@@ -1,20 +1,40 @@
+'use strict';
+
 $(document).ready(function () {
+    $('.materialboxed').materialbox();
     $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
     $('.questions').on('click', '.newanswer', addNewAnswer);
     $('.questions').on('click', '.removeanswer', removeAnswer)
     $('.markcorrect').on('click', markCorrectAnswer);
     $('.newquestion').on('click', addNewQuestion);
+    $('.questions').on('change', '.imageupload', uploadImg);
 
 });
+
+var uploadImg = function (e) {
+    var image = $(this).parent().parent().parent().find('.questionimg');
+
+    if (e.target.files && e.target.files[0]) {
+        var reader = new FileReader();
+        //var parent = this.parent()
+        reader.onload = function (e) {
+            image
+                .attr('src', e.target.result)
+        };
+
+        reader.readAsDataURL(e.target.files[0]);
+
+    }
+}
 
 var addNewQuestion = function (e) {
     e.preventDefault();
     var newQuestion = '<li class="question">' +
-        '<div class="collapsible-header valign-wrapper"><i class="material-icons">add_box</i><input style="width:70%" type="text" placeholder="text vraag"/>  <div class="questionsettings">'+
-
-        '<a data-tooltip="Voeg een foto toe" class=" tooltipped btn btn-large waves-effect waves-light purple"><i class="material-icons">add_a_photo</i></a>'+
-        '<a data-tooltip="Verwijder deze vraag" class=" tooltipped btn btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a>'+
+        '<div class="collapsible-header valign-wrapper"><i class="material-icons">add_box</i><input style="width:50%" type="text" placeholder="text vraag"/> <img id="image" class="materialboxed questionimg" src="#"> <div class="questionsettings">  '+
+        '<div class="questionsettings file-field input-field">' +
+        '<a data-tooltip="Voeg een foto toe" class=" tooltipped btn btn-large waves-effect waves-light purple"><i class="material-icons">add_a_photo</i> <input class="imageupload" type="file" accept="image/gif, image/jpeg, image/png"></a>'+
+        '<a data-tooltip="Verwijder deze vraag" class=" tooltipped btn btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a> </div>'+
 
         '</div>' +
         '</div> ' +
@@ -32,6 +52,7 @@ var addNewQuestion = function (e) {
         '</li>';
     console.log()
     $('.questions').append(newQuestion);
+    $('.materialboxed').materialbox();
 
 }
 
