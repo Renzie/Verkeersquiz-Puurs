@@ -39,9 +39,9 @@ class UserTools extends Database{
 
 	protected function login($username, $password){
 		$connection= $this->connect();
-		$password = password_hash($password, PASSWORD_DEFAULT);
+		//$password = password_hash($password, PASSWORD_DEFAULT);
 
-		echo "<p>firstpass:".$password."</p>";
+		//echo "<p>firstpass:".$password."</p>";
 
 		if ($stmt = $connection->prepare("SELECT password FROM login WHERE username=?")) {
 
@@ -64,8 +64,10 @@ class UserTools extends Database{
     /* fetch value */
     $stmt->fetch();
 
+		/*
 		echo "<p>password:</p>";
 		printf($resultPassword);
+		*/
 
     //printf("%s is in district %s\n", $city, $district);
 
@@ -73,14 +75,8 @@ class UserTools extends Database{
     $stmt->close();
 
 		/* check passwords */
+		return password_verify($password, $resultPassword);
 
-		if($password == $resultPassword){
-			echo "true";
-			return TRUE;
-		}else{
-			echo "false";
-			return FALSE;
-		}
 }
 
 
