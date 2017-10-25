@@ -9,7 +9,7 @@ class View extends UserTools {
 			echo $data["FamilyName"]."<br />";
 		}
 
-		$this->registerAdmin("Maxime", "password");
+		$this->registerAdmin("Arthur", "SupermoeilijKpassword3");
 	}
 }
 

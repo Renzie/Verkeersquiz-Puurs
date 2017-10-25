@@ -3,27 +3,26 @@
 require_once 'Database.class.php';
 
 class UserTools extends Database{
-
 	protected function getAllUsers(){
+		$connection= $this->connect();
 		$sql = "SELECT * FROM user";
-		$result = $this->connect()->query($sql);
+		$result = $connection->query($sql);
 		$numRows = $result->num_rows;
 		$data = array();
 		if($numRows > 0){
 			while($row = $result->fetch_assoc()){
 				$data[] = $row;
 			}
-			//$this->connect()->close();
+			$connection->close();
 			return $data;
 		}
 	}
 
 	protected function registerAdmin($username, $password){
+		$connection= $this->connect();
+		$password = password_hash($password, PASSWORD_DEFAULT);
 
-		//$password = password_hash($password, PASSWORD_DEFAULT);
-
-
-		if(!$stmt = $this->connect()->prepare("INSERT INTO login (username, password) VALUES (?, ?)")){
+		if(!$stmt = $connection->prepare("INSERT INTO login (username, password) VALUES (?, ?)")){
 			echo "FAIL prepare";
 		}
 
@@ -31,14 +30,11 @@ class UserTools extends Database{
 			echo "FAIL bind";
 		}
 
-		echo "username: " . $username;
-		echo "password: " . $password;
-
 		if(!$stmt->execute()){
 			echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 		}
 		$stmt->close();
-		//$this->connect()->close();
+		$connection->close();
 	}
 
 }
