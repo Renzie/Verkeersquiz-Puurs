@@ -37,5 +37,52 @@ class UserTools extends Database{
 		$connection->close();
 	}
 
+	protected function login($username, $password){
+		$connection= $this->connect();
+		$password = password_hash($password, PASSWORD_DEFAULT);
+
+		if ($stmt = $connection->prepare("SELECT password FROM login WHERE username=?")) {
+
+    /* bind parameters for markers */
+    $stmt->bind_param("s", $username);
+
+    /* execute query */
+		if(!$stmt->execute()){
+			echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		}
+
+    /* bind result variables */
+		$resultPassword = $stmt->get_result();
+    // $stmt->bind_result($resultPassword);
+
+
+
+		//echo "<p>resultPassword:".$resultPassword."</p>";
+
+    /* fetch value */
+    $stmt->fetch();
+
+		echo "password:";
+		printf($resultPassword);
+
+    //printf("%s is in district %s\n", $city, $district);
+
+    /* close statement */
+    $stmt->close();
+
+		/* check passwords */
+
+		if($password === $resultPassword){
+			echo "true";
+			return TRUE;
+		}else{
+			echo "false";
+			return FALSE;
+		}
+}
+
+
+	}
+
 }
 ?>

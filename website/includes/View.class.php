@@ -8,8 +8,13 @@ class View extends UserTools {
 			echo $data["Name"]."<br />";
 			echo $data["FamilyName"]."<br />";
 		}
+		// register works
+		//$this->registerAdmin("Arthur", "SupermoeilijKpassword3");
 
-		$this->registerAdmin("Arthur", "SupermoeilijKpassword3");
+		//login
+		echo "login:";
+		echo $this->login("Arthur","SupermoeilijKpassword3");
+
 	}
 }
 
