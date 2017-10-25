@@ -13,7 +13,7 @@ class View extends UserTools {
 
 		//login
 		echo "login:";
-		echo $this->login("Arthur","SupermoeilijKpassword3");
+		echo $this->login("Renzie","password");
 
 	}
 }

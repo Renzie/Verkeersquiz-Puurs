@@ -41,6 +41,8 @@ class UserTools extends Database{
 		$connection= $this->connect();
 		$password = password_hash($password, PASSWORD_DEFAULT);
 
+		echo "<p>firstpass:".$password."</p>";
+
 		if ($stmt = $connection->prepare("SELECT password FROM login WHERE username=?")) {
 
     /* bind parameters for markers */
@@ -52,8 +54,8 @@ class UserTools extends Database{
 		}
 
     /* bind result variables */
-		$resultPassword = $stmt->get_result();
-    // $stmt->bind_result($resultPassword);
+		//$resultPassword = $stmt->get_result();
+    $stmt->bind_result($resultPassword);
 
 
 
@@ -62,7 +64,7 @@ class UserTools extends Database{
     /* fetch value */
     $stmt->fetch();
 
-		echo "password:";
+		echo "<p>password:</p>";
 		printf($resultPassword);
 
     //printf("%s is in district %s\n", $city, $district);
@@ -72,7 +74,7 @@ class UserTools extends Database{
 
 		/* check passwords */
 
-		if($password === $resultPassword){
+		if($password == $resultPassword){
 			echo "true";
 			return TRUE;
 		}else{
