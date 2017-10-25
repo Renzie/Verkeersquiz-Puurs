@@ -1,7 +1,14 @@
-nav.navbar{
-  border-bottom: 2px solid black
+.btn i {
+  padding-left: 25%;
+
+
 }
 
-aside {
-  border-right: 2px solid black
+.btn-floating{
+  margin-left: 2rem;
 }
+
+.questionsettings{
+  margin-left: 5rem;
+}
+

@@ -2,149 +2,171 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title></title>
-  <link href="assets/css/reset.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="assets/materialize/css/materialize.min.css" rel="stylesheet" media="screen,projection" />
-  <link href="assets/css/screen.css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <title></title>
+    <link href="assets/css/reset.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="assets/materialize/css/materialize.min.css" rel="stylesheet" media="screen,projection"/>
+    <link href="assets/css/screen.css" rel="stylesheet"/>
 </head>
 
-<body>
-  <section class="">
+<body class="loaded">
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
+<section class="">
 
     <nav class="">
-      <div class="nav-wrapper teal lighten-1">
-        <a class="brand-logo center">Verkeersquiz Puurs</h1>
+        <div class="nav-wrapper teal lighten-1">
+            <h1 class="brand-logo center">Verkeersquiz Puurs</h1>
 
 
         </div>
 
 
         <ul id="slide-out" class="side-nav fixed">
-      <li>
+            <li>
 
-        <a href="#!name"><span class="logo">Menu</span></a>
-        </li>
-        <li>
-          <div class="divider"></div>
-        </li>
-        <li><a href="#!"><i class="material-icons">dashboard</i>Dashboard</a></li>
-        <li><a href="quiz.html"><i class="material-icons">question_answer</i>Quiz</a></a>
-        </li>
+                <a href="#!name"><span class="logo">Menu</span></a>
+            </li>
+            <li>
+                <div class="divider"></div>
+            </li>
+            <li><a href="#!"><i class="material-icons">dashboard</i>Dashboard</a></li>
+            <li><a href="quiz.html"><i class="material-icons">question_answer</i>Quiz</a></a>
+            </li>
 
-        <li><a href="quiz.html"><i class="material-icons">school</i>School</a></a>
-        </li>
-        <li><a href="quiz.html"><i class="material-icons">insert_chart</i>Statistieken</a></a>
-        </li>
+            <li><a href="quiz.html"><i class="material-icons">school</i>School</a></a>
+            </li>
+            <li><a href="quiz.html"><i class="material-icons">insert_chart</i>Statistieken</a></a>
+            </li>
 
-        <li>
-          <div class="divider"></div>
-        </li>
-        <li><a href="quiz.html"><i class="material-icons">person</i>Afmelden</a></a>
-        </li>
+            <li>
+                <div class="divider"></div>
+            </li>
+            <li><a href="quiz.html"><i class="material-icons">person</i>Afmelden</a></a>
+            </li>
         </ul>
 
 
         <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-      </div>
     </nav>
 
 
     <section class="container">
-      <div class="row">
-        <div class="col s12">
-          <ul class="tabs tabs-fixed-width ">
-            <li class="tab col s3"><a href="#maakquiz">Nieuwe quiz</a></li>
-            <li class="tab col s3"><a href="#test2">Wijzig een gebruikte quiz</a></li>
-            <li class="tab col s3"><a href="#wijzigvragen">Wijzig de vragen per moeilijkheidsgraad</a></li>
-          </ul>
-        </div>
-        <div id="maakquiz" class="col s12">
-          <div class="row">
-            <h2>Maak een nieuwe quiz</h1>
-      <form class="col s12">
         <div class="row">
-          <div class="input-field col s12">
-            <input placeholder="Quiz123" id="quizname" type="text" class="validate">
-            <label for="quizname">Naam quiz</label>
-          </div>
+            <div class="col s12">
+                <ul class="tabs tabs-fixed-width ">
+                    <li class="tab col s3"><a href="#maakquiz">Nieuwe quiz</a></li>
+                    <li class="tab col s3"><a href="#test2">Wijzig een gebruikte quiz</a></li>
+                    <li class="tab col s3"><a href="#wijzigvragen">Wijzig de vragen per moeilijkheidsgraad</a></li>
+                </ul>
+            </div>
+            <div id="maakquiz" class="col s12">
+                <div class="row">
+                    <h2>Maak een nieuwe quiz</h2>
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="Quiz123" id="quizname" type="text" class="validate">
+                                <label for="quizname">Naam quiz</label>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select>
+                                    <option value="" disabled selected>Kies je moeilijkheidsgraad</option>
+                                    <option value="makkelijk">Makkelijk</option>
+                                    <option value="normaal">Normaal</option>
+                                    <option value="moeilijk">Moeilijk</option>
+                                </select>
+                                <label>Moeilijkheidsgraad</label>
+                            </div>
+                        </div>
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Sla quiz op
+                            <i class="material-icons right">send</i>
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+            <div id="wijzigvragen" class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select>
+                            <option value="" disabled selected>Kies je moeilijkheidsgraad die je wilt aanpassen</option>
+                            <option value="makkelijk">Makkelijk</option>
+                            <option value="normaal">Normaal</option>
+                            <option value="moeilijk">Moeilijk</option>
+                        </select>
+                        <label>Moelijkheidsgraad</label>
+                    </div>
+                </div>
+
+                <ul class="questions collapsible" data-collapsible="expandable">
+                    <li class="question">
+                        <div class="collapsible-header valign-wrapper input-field"><i class="material-icons">add_box</i><input
+                                style="width:70%" class=" " type="text" placeholder="text vraag"/>
+                            <div class="questionsettings">
+
+                                <a data-tooltip="Voeg een foto toe"
+                                   class=" btn tooltipped btn-large waves-effect waves-light purple"><i
+                                        class="material-icons">add_a_photo</i></a>
+                                <a data-tooltip="Verwijder deze vraag"
+                                   class=" btn tooltipped btn-large waves-effect waves-light red"><i
+                                        class="material-icons">delete</i></a>
+
+                            </div>
+
+                        </div>
+                        <div class="collapsible-body">
+                            <ul class="answers row">
+                                <li>
+                                    <div class=" answer input-field col s12">
+                                        <input placeholder="Antwoord" type="text" class="validate">
+
+                                        <a data-tooltip="Voeg een nieuwe antwoord"
+                                           class="newanswer tooltipped btn-floating btn-small waves-effect waves-light blue"><i
+                                                class="material-icons">add</i></a>
+                                        <a data-tooltip="Verwijder deze antwoord"
+                                           class="removeanswer tooltipped btn-floating btn-small waves-effect waves-light red"><i
+                                                class="material-icons">delete</i></a>
+                                        <a data-tooltip="Markeer deze antwoord als correct"
+                                           class="markcorrect tooltipped btn-floating btn-small waves-effect waves-light green"><i
+                                                class="material-icons">done</i></a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <a data-tooltip="Voeg een nieuwe vraag"
+                   class="newquestion tooltipped btn-floating btn-small waves-effect waves-light blue"><i
+                        class="material-icons">add</i></a>
+            </div>
         </div>
 
+        <!-- Element Showed -->
 
-        <div class="row">
-          <div class="input-field col s12">
-            <select>
-                <option value="" disabled selected>Kies je moeilijkheidsgraad</option>
-                <option value="makkelijk" >Makkelijk</option>
-                <option value="normaal" >Normaal</option>
-                <option value="moeilijk" >Moeilijk</option>
-            </select>
-            <label>Moeilijkheidsgraad</label>
-          </div>
+
+    </section>
+    <a id="menu" class="waves-effect waves-light btn btn-floating cyan"><i class="material-icons">menu</i></a>
+
+    <!-- Tap Target Structure -->
+    <div class="tap-target cyan" data-activates="menu">
+        <div class="tap-target-content">
+            <h5 class="white-text">Je antwoord is gemarkeerd als correct</h5>
+            <p class="white-text">Je antwoord is gemarkeerd als correct</p>
         </div>
-        <button class="btn waves-effect waves-light" type="submit" name="action">Sla quiz op
-    <i class="material-icons right">send</i>
-  </button>
-
-      </form>
     </div>
-</div>
-<div id="wijzigvragen" class="col s12">
-  <div class="row">
-    <div class="input-field col s6">
-      <select>
-        <option value="" disabled selected>Kies je moeilijkheidsgraad die je wilt aanpassen</option>
-        <option value="makkelijk" >Makkelijk</option>
-        <option value="normaal" >Normaal</option>
-        <option value="moeilijk" >Moeilijk</option>
-      </select>
-      <label>Moelijkheidsgraad</label>
-    </div>
-  </div>
-
-      <ul class="collapsible" data-collapsible="expandable">
-        <li >
-      <div class="collapsible-header"><i class="material-icons">filter_drama</i>Voorrang van links of rechts?</div>
-      <div class="collapsible-body">
-        <div class="answers row">
-          <div class="input-field col s10">
-            <input placeholder="Antwoord 1" id="Antwoord-1" type="text" class="validate">
-
-          </div>
-          <a class="btn-floating btn-small red">
-      <i class="large material-icons">mode_edit</i>
-    </a>
-          <a class=" col s3 newanswer waves-effect waves-light btn">Voeg een nieuwe antwoord toe</a>
-        </div>
-
-
-      </div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-      </ul>
-    </div>
-  </div>
-
-
-
-</div>
-</div>
 </section>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="assets/js/script.js"></script>
+<script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
 
-
-
-
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-          <script type="text/javascript" src="assets/js/script.js"></script>
-          <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
-
-      </body>
-    </html>
+</body>
+</html>
