@@ -6,16 +6,7 @@ class UserTools extends Database{
 	protected function getAllUsers(){
 		$connection= $this->connect();
 		$sql = "SELECT * FROM user";
-		$result = $connection->query($sql);
-		$numRows = $result->num_rows;
-		$data = array();
-		if($numRows > 0){
-			while($row = $result->fetch_assoc()){
-				$data[] = $row;
-			}
-			$connection->close();
-			return $data;
-		}
+		return $this->getData($sql,$connection);
 	}
 
 	protected function registerAdmin($username, $password){
@@ -37,50 +28,97 @@ class UserTools extends Database{
 		$connection->close();
 	}
 
-	protected function login($username, $password){
+	public function login($username, $password){
 		$connection= $this->connect();
 		//$password = password_hash($password, PASSWORD_DEFAULT);
 
 		//echo "<p>firstpass:".$password."</p>";
 
-		if ($stmt = $connection->prepare("SELECT password FROM login WHERE username=?")) {
+			if ($stmt = $connection->prepare("SELECT password FROM login WHERE username=?")) {
 
-    /* bind parameters for markers */
-    $stmt->bind_param("s", $username);
+	    	/* bind parameters for markers */
+		    $stmt->bind_param("s", $username);
 
-    /* execute query */
-		if(!$stmt->execute()){
-			echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-		}
+		    /* execute query */
+			if(!$stmt->execute()){
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			}
 
-    /* bind result variables */
-		//$resultPassword = $stmt->get_result();
-    $stmt->bind_result($resultPassword);
+		    /* bind result variables */
+				//$resultPassword = $stmt->get_result();
+		    $stmt->bind_result($resultPassword);
 
 
 
-		//echo "<p>resultPassword:".$resultPassword."</p>";
+			//echo "<p>resultPassword:".$resultPassword."</p>";
 
-    /* fetch value */
-    $stmt->fetch();
+		    /* fetch value */
+		    $stmt->fetch();
 
-		/*
-		echo "<p>password:</p>";
-		printf($resultPassword);
-		*/
+			/*
+			echo "<p>password:</p>";
+			printf($resultPassword);
+			*/
 
-    //printf("%s is in district %s\n", $city, $district);
+		    //printf("%s is in district %s\n", $city, $district);
 
-    /* close statement */
-    $stmt->close();
+		    /* close statement */
+		    $stmt->close();
 
-		/* check passwords */
+			/* check passwords */
+
+
+			}
 		return password_verify($password, $resultPassword);
 
-}
+	}
 
+	protected function getAllQuizzes(){
+		$connection= $this->connect();
+		$sql = "SELECT * FROM quiz";
+
+		$result = $connection->query($sql);
+		$numRows = $result->num_rows;
+		$data = array();
+
+		if($numRows > 0){
+			while($row = $result->fetch_assoc()){
+				$data[] = $row;
+			}
+			$connection->close();
+
+		}
+
+		return $data;
 
 	}
+
+	protected function getAllOrganization(){
+		$connection= $this->connect();
+		$sql = "SELECT * FROM organization";
+
+		return $this->getData($sql,$connection);
+	}
+
+	protected function getAllDepartmentsById($organizationId){}
+
+	protected function getAllQuestionsById($quizId){}
+
+	protected function getAllAnswersById($questionId){}
+
+	protected function getLogs(){
+		$connection= $this->connect();
+		$sql = "SELECT * FROM logs";
+
+		return $this->getData($sql,$connection);
+	}
+
+	protected function getAnswersByUser($userId){}
+
+	protected function getStatisticsByOragnization($organizationId){}
+
+
+
 
 }
 ?>

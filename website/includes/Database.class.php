@@ -6,8 +6,23 @@ class Database {
 	private $db_name = 'sql11198882';
 
 	protected function connect(){
-		$conn = new mysqli($this->db_host,$this->db_user,$this->db_pass,$this->db_name);
-		return $conn;
+		return new mysqli($this->db_host,$this->db_user,$this->db_pass,$this->db_name);
+	}
+
+	protected function getData($sql,$connection){
+		$result = $connection->query($sql);
+		$numRows = $result->num_rows;
+		$data = array();
+
+		if($numRows > 0){
+			while($row = $result->fetch_assoc()){
+				$data[] = $row;
+			}
+			$connection->close();
+
+		}
+
+		return $data;
 	}
 
 
