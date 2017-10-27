@@ -50,18 +50,7 @@ class UserTools extends Database
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM quiz";
-
-        $result = $connection->query($sql);
-        $numRows = $result->num_rows;
-        $data = array();
-
-        if ($numRows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $data[] = $row;
-            }
-            $connection->close();
-        }
-        return $data;
+        return $this->getData($sql, $connection);
     }
 
     protected function getAllOrganization()
@@ -73,6 +62,30 @@ class UserTools extends Database
 
     protected function getAllDepartmentsById($organizationId)
     {
+        echo $organizationId;
+        $connection= $this->connect();
+        echo "<p>hello its me</p>";
+        if ($stmt = $connection->prepare("SELECT * FROM department WHERE OrganizationId =?")) {
+            $stmt->bind_param("i", $organizationId);
+            echo "<p>hello its me2</p>";
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            echo "<p>hello its me3</p>";
+            $data = array();
+            $stmt->get_result($result);
+            if ($result->num_rows !=0) {
+              echo "<p>hello its me4</p>";
+                while ($row = $stmt->fetch_assoc()) {
+                    $data[] = $row;
+                  }
+            } else {
+                echo "<p>hello its me5</p>";
+            }
+            echo "hello its me";
+            $stmt->close();
+            return $data;
+        }
     }
 
     protected function getAllQuestionsById($quizId)

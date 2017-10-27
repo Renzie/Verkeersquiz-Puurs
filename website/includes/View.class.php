@@ -4,9 +4,9 @@ class View extends UserTools {
 
 
 	public function test(){
-		// foreach($this->getAllUsers() as $data){
-		// 	echo $data["Name"]." ".$data["FamilyName"]."</br>";
-		// }
+		 foreach($this->getAllUsers() as $data){
+		 	echo $data["Name"]." ".$data["FamilyName"]."</br>";
+		 }
 
 		// register works
 		//$this->registerAdmin("Arthur", "SupermoeilijKpassword3");
@@ -14,6 +14,13 @@ class View extends UserTools {
 		//login
 		// echo "login: ";
 		// echo ($this->login("Renzie","password") ? "Succes" : "Failed");
+		echo "test";
+
+		foreach($this->getAllDepartmentsById(1) as $data){
+		 echo $data[1]."</br>";
+		}
+
+
 
 	}
 

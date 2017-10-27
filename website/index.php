@@ -15,7 +15,7 @@ require_once "includes/View.class.php";
 		$view = new View();
 		$view->test();
 		echo "</br>";
-		$view->displayLoginPopup();
+		//$view->displayLoginPopup();
 	?>
 
 	<script src="assets/js/jquery-3.2.1.js" />
