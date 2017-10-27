@@ -24,8 +24,5 @@ class Database {
 
 		return $data;
 	}
-
-
-
 }
 ?>

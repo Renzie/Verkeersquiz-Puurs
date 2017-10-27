@@ -12,8 +12,8 @@ class View extends UserTools {
 		//$this->registerAdmin("Arthur", "SupermoeilijKpassword3");
 
 		//login
-		echo "login: ";
-		echo ($this->login("Renzie","password") ? "Succes" : "Failed");
+		// echo "login: ";
+		// echo ($this->login("Renzie","password") ? "Succes" : "Failed");
 
 	}
 
@@ -26,7 +26,6 @@ class View extends UserTools {
 			echo "There are no quizzes to display";
 		}
 	}
-
 
 	public function displayLogs(){
 		if($this->getAllQuizzes() != null){
@@ -51,8 +50,6 @@ class View extends UserTools {
 
 		<!-- Modal Content -->
 		<form class="modal-content animate" action="/login.php" method="post">
-
-
 
 		<div class="container">
 		  <label><b>Username</b></label>

@@ -2,123 +2,100 @@
 
 require_once 'Database.class.php';
 
-class UserTools extends Database{
-	protected function getAllUsers(){
-		$connection= $this->connect();
-		$sql = "SELECT * FROM user";
-		return $this->getData($sql,$connection);
-	}
+class UserTools extends Database
+{
+    protected function getAllUsers()
+    {
+        $connection= $this->connect();
+        $sql = "SELECT * FROM user";
+        return $this->getData($sql, $connection);
+    }
 
-	protected function registerAdmin($username, $password){
-		$connection= $this->connect();
-		$password = password_hash($password, PASSWORD_DEFAULT);
+    protected function registerAdmin($username, $password)
+    {
+        $connection= $this->connect();
+        $password = password_hash($password, PASSWORD_DEFAULT);
 
-		if(!$stmt = $connection->prepare("INSERT INTO login (username, password) VALUES (?, ?)")){
-			echo "FAIL prepare";
-		}
+        if (!$stmt = $connection->prepare("INSERT INTO login (username, password) VALUES (?, ?)")) {
+            echo "FAIL prepare";
+        }
 
-		if(!$stmt->bind_param("ss", $username, $password)){
-			echo "FAIL bind";
-		}
+        if (!$stmt->bind_param("ss", $username, $password)) {
+            echo "FAIL bind";
+        }
 
-		if(!$stmt->execute()){
-			echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-		}
-		$stmt->close();
-		$connection->close();
-	}
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $stmt->close();
+        $connection->close();
+    }
 
-	public function login($username, $password){
-		$connection= $this->connect();
-		//$password = password_hash($password, PASSWORD_DEFAULT);
+    public function login($username, $password)
+    {
+        $connection= $this->connect();
+        if ($stmt = $connection->prepare("SELECT password FROM login WHERE username=?")) {
+            $stmt->bind_param("s", $username);
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            $stmt->bind_result($resultPassword);
+            $stmt->fetch();
+            $stmt->close();
+        }
+        return password_verify($password, $resultPassword);
+    }
 
-		//echo "<p>firstpass:".$password."</p>";
+    protected function getAllQuizzes()
+    {
+        $connection= $this->connect();
+        $sql = "SELECT * FROM quiz";
 
-			if ($stmt = $connection->prepare("SELECT password FROM login WHERE username=?")) {
+        $result = $connection->query($sql);
+        $numRows = $result->num_rows;
+        $data = array();
 
-	    	/* bind parameters for markers */
-		    $stmt->bind_param("s", $username);
+        if ($numRows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            $connection->close();
+        }
+        return $data;
+    }
 
-		    /* execute query */
-			if(!$stmt->execute()){
-				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-			}
+    protected function getAllOrganization()
+    {
+        $connection= $this->connect();
+        $sql = "SELECT * FROM organization";
+        return $this->getData($sql, $connection);
+    }
 
-		    /* bind result variables */
-				//$resultPassword = $stmt->get_result();
-		    $stmt->bind_result($resultPassword);
+    protected function getAllDepartmentsById($organizationId)
+    {
+    }
 
+    protected function getAllQuestionsById($quizId)
+    {
+    }
 
+    protected function getAllAnswersById($questionId)
+    {
+    }
 
-			//echo "<p>resultPassword:".$resultPassword."</p>";
+    protected function getLogs()
+    {
+        $connection= $this->connect();
+        $sql = "SELECT * FROM logs";
 
-		    /* fetch value */
-		    $stmt->fetch();
+        return $this->getData($sql, $connection);
+    }
 
-			/*
-			echo "<p>password:</p>";
-			printf($resultPassword);
-			*/
+    protected function getAnswersByUser($userId)
+    {
+    }
 
-		    //printf("%s is in district %s\n", $city, $district);
-
-		    /* close statement */
-		    $stmt->close();
-
-			/* check passwords */
-
-
-			}
-		return password_verify($password, $resultPassword);
-
-	}
-
-	protected function getAllQuizzes(){
-		$connection= $this->connect();
-		$sql = "SELECT * FROM quiz";
-
-		$result = $connection->query($sql);
-		$numRows = $result->num_rows;
-		$data = array();
-
-		if($numRows > 0){
-			while($row = $result->fetch_assoc()){
-				$data[] = $row;
-			}
-			$connection->close();
-
-		}
-
-		return $data;
-
-	}
-
-	protected function getAllOrganization(){
-		$connection= $this->connect();
-		$sql = "SELECT * FROM organization";
-
-		return $this->getData($sql,$connection);
-	}
-
-	protected function getAllDepartmentsById($organizationId){}
-
-	protected function getAllQuestionsById($quizId){}
-
-	protected function getAllAnswersById($questionId){}
-
-	protected function getLogs(){
-		$connection= $this->connect();
-		$sql = "SELECT * FROM logs";
-
-		return $this->getData($sql,$connection);
-	}
-
-	protected function getAnswersByUser($userId){}
-
-	protected function getStatisticsByOragnization($organizationId){}
-
-
-
-
+    protected function getStatisticsByOragnization($organizationId)
+    {
+    }
 }
-?>
