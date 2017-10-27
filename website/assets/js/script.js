@@ -9,8 +9,15 @@ $(document).ready(function () {
     $('.markcorrect').on('click', markCorrectAnswer);
     $('.newquestion').on('click', addNewQuestion);
     $('.questions').on('change', '.imageupload', uploadImg);
+    $('.questions').on('click', '.delquestion', removeQuestion)
 
 });
+
+var removeQuestion = function (e) {
+    e.preventDefault();
+    console.log($(this).parent().find('question'))
+
+}
 
 var uploadImg = function (e) {
     var image = $(this).parent().parent().parent().find('.questionimg');
@@ -31,7 +38,7 @@ var uploadImg = function (e) {
 var addNewQuestion = function (e) {
     e.preventDefault();
     var newQuestion = '<li class="question">' +
-        '<div class="collapsible-header valign-wrapper"><i class="material-icons">add_box</i><input style="width:50%" type="text" placeholder="text vraag"/> <img id="image" class="materialboxed questionimg" src="#"> <div class="questionsettings">  '+
+        '<div class="collapsible-header valign-wrapper"><i class="material-icons">add_box</i><input style="width:50%" type="text" placeholder="text vraag"/> <img class="materialboxed questionimg" src="#"> '+
         '<div class="questionsettings file-field input-field">' +
         '<a data-tooltip="Voeg een foto toe" class=" tooltipped btn btn-large waves-effect waves-light purple"><i class="material-icons">add_a_photo</i> <input class="imageupload" type="file" accept="image/gif, image/jpeg, image/png"></a>'+
         '<a data-tooltip="Verwijder deze vraag" class=" tooltipped btn btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a> </div>'+
