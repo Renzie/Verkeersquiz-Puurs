@@ -17,8 +17,8 @@ class View extends UserTools {
 		echo "test";
 
 		foreach($this->getAllDepartmentsById(1) as $data){
-		 echo $data[1]."</br>";
-		}
+		 echo $data["name"]."</br>";
+	 };
 
 
 

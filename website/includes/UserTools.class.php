@@ -62,27 +62,26 @@ class UserTools extends Database
 
     protected function getAllDepartmentsById($organizationId)
     {
-        echo $organizationId;
+
         $connection= $this->connect();
-        echo "<p>hello its me</p>";
+
         if ($stmt = $connection->prepare("SELECT * FROM department WHERE OrganizationId =?")) {
             $stmt->bind_param("i", $organizationId);
-            echo "<p>hello its me2</p>";
+
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            echo "<p>hello its me3</p>";
+            $stmt->bind_result($id, $name, $organizationId);
             $data = array();
-            $stmt->get_result($result);
-            if ($result->num_rows !=0) {
-              echo "<p>hello its me4</p>";
-                while ($row = $stmt->fetch_assoc()) {
-                    $data[] = $row;
-                  }
-            } else {
-                echo "<p>hello its me5</p>";
+
+            while($stmt -> fetch()){
+              $subarray = [
+                "id"=>$id,
+                "name"=>$name,
+                "organizationId"=>$organizationId
+              ];
+              array_push($data,$subarray);
             }
-            echo "hello its me";
             $stmt->close();
             return $data;
         }
