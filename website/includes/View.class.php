@@ -14,11 +14,27 @@ class View extends UserTools {
 		//login
 		// echo "login: ";
 		// echo ($this->login("Renzie","password") ? "Succes" : "Failed");
-		echo "test";
+
 
 		foreach($this->getAllDepartmentsById(1) as $data){
 		 echo $data["name"]."</br>";
 	 };
+
+		foreach($this->getAllQuestionsByQuizId(1) as $data){
+		  echo $data["question"]."</br>";
+
+	 };
+
+	 foreach($this->getAllAnswersById(2) as $data){
+	   echo $data["answer"].$data["questionId"].$data["correct"]."</br>";
+
+  };
+
+  foreach($this->getAnswersByUser(1) as $data){
+	echo $data["answer"]."</br>";
+
+	};
+
 
 
 

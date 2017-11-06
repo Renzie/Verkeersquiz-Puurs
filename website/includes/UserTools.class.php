@@ -87,12 +87,59 @@ class UserTools extends Database
         }
     }
 
-    protected function getAllQuestionsById($quizId)
+    protected function getAllQuestionsByQuizId($quizId)
     {
+		$connection= $this->connect();
+
+		if ($stmt = $connection->prepare("SELECT * FROM question JOIN quiz_questions ON question.id = quiz_questions.QuestionId WHERE QuizId = ?")) {
+			$stmt->bind_param("i", $quizId);
+
+			if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			}
+			$stmt->bind_result($id, $question, $difficulty, $imageLink, $time,$quizidextra,$questionidextra);
+			$data = array();
+
+			while($stmt -> fetch()){
+			  $subarray = [
+				"id"=>$id,
+				"question"=>$question,
+				"difficulty"=>$difficulty,
+				"imageLink"=>$imageLink,
+				"time"=>$time
+			  ];
+			  array_push($data,$subarray);
+			}
+			$stmt->close();
+			return $data;
+		}
     }
 
     protected function getAllAnswersById($questionId)
     {
+		$connection= $this->connect();
+
+		if ($stmt = $connection->prepare("SELECT * FROM answer WHERE QuestionId =?")) {
+			$stmt->bind_param("i", $questionId);
+
+			if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			}
+			$stmt->bind_result($id, $answer, $quistionId,$correct);
+			$data = array();
+
+			while($stmt -> fetch()){
+			  $subarray = [
+				"id"=>$id,
+				"answer"=>$answer,
+				"quistionId"=>$questionId,
+				"correct"=>$correct
+			  ];
+			  array_push($data,$subarray);
+			}
+			$stmt->close();
+			return $data;
+		}
     }
 
     protected function getLogs()
@@ -105,6 +152,29 @@ class UserTools extends Database
 
     protected function getAnswersByUser($userId)
     {
+		$connection= $this->connect();
+
+		if ($stmt = $connection->prepare("SELECT answer.id, answer.answer, answer.questionId, answer.correct  FROM answer JOIN answer_user ON answer.id = answer_user.AwnserId WHERE UserId = ?")) {
+			$stmt->bind_param("i", $userId);
+
+			if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			}
+			$stmt->bind_result($id, $answer, $questionId, $correct);
+			$data = array();
+
+			while($stmt -> fetch()){
+			  $subarray = [
+				"id"=>$id,
+				"answer"=>$answer,
+				"questionId"=>$questionId,
+				"correct"=>$correct
+			  ];
+			  array_push($data,$subarray);
+			}
+			$stmt->close();
+			return $data;
+		}
     }
 
     protected function getStatisticsByOragnization($organizationId)
