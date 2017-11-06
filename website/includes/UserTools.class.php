@@ -31,6 +31,141 @@ class UserTools extends Database
         $connection->close();
     }
 
+	protected function registerUser($firstname, $familyname, $departmentid)
+    {
+        $connection= $this->connect();
+
+        if (!$stmt = $connection->prepare("INSERT INTO user (Name, FamilyName, DepartmentId) VALUES (?, ?,?)")) {
+            echo "FAIL prepare";
+        }
+
+        if (!$stmt->bind_param("ssi", $firstname, $familyname, $departmentid)) {
+            echo "FAIL bind";
+        }
+
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $stmt->close();
+        $connection->close();
+    }
+
+	protected function makeDepartment($name, $organizationid)
+  	{
+	  $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("INSERT INTO department (Name, OrganizationId) VALUES (?, ?)")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("si", $name, $organizationid)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+  }
+
+  protected function makeOrganization($name, $extrainfo)
+  {
+	  $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("INSERT INTO organization (Name, ExtraInfo) VALUES (?, ?)")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("ss", $name, $extrainfo)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+  }
+
+  protected function makeDifficulty($difficulty)
+  {
+	  $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("INSERT INTO difficulty (difficulty) VALUES (?)")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("s",$difficulty)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+  }
+
+  protected function makeQuiz($name, $extrainfo)
+  {
+	  $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("INSERT INTO quiz (Name, Extra info) VALUES (?, ?)")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("ss", $name, $extrainfo)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+  }
+
+  protected function makeAnswer($answer, $questionid, $correct)
+  {
+	  $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("INSERT INTO answer (Answer, QuestionId, Correct) VALUES (?, ?, ?)")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("sii", $answer, $questionid, $correct)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+  }
+
+  protected function makeUserAnswer($userid, $answerid, $time)
+  {
+	  $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("INSERT INTO answer_user (UserId, AnswerId, Time) VALUES (?, ?, ?)")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("iis", $userid, $answerid, $time)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+  }
+
+  
+
     public function login($username, $password)
     {
         $connection= $this->connect();
@@ -176,6 +311,11 @@ class UserTools extends Database
 			return $data;
 		}
     }
+
+	protected function getStatisticsByDepartment($demapartmentId)
+	{
+
+	}
 
     protected function getStatisticsByOragnization($organizationId)
     {
