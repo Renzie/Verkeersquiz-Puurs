@@ -21,3 +21,14 @@
   margin-left: 1rem;
   margin-bottom: 1rem;
 }
+
+li.question .collapsible-header{
+  border-color: black;
+}
+
+.tabel_school tr td a{
+  margin-left: 30px;
+}
+.tabel_school tr td a i{
+  margin-right: 23px;
+}

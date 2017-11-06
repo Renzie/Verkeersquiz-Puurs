@@ -20,14 +20,13 @@
 <section class="">
 
     <nav class="">
-        <div class="nav-wrapper teal lighten-1">
+
+        <div class="nav-wrapper deep-purple lighten-1">
             <h1 class="brand-logo center">Verkeersquiz Puurs</h1>
-
-
         </div>
 
 
-        <ul id="slide-out" class="side-nav fixed">
+        <ul id="slide-out" class="side-nav fixed collapsible collapsible-accordion">
             <li>
 
                 <a href="#!name"><span class="logo">Menu</span></a>
@@ -36,12 +35,25 @@
                 <div class="divider"></div>
             </li>
             <li><a href="#!"><i class="material-icons">dashboard</i>Dashboard</a></li>
-            <li><a href="quiz.html"><i class="material-icons">question_answer</i>Quiz</a></a>
-            </li>
 
-            <li><a href="quiz.html"><i class="material-icons">school</i>School</a></a>
+
+                    <li>
+                        <a class="collapsible-header">Quiz<i class="material-icons">arrow_drop_down</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="#!"><i class="material-icons">add</i>Maak een nieuwe quiz</a></li>
+                                <li><a href="#!"><i class="material-icons">edit</i>Wijzig een gebruikte quiz</a></li>
+                                <li><a href="#!"><i class="material-icons">question_answer</i>Wijzig de vragen </a></li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+
+
+            <li><a href="school.php"><i class="material-icons">school</i>School</a></a>
             </li>
-            <li><a href="quiz.html"><i class="material-icons">insert_chart</i>Statistieken</a></a>
+            <li><a href="statistieken.php"><i class="material-icons">insert_chart</i>Statistieken</a></a>
             </li>
 
             <li>
@@ -50,7 +62,5 @@
             <li><a href="quiz.html"><i class="material-icons">person</i>Afmelden</a></a>
             </li>
         </ul>
-
-
         <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
     </nav>

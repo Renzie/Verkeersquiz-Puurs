@@ -11,6 +11,8 @@ $(document).ready(function () {
     $('.newquestion').on('click', addNewQuestion);
     $('.questions').on('change', '.imageupload', uploadImg);
     $('.questions').on('click', '.delquestion', checkQuestion);
+
+
 });
 
 var checkQuestion = function (e) {
@@ -40,11 +42,12 @@ var uploadImg = function (e) {
 
     if (e.target.files && e.target.files[0]) {
         var reader = new FileReader();
+        console.log(e.target.files)
         reader.onload = function (e) {
-            image
-                .attr('src', e.target.result)
+            image.attr('src', e.target.result)
+            //console.log("derp" + e.target.result);
+            console.log(e.target.result)
         };
-
         reader.readAsDataURL(e.target.files[0]);
 
     }
