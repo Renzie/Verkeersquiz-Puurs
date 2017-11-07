@@ -1,6 +1,22 @@
 <?php
 class View extends UserTools {
 
+	public function getAllSchools(){
+		foreach($this->getAllOrganization() as $school)
+		{
+			//echo $school["Name"];
+			?>
+			<tr class="school" schoolId="<?php echo $school["Id"]?>" >
+				<td><input class="schoolName" type="text" value="<?php echo $school["Name"]?>" schoolIdName="<?php echo $school["Id"]?>" ></td>
+				<td><input class="schoolInfo" type="text" value="<?php echo $school["ExtraInfo"]?>" schoolIdInfo="<?php echo $school["Id"]?>"  ></td>
+				<td><a  class="btn red remove_school" buttonAction="deleteOrganization"><i class="material-icons">delete</i></a>
+					<a class="btn purple save_school" buttonAction="updateOrganization" ><i class="material-icons">save</i></a>
+					</td>
+					</tr>
+			<?php
+
+		}
+	}
 
 
 	public function test(){
@@ -17,12 +33,7 @@ class View extends UserTools {
 
 		//$this->registerUser("Test","test",3);
 
-		$this->makeDepartment("Test",3);
-
-
-
-
-
+		//$this->makeDepartment("Test",3);
 
 	}
 
@@ -78,8 +89,19 @@ class View extends UserTools {
 		</form>
 		</div>
 
+
+
 		<?php
 	}
+
+
+
+
+
+
+
+
+
 }
 
 ?>

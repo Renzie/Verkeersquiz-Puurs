@@ -69,7 +69,9 @@ class UserTools extends Database
 	  $connection->close();
   }
 
-  protected function makeOrganization($name, $extrainfo)
+
+
+  public function makeOrganization($name, $extrainfo)
   {
 	  $connection= $this->connect();
 
@@ -86,6 +88,46 @@ class UserTools extends Database
 	  }
 	  $stmt->close();
 	  $connection->close();
+  }
+
+  public function updateOrganization($id,$name,$extrainfo){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("UPDATE organization SET Name = ? , ExtraInfo = ? WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("ssi", $name, $extrainfo, $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
+  public function deleteOrganization($id){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("DELETE FROM organization WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("i", $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
   }
 
   protected function makeDifficulty($difficulty)
@@ -164,7 +206,7 @@ class UserTools extends Database
 	  $connection->close();
   }
 
-  
+
 
     public function login($username, $password)
     {
