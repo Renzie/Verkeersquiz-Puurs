@@ -1,6 +1,22 @@
 <?php
 //This is the Roels Special
 require_once "head.html";
+require_once "includes/Database.class.php";
+require_once "includes/UserTools.class.php";
+require_once "includes/View.class.php";
+$view = new View();
+
+if (isset($_POST['Submit1'])) {
+    $username = $_POST['username'];
+
+    if ($username == "letmein") {
+        print("Welcome back, friend!");
+    } else {
+        print("You're not a member of this site");
+    }
+}
+
+
 
 ?>
 
@@ -13,6 +29,9 @@ require_once "head.html";
         </tr>
         </thead>
         <tbody class="tabel_school">
+          <?php
+         $view->getAllSchools();
+           ?>
         </tbody>
 
 
@@ -26,6 +45,7 @@ require_once "head.html";
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="assets/js/school.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
+
 
 <?php
 
