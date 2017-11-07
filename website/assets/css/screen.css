@@ -37,6 +37,10 @@ li.question .collapsible-header{
   padding:0 32px;
 }
 
+.side-nav .collapsible-body{
+  padding: 0 12px;
+}
+
 .side-nav{
   width:15vw;
 }
@@ -44,3 +48,8 @@ li.question .collapsible-header{
 .container{
   width:70vw;
 }
+
+.side-nav li>a{
+  font-size: 1rem;
+}
+

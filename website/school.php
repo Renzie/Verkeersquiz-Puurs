@@ -39,6 +39,7 @@ if (isset($_POST['Submit1'])) {
     </table>
     <a class="btn add_new_school"><i class="material-icons right">add</i>Nieuw school</a>
 
+</section>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>

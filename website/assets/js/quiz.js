@@ -37,18 +37,14 @@ var delqu = function (question) {
 }
 
 
-var uploadImg = function (e) {
-    var image = $(this).find('.questionimg');
-
-    if (e.target.files && e.target.files[0]) {
+var uploadImg = function () {
+    var image = $(this).closest('.question').find('.questionimg');
+    if (this.files && this.files[0]) {
         var reader = new FileReader();
-        console.log(e.target.files)
         reader.onload = function (e) {
             image.attr('src', e.target.result)
-            //console.log("derp" + e.target.result);
-            console.log(e.target.result)
         };
-        reader.readAsDataURL(e.target.files[0]);
+        reader.readAsDataURL(this.files[0]);
 
     }
 }

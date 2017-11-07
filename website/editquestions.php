@@ -3,6 +3,7 @@ require_once "head.html";
 
 ?>
     <div id="wijzigvragen" class="col s12">
+        <h1>Vragen Wijziging</h1>
         <div class="row">
             <div class="input-field col s6">
                 <select>
@@ -59,7 +60,10 @@ require_once "head.html";
            class="newquestion tooltipped btn-floating btn-small waves-effect waves-light blue"><i
                 class="material-icons">add</i></a>
     </div>
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
+    <script type="text/javascript" src="assets/js/quiz.js"></script>
+    <script type="text/javascript" src="assets/js/script.js"></script>
 <?php
 
 require_once "tail.html";
