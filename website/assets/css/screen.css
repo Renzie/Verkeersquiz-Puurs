@@ -1,5 +1,5 @@
-.btn i {
-  padding-left: 25%;
+.questionsettings .btn i {
+ margin-left: 1vw;
 }
 
 .material-placeholder{
@@ -26,6 +26,10 @@ li.question .collapsible-header{
   border-color: black;
 }
 
+h1{
+  margin-top:0.67em;
+}
+
 .tabel_school tr td a{
   margin-left: 30px;
 }
@@ -33,12 +37,16 @@ li.question .collapsible-header{
   margin-right: 23px;
 }
 
+.side-nav li a{
+  padding: 0 1vw;
+}
+
 .side-nav .collapsible-header, .side-nav.fixed .collapsible-header{
-  padding:0 32px;
+  padding: 0 1vw;
 }
 
 .side-nav .collapsible-body{
-  padding: 0 12px;
+  padding: 0 0.5vw;
 }
 
 .side-nav{
@@ -50,6 +58,6 @@ li.question .collapsible-header{
 }
 
 .side-nav li>a{
-  font-size: 1rem;
+  font-size: 1em;
 }
 

@@ -5,7 +5,7 @@ require_once "head.html";
 ?>
 
 
-<h1>Statistieken</h1>
+<h1>Dashboard</h1>
 
 <canvas id="myChart" width="400" height="400"></canvas>
 

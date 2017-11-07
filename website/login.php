@@ -45,15 +45,12 @@
                             <input class='validate' type='password' name='password' id='password'/>
                             <label for='password'>Wachtwoord</label>
                         </div>
-                        <label class="right">
-                            <a class='pink-text' href='#!'><b>Wachtwoord vergeten?</b></a>
-                        </label>
+
                     </div>
 
 
                     <div class='row'>
-                        <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Login
-                        </button>
+                        <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Login</button>
                     </div>
 
                 </form>

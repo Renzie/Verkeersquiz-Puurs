@@ -42,13 +42,13 @@ require_once "head.html";
                                 <input placeholder="Antwoord" type="text" class="validate">
 
                                 <a data-tooltip="Voeg een nieuwe antwoord"
-                                   class="newanswer tooltipped btn-floating btn-small waves-effect waves-light blue"><i
+                                   class="newanswer tooltipped btn btn-small waves-effect waves-light blue"><i
                                         class="material-icons">add</i></a>
                                 <a data-tooltip="Verwijder deze antwoord"
-                                   class="removeanswer tooltipped btn-floating btn-small waves-effect waves-light red"><i
+                                   class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i
                                         class="material-icons">delete</i></a>
                                 <a data-tooltip="Markeer deze antwoord als correct"
-                                   class="markcorrect tooltipped btn-floating btn-small waves-effect waves-light green"><i
+                                   class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i
                                         class="material-icons">done</i></a>
                             </div>
                         </li>
@@ -57,7 +57,7 @@ require_once "head.html";
             </li>
         </ul>
         <a data-tooltip="Voeg een nieuwe vraag"
-           class="newquestion tooltipped btn-floating btn-small waves-effect waves-light blue"><i
+           class="newquestion tooltipped btn btn-small waves-effect waves-light blue"><i
                 class="material-icons">add</i></a>
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
