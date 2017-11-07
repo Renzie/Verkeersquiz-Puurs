@@ -44,3 +44,7 @@ li.question .collapsible-header{
 .container{
   width:70vw;
 }
+
+.side-nav li>a{
+  font-size: 1rem;
+}
