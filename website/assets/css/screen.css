@@ -32,3 +32,7 @@ li.question .collapsible-header{
 .tabel_school tr td a i{
   margin-right: 23px;
 }
+
+.side-nav .collapsible-header, .side-nav.fixed .collapsible-header{
+  padding:0 32px;
+}
