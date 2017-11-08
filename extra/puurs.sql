@@ -29,7 +29,7 @@ CREATE TABLE `answer` (
   `correct` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `Question_idx` (`questionId`),
-  CONSTRAINT `QuestionForAwnser` FOREIGN KEY (`duestionId`) REFERENCES `question` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `QuestionForAwnser` FOREIGN KEY (`questionId`) REFERENCES `question` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -311,3 +311,5 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-11-06  9:05:16
