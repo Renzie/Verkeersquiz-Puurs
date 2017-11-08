@@ -6,9 +6,9 @@ class View extends UserTools {
 		{
 			//echo $school["Name"];
 			?>
-			<tr class="school" schoolId="<?php echo $school["Id"]?>" >
-				<td><input class="schoolName" type="text" value="<?php echo $school["Name"]?>" schoolIdName="<?php echo $school["Id"]?>" ></td>
-				<td><input class="schoolInfo" type="text" value="<?php echo $school["ExtraInfo"]?>" schoolIdInfo="<?php echo $school["Id"]?>"  ></td>
+			<tr class="school" schoolId="<?php echo $school["id"]?>" >
+				<td><input class="schoolName" type="text" value="<?php echo $school["name"]?>" schoolIdName="<?php echo $school["id"]?>" ></td>
+				<td><input class="schoolInfo" type="text" value="<?php echo $school["extraInfo"]?>" schoolIdInfo="<?php echo $school["id"]?>"  ></td>
 				<td><a  class="btn red remove_school" buttonAction="deleteOrganization"><i class="material-icons">delete</i></a>
 					<a class="btn purple save_school" buttonAction="updateOrganization" ><i class="material-icons">save</i></a>
 					</td>
@@ -25,9 +25,9 @@ class View extends UserTools {
 		{
 			//echo $school["Name"];
 			?>
-			<tr class="quiz" quizId="<?php echo $quiz["Id"]?>" >
-				<td><input class="quizName" type="text" value="<?php echo $quiz["Name"]?>" schoolIdName="<?php echo $quiz["Id"]?>" ></td>
-				<td><input class="quizInfo" type="text" value="<?php echo $quiz["Extra info"]?>" schoolIdInfo="<?php echo $quiz["Id"]?>"  ></td>
+			<tr class="quiz" quizId="<?php echo $quiz["id"]?>" >
+				<td><input class="quizName" type="text" value="<?php echo $quiz["name"]?>" schoolIdName="<?php echo $quiz["id"]?>" ></td>
+				<td><input class="quizInfo" type="text" value="<?php echo $quiz["extraInfo"]?>" schoolIdInfo="<?php echo $quiz["id"]?>"  ></td>
 				<td>
 					<a class="btn edit_questions"><i class="material-icons">edit</i> </a>
 					<a class="btn purple save_quiz" buttonAction="updateQuiz" ><i class="material-icons">save</i></a>
@@ -44,7 +44,7 @@ class View extends UserTools {
 
 	public function test(){
 		 foreach($this->getAllUsers() as $data){
-		 	echo $data["Name"]." ".$data["FamilyName"]."</br>";
+		 	echo $data["name"]." ".$data["familyName"]."</br>";
 		 }
 
 		// register works
@@ -63,7 +63,7 @@ class View extends UserTools {
 	public function displayQuizzes(){
 		if($this->getAllQuizzes() != null){
 			foreach($this->getAllQuizzes() as $data){
-				echo $data["Name"]." ".$data["Extra info"]."</br>";
+				echo $data["name"]." ".$data["extraInfo"]."</br>";
 			}
 		}else{
 			echo "There are no quizzes to display";
@@ -73,7 +73,7 @@ class View extends UserTools {
 	public function displayLogs(){
 		if($this->getAllQuizzes() != null){
 			foreach($this->getLogs() as $data){
-				echo $data["Timestamp"].": ".$data["Message"]."</br>";
+				echo $data["timestamp"].": ".$data["message"]."</br>";
 			}
 		}else{
 			echo "Logs are empty";
