@@ -16,15 +16,14 @@
     <div class="loader-section section-left"></div>
     <div class="loader-section section-right"></div>
 </div>
-<section class="container">
     <div class="section"></div>
     <main class="center">
 
         <h5 class="indigo-text">Quizplatform</h5>
         <div class="section"></div>
 
-        <div class="container">
-            <div class="z-depth-1 grey lighten-4 row"
+
+            <div class="loginpanel z-depth-1 grey lighten-4 row"
                  style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
                 <form class="col s12" method="post">
@@ -55,8 +54,8 @@
 
                 </form>
             </div>
-        </div>
-        <a href="#!">Create account</a>
+
+        <a class="" href="#!">Create account</a>
 
 
         <div class="section"></div>
