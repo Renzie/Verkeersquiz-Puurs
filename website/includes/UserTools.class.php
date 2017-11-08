@@ -35,7 +35,7 @@ class UserTools extends Database
     {
         $connection= $this->connect();
 
-        if (!$stmt = $connection->prepare("INSERT INTO user (Name, FamilyName, DepartmentId) VALUES (?, ?,?)")) {
+        if (!$stmt = $connection->prepare("INSERT INTO user (name, familyName, departmentId) VALUES (?, ?,?)")) {
             echo "FAIL prepare";
         }
 
@@ -54,7 +54,7 @@ class UserTools extends Database
   	{
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO department (Name, OrganizationId) VALUES (?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO department (name, organizationId) VALUES (?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -75,7 +75,7 @@ class UserTools extends Database
   {
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO organization (Name, ExtraInfo) VALUES (?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO organization (name, extraInfo) VALUES (?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -94,7 +94,7 @@ class UserTools extends Database
 
     $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("UPDATE organization SET Name = ? , ExtraInfo = ? WHERE id = ?")) {
+	  if (!$stmt = $connection->prepare("UPDATE organization SET name = ? , extraInfo = ? WHERE id = ?")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -154,7 +154,7 @@ class UserTools extends Database
   {
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO quiz (Name, `Extra info`) VALUES (?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO quiz (name, `extraInfo`) VALUES (?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -193,7 +193,7 @@ class UserTools extends Database
 
     $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("UPDATE quiz SET Name = ? , `Extra info` = ? WHERE Id = ?")) {
+	  if (!$stmt = $connection->prepare("UPDATE quiz SET name = ? , extraInfo = ? WHERE id = ?")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -213,7 +213,7 @@ class UserTools extends Database
   {
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO answer (Answer, QuestionId, Correct) VALUES (?, ?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO answer (answer, questionId, correct) VALUES (?, ?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -232,7 +232,7 @@ class UserTools extends Database
   {
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO answer_user (UserId, AnswerId, Time) VALUES (?, ?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO answer_user (userId, answerId, time) VALUES (?, ?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -283,7 +283,7 @@ class UserTools extends Database
 
         $connection= $this->connect();
 
-        if ($stmt = $connection->prepare("SELECT * FROM department WHERE OrganizationId =?")) {
+        if ($stmt = $connection->prepare("SELECT * FROM department WHERE organizationId =?")) {
             $stmt->bind_param("i", $organizationId);
 
             if (!$stmt->execute()) {
@@ -309,7 +309,7 @@ class UserTools extends Database
     {
 		$connection= $this->connect();
 
-		if ($stmt = $connection->prepare("SELECT * FROM question JOIN quiz_questions ON question.id = quiz_questions.QuestionId WHERE QuizId = ?")) {
+		if ($stmt = $connection->prepare("SELECT * FROM question JOIN quiz_questions ON question.id = quiz_questions.questionId WHERE quizId = ?")) {
 			$stmt->bind_param("i", $quizId);
 
 			if (!$stmt->execute()) {
@@ -337,7 +337,7 @@ class UserTools extends Database
     {
 		$connection= $this->connect();
 
-		if ($stmt = $connection->prepare("SELECT * FROM answer WHERE QuestionId =?")) {
+		if ($stmt = $connection->prepare("SELECT * FROM answer WHERE questionId =?")) {
 			$stmt->bind_param("i", $questionId);
 
 			if (!$stmt->execute()) {
@@ -372,7 +372,7 @@ class UserTools extends Database
     {
 		$connection= $this->connect();
 
-		if ($stmt = $connection->prepare("SELECT answer.id, answer.answer, answer.questionId, answer.correct  FROM answer JOIN answer_user ON answer.id = answer_user.AwnserId WHERE UserId = ?")) {
+		if ($stmt = $connection->prepare("SELECT answer.id, answer.answer, answer.questionId, answer.correct  FROM answer JOIN answer_user ON answer.id = answer_user.awnserId WHERE userId = ?")) {
 			$stmt->bind_param("i", $userId);
 
 			if (!$stmt->execute()) {
