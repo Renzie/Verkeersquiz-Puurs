@@ -130,6 +130,7 @@ class UserTools extends Database
 
   }
 
+
   protected function makeDifficulty($difficulty)
   {
 	  $connection= $this->connect();
@@ -149,11 +150,11 @@ class UserTools extends Database
 	  $connection->close();
   }
 
-  protected function makeQuiz($name, $extrainfo)
+  public function makeQuiz($name, $extrainfo)
   {
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO quiz (Name, Extra info) VALUES (?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO quiz (Name, `Extra info`) VALUES (?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -166,6 +167,46 @@ class UserTools extends Database
 	  }
 	  $stmt->close();
 	  $connection->close();
+  }
+
+  public function deleteQuiz($id){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("DELETE FROM quiz WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("i", $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
+  public function updateQuiz($id,$name,$extrainfo){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("UPDATE quiz SET Name = ? , `Extra info` = ? WHERE Id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("ssi", $name, $extrainfo, $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
   }
 
   protected function makeAnswer($answer, $questionid, $correct)
