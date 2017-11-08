@@ -19,6 +19,15 @@ if (isset($_POST['action'])) {
         case 'deleteOrganization':
             $usertools->deleteOrganization($_POST['schoolId']);
             break;
+        case 'deleteQuiz':
+            $usertools->deleteQuiz($_POST['quizId']);
+            break;
+        case 'updateQuiz':
+            $usertools->updateQuiz($_POST['quizId'],$_POST['quizName'],$_POST['quizInfo']);
+            break;
+        case 'createQuiz':
+            $usertools->makeQuiz($_POST['quizName'],$_POST['quizInfo']);
+            break;
     }
 }
 

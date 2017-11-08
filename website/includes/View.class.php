@@ -18,6 +18,29 @@ class View extends UserTools {
 		}
 	}
 
+	public function getQuizzes(){
+
+
+		foreach($this->getAllQuizzes() as $quiz)
+		{
+			//echo $school["Name"];
+			?>
+			<tr class="quiz" quizId="<?php echo $quiz["Id"]?>" >
+				<td><input class="quizName" type="text" value="<?php echo $quiz["Name"]?>" schoolIdName="<?php echo $quiz["Id"]?>" ></td>
+				<td><input class="quizInfo" type="text" value="<?php echo $quiz["Extra info"]?>" schoolIdInfo="<?php echo $quiz["Id"]?>"  ></td>
+				<td>
+					<a class="btn edit_questions"><i class="material-icons">edit</i> </a>
+					<a class="btn purple save_quiz" buttonAction="updateQuiz" ><i class="material-icons">save</i></a>
+					<a  class="btn red remove_quiz" buttonAction="deleteQuiz"><i class="material-icons">delete</i></a>
+					</td>
+					</tr>
+			<?php
+
+		}
+	}
+
+
+
 
 	public function test(){
 		 foreach($this->getAllUsers() as $data){

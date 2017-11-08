@@ -13,7 +13,91 @@ $(document).ready(function () {
     $('.questions').on('click', '.delquestion', checkQuestion);
 
 
+
+    //create quiz
+    $(".add_new_quiz").on('click', addNewQuiz);
+    $('.tabel_quiz').on('click', '.remove_quiz', removeQuiz);
+    $('.tabel_quiz').on('click', '.save_quiz', saveQuiz);
+    //$('.tabel_quiz').on('click', '.edit_questions', edit_questions);
+
+
 });
+
+
+function addNewQuiz(e) {
+  console.log("testss");
+    e.preventDefault();
+    var newRow = '<tr class="quiz" quizId="" >'+
+      '<td><input class="quizName" type="text" value="" quizIdName="" ></td>'+
+      '<td><input class="quizInfo" type="text" value="" quizIdInfo=""  ></td>'+
+      '<td>'+
+        '<a class="btn grey "><i class="material-icons">edit</i> </a>'+
+        '<a class="btn purple save_quiz" buttonAction="createQuiz" ><i class="material-icons">save</i></a>'+
+        '<a  class="btn red remove_quiz" buttonAction="deleteQuiz"><i class="material-icons">delete</i></a>'+
+        '</td>'+
+        '</tr>'
+
+
+    $('.tabel_quiz').append(newRow);
+}
+
+function saveQuiz() {
+
+  //todo
+
+  var quizId = $(this).closest('.quiz').attr("quizId");
+  console.log("quizid: "+quizId);
+  var quizName = $(this).parent().parent().find(".quizName").val();
+
+
+  console.log("quizName: "+quizName);
+
+  var quizInfo = $(this).parent().parent().find(".quizInfo").val();
+  console.log("quizInfo: "+quizInfo);
+
+  var buttonAction = $(this).attr("buttonAction");
+  console.log("buttonAction: ",buttonAction);
+
+  if(buttonAction == "createQuiz"){
+    $(this).parent().find(".grey").removeClass("grey").addClass("edit_questions");
+  }
+
+        var ajaxurl = 'dbaction.php',
+        data =  {
+          'action': buttonAction,
+          'quizId': quizId,
+          'quizName': quizName,
+          'quizInfo': quizInfo
+        };
+        $.post(ajaxurl, data, function (response) {
+            // Response div goes here.
+            alert("action performed successfully");
+        });
+
+
+}
+
+
+function removeQuiz() {
+    var quizId = $(this).closest('.quiz').attr("quizId");
+    console.log("quizId: "+quizId);
+    var buttonAction = $(this).attr("buttonAction");
+    console.log("buttonAction: "+buttonAction);
+    var ajaxurl = 'dbaction.php',
+    data =  {
+      'action': buttonAction,
+      'quizId': quizId
+    };
+    $.post(ajaxurl, data, function (response) {
+        // Response div goes here.
+        alert("action performed successfully");
+    });
+
+
+
+    var quiz = $(this).closest('.quiz');
+    quiz.remove();
+}
 
 var checkQuestion = function (e) {
     e.preventDefault();

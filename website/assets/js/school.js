@@ -43,7 +43,7 @@ function removeSchool() {
 
 function saveSchool() {
 
-  //todo
+  
 
   var schoolId = $(this).closest('.school').attr("schoolId");
   console.log("schoolid: "+schoolId);
