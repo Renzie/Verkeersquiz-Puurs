@@ -71,7 +71,7 @@ function saveQuiz() {
         };
         $.post(ajaxurl, data, function (response) {
             // Response div goes here.
-            alert("action performed successfully");
+            //alert("action performed successfully");
             Materialize.toast("opgeslagen!",1155);
         });
 
@@ -91,7 +91,7 @@ function removeQuiz() {
     };
     $.post(ajaxurl, data, function (response) {
         // Response div goes here.
-        Materialize.toast("verwijdert!",1155);
+        Materialize.toast("verwijderd!",1155);
     });
 
 
