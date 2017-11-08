@@ -1,63 +1,69 @@
 .questionsettings .btn i {
- margin-left: 1vw;
+    margin-left: 1vw;
 }
 
-.material-placeholder{
-  width:150px;
+.material-placeholder {
+    width: 150px;
 }
 
-.questionimg{
-  width: 150px;
-  display: inline;
-  margin-left: 2vw;
+.questionimg {
+    width: 150px;
+    display: inline;
+    margin-left: 2vw;
 }
 
-
-.questionsettings{
-  margin-left: 7vw;
+.questionsettings {
+    margin-left: 2vw;
 }
 
 .questionsettings a {
-  margin-left: 1rem;
-  margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
 }
 
-li.question .collapsible-header{
-  border-color: black;
+li.question .collapsible-header {
+    border-color: black;
 }
 
-h1{
-  margin-top:0.67em;
+h1 {
+    margin-top: 0.67em;
 }
 
-.tabel_school tr td a{
-  margin-left: 30px;
-}
-.tabel_school tr td a i{
-  margin-right: 23px;
+.tabel_school tr td a {
+    margin-left: 30px;
 }
 
-.side-nav li a{
-  padding: 0 1vw;
+.tabel_school tr td a i {
+    margin-right: 23px;
 }
 
-.side-nav .collapsible-header, .side-nav.fixed .collapsible-header{
-  padding: 0 1vw;
+.side-nav li a {
+    padding: 0 1vw;
 }
 
-.side-nav .collapsible-body{
-  padding: 0 0.5vw;
+.side-nav .collapsible-header, .side-nav.fixed .collapsible-header {
+    padding: 0 1vw;
 }
 
-.side-nav{
-  width:15vw;
+.side-nav .collapsible-body {
+    padding: 0 0.5vw;
 }
 
-.container{
-  width:60vw;
+.container {
+
+    padding-left: 10vw;
 }
 
-.side-nav li>a{
-  font-size: 1em;
+.side-nav li > a {
+    font-size: 1em;
 }
 
+.top-nav{
+    height:10vh
+}
+
+@media screen and (max-width: 992px){
+    .container{
+       padding-left: 0;
+    }
+}
