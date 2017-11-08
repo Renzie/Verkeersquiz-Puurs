@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `answer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `answer` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Answer` longtext NOT NULL,
-  `QuestionId` int(11) NOT NULL,
-  `Correct` tinyint(1) NOT NULL,
-  PRIMARY KEY (`Id`),
-  KEY `Question_idx` (`QuestionId`),
-  CONSTRAINT `QuestionForAwnser` FOREIGN KEY (`QuestionId`) REFERENCES `question` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `answer` longtext NOT NULL,
+  `questionId` int(11) NOT NULL,
+  `correct` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Question_idx` (`questionId`),
+  CONSTRAINT `QuestionForAwnser` FOREIGN KEY (`duestionId`) REFERENCES `question` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,15 +50,15 @@ DROP TABLE IF EXISTS `answer_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `answer_user` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `UserId` int(11) NOT NULL,
-  `AwnserId` int(11) NOT NULL,
-  `Time` time DEFAULT NULL,
-  PRIMARY KEY (`Id`),
-  KEY `Student_idx` (`UserId`),
-  KEY `Answer_idx` (`AwnserId`),
-  CONSTRAINT `Answer` FOREIGN KEY (`AwnserId`) REFERENCES `answer` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Student` FOREIGN KEY (`UserId`) REFERENCES `user` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
+  `awnserId` int(11) NOT NULL,
+  `time` time DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Student_idx` (`userId`),
+  KEY `Answer_idx` (`awnserId`),
+  CONSTRAINT `Answer` FOREIGN KEY (`awnserId`) REFERENCES `answer` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Student` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -79,11 +79,11 @@ DROP TABLE IF EXISTS `department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `department` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(45) NOT NULL,
-  `OrganizationId` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `organizationId` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `School_idx` (`OrganizationId`)
+  KEY `School_idx` (`organizationId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -154,10 +154,10 @@ DROP TABLE IF EXISTS `logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `logs` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Message` longtext,
-  PRIMARY KEY (`Id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `message` longtext,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -179,9 +179,9 @@ DROP TABLE IF EXISTS `organization`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `organization` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(45) NOT NULL,
-  `ExtraInfo` varchar(45) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `extraInfo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -204,14 +204,14 @@ DROP TABLE IF EXISTS `question`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `question` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Question` mediumtext NOT NULL,
-  `Difficulty` int(11) NOT NULL,
-  `ImageLink` longtext,
-  `Time` time DEFAULT NULL,
-  PRIMARY KEY (`Id`),
-  KEY `Diff_idx` (`Difficulty`),
-  CONSTRAINT `Diff` FOREIGN KEY (`Difficulty`) REFERENCES `difficulty` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `question` mediumtext NOT NULL,
+  `difficulty` int(11) NOT NULL,
+  `imageLink` longtext,
+  `time` time DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Diff_idx` (`difficulty`),
+  CONSTRAINT `Diff` FOREIGN KEY (`difficulty`) REFERENCES `difficulty` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -232,10 +232,10 @@ DROP TABLE IF EXISTS `quiz`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `quiz` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(45) DEFAULT NULL,
-  `Extra info` mediumtext,
-  PRIMARY KEY (`Id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `extraInfo` mediumtext,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -257,13 +257,13 @@ DROP TABLE IF EXISTS `quiz_questions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `quiz_questions` (
-  `QuizId` int(11) NOT NULL,
-  `QuestionId` int(11) NOT NULL,
-  PRIMARY KEY (`QuizId`),
-  KEY `Question_idx` (`QuestionId`),
-  KEY `_idx` (`QuestionId`),
-  CONSTRAINT `QuestionForQuiz` FOREIGN KEY (`QuestionId`) REFERENCES `question` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Quiz` FOREIGN KEY (`QuizId`) REFERENCES `quiz` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `quizId` int(11) NOT NULL,
+  `questionId` int(11) NOT NULL,
+  PRIMARY KEY (`quizId`),
+  KEY `Question_idx` (`questionId`),
+  KEY `_idx` (`questionId`),
+  CONSTRAINT `QuestionForQuiz` FOREIGN KEY (`questionId`) REFERENCES `question` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Quiz` FOREIGN KEY (`quizId`) REFERENCES `quiz` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -284,12 +284,12 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(45) DEFAULT NULL,
-  `FamilyName` varchar(45) DEFAULT NULL,
-  `DepartmentId` int(11) NOT NULL,
-  PRIMARY KEY (`Id`),
-  KEY `Class_idx` (`DepartmentId`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `familyName` varchar(45) DEFAULT NULL,
+  `departmentId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Class_idx` (`departmentId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -311,5 +311,3 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2017-11-06  9:05:16
