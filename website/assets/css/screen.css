@@ -58,6 +58,10 @@ h1 {
     font-size: 1em;
 }
 
+.loginpanel{
+    margin-left:5vw;
+}
+
 .top-nav{
     height:10vh
 }
