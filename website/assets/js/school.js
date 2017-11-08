@@ -32,7 +32,8 @@ function removeSchool() {
     };
     $.post(ajaxurl, data, function (response) {
         // Response div goes here.
-        alert("action performed successfully");
+        Materialize.toast("verwijdert!",1155);
+        //alert("action performed successfully");
     });
 
 
@@ -43,7 +44,7 @@ function removeSchool() {
 
 function saveSchool() {
 
-  
+
 
   var schoolId = $(this).closest('.school').attr("schoolId");
   console.log("schoolid: "+schoolId);
@@ -72,7 +73,8 @@ function saveSchool() {
         };
         $.post(ajaxurl, data, function (response) {
             // Response div goes here.
-            alert("action performed successfully");
+            Materialize.toast("opgeslagen!",1155);
+            //alert("action performed successfully");
         });
 
 
