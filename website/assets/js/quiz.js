@@ -60,9 +60,9 @@ function saveQuiz() {
   var buttonAction = $(this).attr("buttonAction");
   console.log("buttonAction: ",buttonAction);
 
-  if(buttonAction == "createQuiz"){
-    $(this).parent().find(".grey").removeClass("grey").addClass("edit_questions");
-  }
+  // if(buttonAction == "createQuiz"){
+  //   $(this).parent().find(".grey").removeClass("grey").addClass("edit_questions");
+  // }
 
         var ajaxurl = 'dbaction.php',
         data =  {
@@ -75,6 +75,7 @@ function saveQuiz() {
             // Response div goes here.
             //alert("action performed successfully");
             Materialize.toast("opgeslagen!",1155);
+            $('.tabel_quiz').load(document.URL +  ' .tabel_quiz');
         });
 
 

@@ -1,5 +1,15 @@
 <?php
 //This is the Roels Special
+
+session_start();
+
+if(!$_SESSION['login']){
+   header("location:login.php");
+   //die;
+}
+
+
+
 require_once "head.html";
 require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";

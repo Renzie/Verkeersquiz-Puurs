@@ -2,6 +2,7 @@
 require_once "head.html";
 
 
+
 ?>
 <div id="wijzigvragen" class="col s12">
     <h1>Quiz: ...</h1>
