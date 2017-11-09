@@ -6,10 +6,10 @@ require_once "head.html";
 
 
 
-if(!$_SESSION['login']){
+/*if(!$_SESSION['login']){
    header("location:logout.php");
    //die;
-}
+}*/
 
 if(!isset($_GET["id"])){
 	header("location:createquiz.php");
@@ -30,9 +30,13 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
 
 
 
+
     <ul class="questions collapsible" data-collapsible="expandable">
 			<?php $view->getAllQuestionsById($_GET["id"]) ?>
-        
+
+
+
+
     </ul>
     <a data-tooltip="Voeg een nieuwe vraag"
        class="newquestion tooltipped btn btn-small waves-effect waves-light blue"><i

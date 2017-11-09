@@ -10,7 +10,7 @@ $(document).ready(function () {
     $('.markcorrect').on('click', markCorrectAnswer);
     $('.newquestion').on('click', addNewQuestion);
     $('.questions').on('change', '.imageupload', uploadImg);
-    $('.questionbuttons').on('click', '.delquestion', checkQuestion);
+    $('.questionbuttons').on('click', 'a.delquestion', checkQuestion);
 
 
 
@@ -19,7 +19,7 @@ $(document).ready(function () {
     $('.tabel_quiz').on('click', '.remove_quiz', removeQuiz);
     $('.tabel_quiz').on('click', '.save_quiz', saveQuiz);
     //$('.tabel_quiz').on('click', '.edit_questions', edit_questions);
-    $(".questionbuttons").on('click', '.removeimage', removeImage)
+    //$(".questionbuttons").on('click', '.removeimage', removeImage)
 
 
 
@@ -136,20 +136,20 @@ var uploadImg = function () {
         reader.readAsDataURL(this.files[0]);
     }
 };
-
-var removeImage = () => {
-    var image = this
-    console.log(image)
-    image.attr('src', '');
-    $(".removeimage").remove();
-}
-
 var addRemoveImageButton = (image) =>{
     if (image.attr('src') != "#"){
         $(".removeimage").remove();
-        $(".questionbuttons").append('<a data-tooltip="Verwijder afbeelding" class="modal-trigger removeimage btn tooltipped btn-small waves-effect waves-light red">' +
+        $(".questionbuttons").append('<a data-tooltip="Verwijder afbeelding" class="removeimage btn tooltipped btn-small waves-effect waves-light red">' +
             '<i class="material-icons">block</i>'+
             '</a>' );
+        $('.questionbuttons').off('.removeimage');
+        $('.questionbuttons').on('click', 'a.removeimage', function () {
+
+            var image = $(this).closest('.question').find('.questionimg' );
+            console.log(image)
+            image.attr('src', '#');
+            $(".removeimage").remove();
+        });
     };
 }
 
@@ -203,7 +203,7 @@ var addNewQuestion = function (e) {
         '<input placeholder="Antwoord" type="text" class="validate">'+
 
 
-        '<a data-tooltip="Verwijder deze antwoord" class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>'+
+        '<a class="removeanswer  btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>'+
         '<a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>'+
         '</div>'+
         '</li>'+
@@ -231,6 +231,7 @@ var addNewQuestion = function (e) {
     $('.questions').append(newQuestion);
     $('.materialboxed').materialbox();
     $('select').material_select();
+
 }
 
 var removeAnswer = function (e) {
@@ -242,13 +243,14 @@ var removeAnswer = function (e) {
     } else {
         currentAnswer.remove();
     }
+
 }
 
 var addNewAnswer = function (e) {
     e.preventDefault();
     var newInput = '<li class="answer"><div class="input-field col s12">' +
         '<input placeholder="Antwoord " type="text" class="validate">' +
-        '<a data-tooltip="Verwijder deze antwoord" class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>' +
+        '<a  class="removeanswer btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>' +
         ' <a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>' +
         '</div></li>';
     $(this).closest('.question').find('.answers').append(newInput);
