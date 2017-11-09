@@ -1,9 +1,11 @@
 <?php
 require_once "head.html";
 
+
 ?>
     <div id="wijzigvragen" class="col s12">
-        <h1>Vragen Wijziging</h1>
+        <h1>Quiz: ...</h1>
+        <h3>Vragen Wijziging</h3>
         <div class="row">
             <div class="input-field col s6">
                 <select>
@@ -18,9 +20,10 @@ require_once "head.html";
 
         <ul class="questions collapsible" data-collapsible="expandable">
             <li class="question">
-                <div class="collapsible-header valign-wrapper input-field"><i class="material-icons">add_box</i><input
-                        style="width:50%" class=" " type="text" placeholder="text vraag"/>
-                    <img class="materialboxed questionimg" src="#">
+                <div class="collapsible-header valign-wrapper input-field">
+                  <i class="material-icons">add_box</i>
+                  <input style="" class=" " type="text" placeholder="text vraag"/>
+                  <img class="materialboxed questionimg" src="#">
                     <div class="questionsettings file-field input-field">
                         <a data-tooltip="Voeg een foto toe"
                            class=" btn tooltipped btn-large waves-effect waves-light purple"><i
@@ -67,5 +70,4 @@ require_once "head.html";
 <?php
 
 require_once "tail.html";
-
 ?>
