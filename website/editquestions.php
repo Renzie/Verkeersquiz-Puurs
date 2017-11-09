@@ -3,10 +3,10 @@ require_once "head.html";
 
 session_start();
 
-if(!$_SESSION['login']){
+/*if(!$_SESSION['login']){
    header("location:logout.php");
    //die;
-}
+}*/
 
 
 
@@ -67,8 +67,7 @@ if(!$_SESSION['login']){
                                 <input placeholder="Antwoord" type="text" class="validate">
 
 
-                                <a data-tooltip="Verwijder deze antwoord"
-                                   class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i
+                                <a class="removeanswer btn btn-small waves-effect waves-light red"><i
                                         class="material-icons">delete</i></a>
                                 <a data-tooltip="Markeer deze antwoord als correct"
                                    class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i
@@ -89,8 +88,8 @@ if(!$_SESSION['login']){
                             <a data-tooltip="Markeer deze antwoord als correct"
                                class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i
                                     class="material-icons">save</i></a>
-                            <a data-tooltip="Verwijder deze antwoord"
-                               class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i
+                            <a
+                               class="removeanswer btn btn-small waves-effect waves-light red"><i
                                     class="material-icons">delete</i></a>
                         </div>
                     </div>
