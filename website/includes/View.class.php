@@ -39,6 +39,101 @@ class View extends UserTools {
 		}
 	}
 
+	public function getAllQuestionsById($id){
+		foreach ($this->getAllQuestionsByQuizId($id) as $data) {
+			?>
+
+			<li class="question">
+		        <div class="collapsible-header">
+		        <i class="material-icons">chevron_right</i> <?php echo $data["question"]?> </div>
+		    	<div class="collapsible-body">
+		        <label>Vraag</label>
+		        <input class=" col s6" type="text" value="<?php echo $data["question"]?>" placeholder="text vraag"/>
+
+		        <div class="editquestion row">
+		        <div class="input-field col s5">
+		        <select>
+		       	<option value="" disabled selected>Selecteer de moeilijkheidsgraad</option>
+		        <option value="makkelijk">Makkelijk</option>
+		       	<option value="normaal">Normaal</option>
+		        <option value="moeilijk">Moeilijk</option>
+		        </select>
+		        <label>Moelijkheidsgraad</label>
+
+
+
+		        </div>
+		       <div class="col s4 file-field ">
+		       <div>
+		       	<label>Afbeelding</label>
+		        <img class="materialboxed questionimg" src="<?php echo ($data["imageLink"]!="" ?$data["imageLink"] : "#")  ?>">
+		        </div>
+
+
+
+		        </div>
+		        <div class="questionbuttons col s3 file-field input-field">
+		        <a data-tooltip="Voeg een foto toe" class=" btn tooltipped btn-small waves-effect waves-light purple">
+		        <i class="material-icons">add_a_photo</i> <input class="imageupload" type="file" accept="image/gif, image/jpeg, image/png">
+		        </a>
+
+		        </div>
+		        </div>
+
+
+		        <ul class="answers row">
+		        <li>
+		        <h4>Antwoorden</h4>
+		        </li>
+		        <li class="answer">
+					<?php $this->getAnswerByQuestionId($data["id"]) ?>
+		        </li>
+
+		        </ul>
+
+		        <div class="row">
+		        <div class="col s6">
+		        <a data-tooltip="Voeg een nieuwe antwoord"
+		     class="newanswer tooltipped btn btn-small waves-effect waves-light blue"><i
+		     class="material-icons">add</i></a>
+		        </div>
+
+		        <div class="col s3 offset-s3 ">
+		        <a data-tooltip="Markeer deze antwoord als correct"
+		     class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i
+		     class="material-icons">save</i></a>
+		        <a data-tooltip="Verwijder deze antwoord"
+		     class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i
+		    class="material-icons">delete</i></a>
+		        </div>
+		        </div>
+		        </div>
+		        </li>
+
+
+			<?php
+		}
+
+
+	}
+
+	private function getAnswerByQuestionId($id){
+
+		foreach ($this->getAllAnswersByQuestionId($id) as $data) {
+			?>
+			<li class="answer"><div class="input-field col s12">
+				<input placeholder="Antwoord " type="text" class="validate" value="<?php echo $data["answer"]?>">
+				<a data-tooltip="Verwijder deze antwoord" class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
+				 <a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>
+				</div></li>
+
+			<?php
+		}
+
+
+
+	}
+
 
 
 

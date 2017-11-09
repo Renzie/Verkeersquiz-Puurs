@@ -50,24 +50,7 @@ class UserTools extends Database
         $connection->close();
     }
 
-	protected function makeDepartment($name, $organizationid)
-  	{
-	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO department (name, organizationId) VALUES (?, ?)")) {
-		  echo "FAIL prepare";
-	  }
-
-	  if (!$stmt->bind_param("si", $name, $organizationid)) {
-		  echo "FAIL bind";
-	  }
-
-	  if (!$stmt->execute()) {
-		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-	  }
-	  $stmt->close();
-	  $connection->close();
-  }
 
 
 
@@ -129,6 +112,24 @@ class UserTools extends Database
 	  $connection->close();
 
   }
+
+  protected function makeDepartment($name, $organizationid){
+		$connection= $this->connect();
+
+		if (!$stmt = $connection->prepare("INSERT INTO department (name, organizationId) VALUES (?, ?)")) {
+			echo "FAIL prepare";
+		}
+
+		if (!$stmt->bind_param("si", $name, $organizationid)) {
+			echo "FAIL bind";
+		}
+
+		if (!$stmt->execute()) {
+			echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		}
+		$stmt->close();
+		$connection->close();
+	}
 
 
   protected function makeDifficulty($difficulty)
@@ -305,6 +306,28 @@ class UserTools extends Database
         }
     }
 
+	public function getQuizInfoById($id){
+		$connection= $this->connect();
+		$data = array();
+        if ($stmt = $connection->prepare("SELECT * FROM quiz WHERE id=?")) {
+            $stmt->bind_param("i", $id);
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            $stmt->bind_result($id,$name,$extraInfo);
+            $stmt->fetch();
+			$data = [
+			  "id"=>$id,
+			  "name"=>$name,
+			  "extraInfo"=>$extraInfo
+			];
+            $stmt->close();
+        }
+		return $data;
+
+
+	}
+
     protected function getAllQuestionsByQuizId($quizId)
     {
 		$connection= $this->connect();
@@ -333,7 +356,7 @@ class UserTools extends Database
 		}
     }
 
-    protected function getAllAnswersById($questionId)
+    protected function getAllAnswersByQuestionId($questionId)
     {
 		$connection= $this->connect();
 
