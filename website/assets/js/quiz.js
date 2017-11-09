@@ -19,6 +19,8 @@ $(document).ready(function () {
     $('.tabel_quiz').on('click', '.remove_quiz', removeQuiz);
     $('.tabel_quiz').on('click', '.save_quiz', saveQuiz);
     //$('.tabel_quiz').on('click', '.edit_questions', edit_questions);
+    $(".question").on('click', '.removeimage', removeImage)
+
 
 
 });
@@ -124,14 +126,31 @@ var delqu = function (question) {
 
 var uploadImg = function () {
     var image = $(this).closest('.question').find('.questionimg');
+    var promise = Promise.resolve();
     if (this.files && this.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            image.attr('src', e.target.result)
-        };
+            image.attr('src', e.target.result);
+                promise.then(() => addRemoveImageButton(image))
+            };
         reader.readAsDataURL(this.files[0]);
-
     }
+};
+
+var removeImage = () => {
+    var image = $(this)
+    console.log(image)
+    image.attr('src', '');
+    $(".removeimage").remove();
+}
+
+var addRemoveImageButton = (image) =>{
+    if (image.attr('src') != "#"){
+        $(".removeimage").remove();
+        $(".questionbuttons").append('<a data-tooltip="Verwijder afbeelding" class="modal-trigger removeimage btn tooltipped btn-small waves-effect waves-light red">' +
+            '<i class="material-icons">block</i>'+
+            '</a>' )
+    };
 }
 
 var addNewQuestion = function (e) {
