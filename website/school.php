@@ -4,7 +4,7 @@
 session_start();
 
 if(!$_SESSION['login']){
-   header("location:login.php");
+   header("location:logout.php");
    //die;
 }
 
