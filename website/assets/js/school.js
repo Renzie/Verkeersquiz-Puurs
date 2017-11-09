@@ -74,6 +74,7 @@ function saveSchool() {
         $.post(ajaxurl, data, function (response) {
             // Response div goes here.
             Materialize.toast("opgeslagen!",1155);
+            
             //alert("action performed successfully");
         });
 

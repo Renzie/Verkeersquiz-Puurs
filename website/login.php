@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once "includes/Database.class.php";
+require_once "includes/UserTools.class.php";
+$usertools = new UserTools();
+
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 
@@ -26,7 +36,7 @@
             <div class="loginpanel z-depth-1 grey lighten-4 row"
                  style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
-                <form class="col s12" method="post">
+                <form class="col s12" method="post" action="login.php">
                     <div class='row'>
                         <div class='col s12'>
                         </div>
@@ -34,14 +44,14 @@
 
                     <div class='row'>
                         <div class='input-field col s12'>
-                            <input class='validate' type='text' name='username' id='username'/>
+                            <input class='validate' type='text' name='username' id='username' required/>
                             <label for='username'>Gebruikersnaam</label>
                         </div>
                     </div>
 
                     <div class='row'>
                         <div class='input-field col s12'>
-                            <input class='validate' type='password' name='password' id='password'/>
+                            <input class='validate' type='password' name='password' id='password' required/>
                             <label for='password'>Wachtwoord</label>
                         </div>
 
@@ -55,9 +65,6 @@
                 </form>
             </div>
 
-        <a class="" href="#!">Create account</a>
-
-
         <div class="section"></div>
         <div class="section"></div>
     </main>
@@ -67,7 +74,28 @@
     <script type="text/javascript" src="assets/js/script.js"></script>
     <?php
 
+    if (isset($_POST["username"]) && !empty($_POST["username"])) {
+      //echo "login attempt";
+
+      $check = $usertools->login($_POST["username"],$_POST["password"]);
+      if($check){
+        //echo "succesfull";
+        $_SESSION['login'] = true;
+        header("location:index.php");
+
+      }else{
+        //echo "failed";
+        $_SESSION['login'] = false;
+        echo '<script>Materialize.toast("Login gefaald!",1155);</script>';
+        //echo "<script>alert('login gefaald')</script>";
+        //die;
+      }
+
+
+    }
+
+
+
     require_once "tail.html";
 
     ?>
-
