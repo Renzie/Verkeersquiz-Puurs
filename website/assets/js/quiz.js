@@ -10,7 +10,7 @@ $(document).ready(function () {
     $('.markcorrect').on('click', markCorrectAnswer);
     $('.newquestion').on('click', addNewQuestion);
     $('.questions').on('change', '.imageupload', uploadImg);
-    $('.questions').on('click', '.delquestion', checkQuestion);
+    $('.questionbuttons').on('click', '.delquestion', checkQuestion);
 
 
 
@@ -19,7 +19,7 @@ $(document).ready(function () {
     $('.tabel_quiz').on('click', '.remove_quiz', removeQuiz);
     $('.tabel_quiz').on('click', '.save_quiz', saveQuiz);
     //$('.tabel_quiz').on('click', '.edit_questions', edit_questions);
-    $(".question").on('click', '.removeimage', removeImage)
+    $(".questionbuttons").on('click', '.removeimage', removeImage)
 
 
 
@@ -27,7 +27,6 @@ $(document).ready(function () {
 
 
 function addNewQuiz(e) {
-  console.log("testss");
     e.preventDefault();
     var newRow = '<tr class="quiz" quizId="" >'+
       '<td><input class="quizName" type="text" value="" quizIdName="" ></td>'+
@@ -139,7 +138,7 @@ var uploadImg = function () {
 };
 
 var removeImage = () => {
-    var image = $(this)
+    var image = this
     console.log(image)
     image.attr('src', '');
     $(".removeimage").remove();
@@ -150,34 +149,88 @@ var addRemoveImageButton = (image) =>{
         $(".removeimage").remove();
         $(".questionbuttons").append('<a data-tooltip="Verwijder afbeelding" class="modal-trigger removeimage btn tooltipped btn-small waves-effect waves-light red">' +
             '<i class="material-icons">block</i>'+
-            '</a>' )
+            '</a>' );
     };
 }
 
 var addNewQuestion = function (e) {
     e.preventDefault();
-    var newQuestion = '<li class="question">' +
-        '<div class="collapsible-header valign-wrapper"><i class="material-icons">add_box</i><input style="width:50%" type="text" placeholder="text vraag"/> <img class="materialboxed questionimg" src="#"> '+
-        '<div class="questionsettings file-field input-field">' +
-        '<a data-tooltip="Voeg een foto toe" class=" tooltipped btn btn-large waves-effect waves-light purple"><i class="material-icons">add_a_photo</i> <input class="imageupload" type="file" accept="image/gif, image/jpeg, image/png"></a>'+
-        '<a data-tooltip="Verwijder deze vraag" class=" delquestion tooltipped btn btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a> </div>'+
-        '</div>' +
-        '</div> ' +
-        '<div class="collapsible-body">' +
-        '<ul class="answers row"><li>' +
-        '<div class=" answer input-field col s12">' +
-        '<input placeholder="Antwoord" type="text" class="validate">' +
-        '<a data-tooltip="Voeg een nieuwe antwoord" class="newanswer tooltipped btn btn-small waves-effect waves-light blue"><i class="material-icons">add</i></a>' +
-        '<a data-tooltip="Verwijder deze antwoord" class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>' +
-        '<a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>' +
-        '</div> ' +
-        '</li>' +
-        '</ul>' +
-        '</div>' +
+    var newQuestion =
+    '<li class="question">' +
+        '<div class="collapsible-header">' +
+        '<i class="material-icons">chevron_right</i> Links of rechts </div>'+
+    '<div class="collapsible-body">'+
+        '<label>Vraag</label>'+
+        '<input value="Links of rechts" class=" col s6" type="text" placeholder="text vraag"/>'+
+
+        '<div class="editquestion row">'+
+        '<div class="input-field col s5">'+
+        '<select>'+
+        '<option value="" disabled selected>Selecteer de moeilijkheidsgraad</option>'+
+        '<option value="makkelijk">Makkelijk</option>'+
+        '<option value="normaal">Normaal</option>'+
+        '<option value="moeilijk">Moeilijk</option>'+
+        '</select>'+
+        '<label>Moelijkheidsgraad</label>'+
+
+
+
+        '</div>'+
+       ' <div class="col s4 file-field ">'+
+        '<div>'+
+        '<label>Afbeelding</label>'+
+        '<img class="materialboxed questionimg" src="#">'+
+        '</div>'+
+
+
+
+        '</div>'+
+        '<div class="questionbuttons col s3 file-field input-field">'+
+        '<a data-tooltip="Voeg een foto toe" class=" btn tooltipped btn-small waves-effect waves-light purple">'+
+        '<i class="material-icons">add_a_photo</i> <input class="imageupload" type="file" accept="image/gif, image/jpeg, image/png">'+
+        '</a>' +
+
+       ' </div>'+
+        '</div>'+
+
+
+        '<ul class="answers row">'+
+        '<li>'+
+        '<h4>Antwoorden</h4>'+
+        '</li>'+
+        '<li class="answer">'+
+        '<div class="  input-field col s12">'+
+        '<input placeholder="Antwoord" type="text" class="validate">'+
+
+
+        '<a data-tooltip="Verwijder deze antwoord" class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>'+
+        '<a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>'+
+        '</div>'+
+        '</li>'+
+
+        '</ul>'+
+
+        '<div class="row">'+
+        '<div class="col s6">'+
+        '<a data-tooltip="Voeg een nieuwe antwoord"'+
+    ' class="newanswer tooltipped btn btn-small waves-effect waves-light blue"><i'+
+    ' class="material-icons">add</i></a>'+
+        '</div>'+
+
+        '<div class="col s3 offset-s3 ">'+
+        '<a data-tooltip="Markeer deze antwoord als correct"'+
+    ' class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i'+
+    ' class="material-icons">save</i></a>'+
+        '<a data-tooltip="Verwijder deze antwoord"'+
+    ' class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i'+
+   ' class="material-icons">delete</i></a>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
         '</li>';
     $('.questions').append(newQuestion);
     $('.materialboxed').materialbox();
-
+    $('select').material_select();
 }
 
 var removeAnswer = function (e) {

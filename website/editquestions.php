@@ -85,9 +85,7 @@ require_once "head.html";
                             <a data-tooltip="Verwijder deze antwoord"
                                class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i
                                     class="material-icons">delete</i></a>
-
                         </div>
-
                     </div>
                 </div>
         </li>
