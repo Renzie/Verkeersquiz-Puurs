@@ -1,6 +1,13 @@
 <?php
 require_once "head.html";
 
+session_start();
+
+if(!$_SESSION['login']){
+   header("location:logout.php");
+   //die;
+}
+
 
 
 ?>
