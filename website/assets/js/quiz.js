@@ -195,11 +195,10 @@ var addNewAnswer = function (e) {
     e.preventDefault();
     var newInput = '<li class="answer"><div class="input-field col s12">' +
         '<input placeholder="Antwoord " type="text" class="validate">' +
-        '<a data-tooltip="Voeg een nieuwe antwoord" class="newanswer tooltipped btn btn-small waves-effect waves-light blue"><i class="material-icons">add</i></a>' +
         '<a data-tooltip="Verwijder deze antwoord" class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>' +
         ' <a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>' +
         '</div></li>';
-    $(this).parent().parent().parent().append(newInput);
+    $(this).closest('.question').find('.answers').append(newInput);
     $('.tooltipped').tooltip({delay: 50});
 };
 
