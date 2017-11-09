@@ -2,7 +2,7 @@
 class Database {
 	private $db_host = '127.0.0.1';
 	private $db_user = 'root';
-	private $db_pass = '';
+	private $db_pass = 'toor';
 	private $db_name = 'puurs';
 
 	protected function connect(){

@@ -170,7 +170,74 @@ class UserTools extends Database
 	  $connection->close();
   }
 
+  //DANGER -> This will remove every child
+  public function deleteQuizandQuestions($quizId){
+    $connection= $this->connect();
+    if ($stmt = $connection->prepare("SELECT * FROM quiz_questions WHERE quizId = ?")) {
+        $stmt->bind_param("i", $quizId);
+
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        if($stmt->bind_result($id, $questionId)){
+          echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+
+        $data = array();
+
+        while($stmt -> fetch()){
+          array_push($data,$questionId);
+          $this->deleteQuestionWithId($questionId);
+        }
+        $stmt->close();
+
+        foreach ($data as $value) {
+          $this->deleteQuestionWithId($value);
+        }
+
+    }
+
+
+
+    $connection= $this->connect();
+
+    if (!$stmt = $connection->prepare("DELETE FROM quiz_questions WHERE quizId = ?")) {
+      echo "FAIL prepare";
+    }
+
+    if (!$stmt->bind_param("i", $quizId)) {
+      echo "FAIL bind";
+    }
+
+    if (!$stmt->execute()) {
+      echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
+    $stmt->close();
+    $connection->close();
+
+
+    $connection= $this->connect();
+
+    if (!$stmt = $connection->prepare("DELETE FROM quiz WHERE id = ?")) {
+      echo "FAIL prepare";
+    }
+
+    if (!$stmt->bind_param("i", $quizId)) {
+      echo "FAIL bind";
+    }
+
+    if (!$stmt->execute()) {
+      echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
+    $stmt->close();
+    $connection->close();
+
+
+  }
+
   public function deleteQuiz($id){
+
 
     $connection= $this->connect();
 
@@ -228,6 +295,46 @@ class UserTools extends Database
 	  $stmt->close();
 	  $connection->close();
   }
+
+
+
+  protected function deleteQuestionWithId($qid){
+
+    $connection= $this->connect();
+
+    if (!$stmt = $connection->prepare("DELETE FROM answer WHERE questionId = ?")) {
+      echo "FAIL prepare";
+    }
+
+    if (!$stmt->bind_param("i", $qid)) {
+      echo "FAIL bind";
+    }
+
+    if (!$stmt->execute()) {
+      echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
+    $stmt->close();
+    $connection->close();
+
+    $connection= $this->connect();
+
+    if (!$stmt = $connection->prepare("DELETE FROM question WHERE id = ?")) {
+      echo "FAIL prepare";
+    }
+
+    if (!$stmt->bind_param("i", $qid)) {
+      echo "FAIL bind";
+    }
+
+    if (!$stmt->execute()) {
+      echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
+
+
+    $stmt->close();
+    $connection->close();
+  }
+
 
   protected function makeUserAnswer($userid, $answerid, $time)
   {

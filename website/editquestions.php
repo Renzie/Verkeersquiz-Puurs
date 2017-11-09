@@ -33,10 +33,6 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
 
     <ul class="questions collapsible" data-collapsible="expandable">
 			<?php $view->getAllQuestionsById($_GET["id"]) ?>
-
-
-
-
     </ul>
     <a data-tooltip="Voeg een nieuwe vraag"
        class="newquestion tooltipped btn btn-small waves-effect waves-light blue"><i
