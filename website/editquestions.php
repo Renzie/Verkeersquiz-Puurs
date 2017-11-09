@@ -7,17 +7,7 @@ require_once "head.html";
 <div id="wijzigvragen" class="col s12">
     <h1>Quiz: ...</h1>
     <h3>Vragen Wijziging</h3>
-    <div class="row">
-        <div class="input-field col s6">
-            <select>
-                <option value="" disabled selected>Kies je moeilijkheidsgraad die je wilt aanpassen</option>
-                <option value="makkelijk">Makkelijk</option>
-                <option value="normaal">Normaal</option>
-                <option value="moeilijk">Moeilijk</option>
-            </select>
-            <label>Moelijkheidsgraad</label>
-        </div>
-    </div>
+
 
 
     <ul class="questions collapsible" data-collapsible="expandable">
@@ -62,13 +52,14 @@ require_once "head.html";
 
 
                     <ul class="answers row">
+                        <li>
+                            <h4>Antwoorden</h4>
+                        </li>
                         <li class="answer">
                             <div class="  input-field col s12">
                                 <input placeholder="Antwoord" type="text" class="validate">
 
-                                <a data-tooltip="Voeg een nieuwe antwoord"
-                                   class="newanswer tooltipped btn btn-small waves-effect waves-light blue"><i
-                                        class="material-icons">add</i></a>
+
                                 <a data-tooltip="Verwijder deze antwoord"
                                    class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i
                                         class="material-icons">delete</i></a>
@@ -77,7 +68,27 @@ require_once "head.html";
                                         class="material-icons">done</i></a>
                             </div>
                         </li>
+
                     </ul>
+
+                    <div class="row">
+                        <div class="col s6">
+                            <a data-tooltip="Voeg een nieuwe antwoord"
+                               class="newanswer tooltipped btn btn-small waves-effect waves-light blue"><i
+                                    class="material-icons">add</i></a>
+                        </div>
+
+                        <div class="col s3 offset-s3 ">
+                            <a data-tooltip="Markeer deze antwoord als correct"
+                               class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i
+                                    class="material-icons">save</i></a>
+                            <a data-tooltip="Verwijder deze antwoord"
+                               class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i
+                                    class="material-icons">delete</i></a>
+
+                        </div>
+
+                    </div>
                 </div>
         </li>
     </ul>
