@@ -29,9 +29,11 @@ if (isset($_POST['action'])) {
             $usertools->makeQuiz($_POST['quizName'],$_POST['quizInfo']);
             break;
         case 'createQuestion':
+            $usertools->makeQuestion($_POST['question'],$_POST['difficulty'],$_POST['imgLink'], $_POST['time'], $_POST['quizId']);
 
             break;
         case 'updateQuestion':
+            $usertools->updateQuestion($_POST['id'],$_POST['question'],$_POST['difficulty'],$_POST['imgLink'], $_POST['time']);
 
             break;
         case 'deleteQuestion':

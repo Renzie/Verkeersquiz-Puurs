@@ -43,20 +43,37 @@ class View extends UserTools {
 		foreach ($this->getAllQuestionsByQuizId($id) as $data) {
 			?>
 
-			<li class="question">
+			<li class="question" questionId="<?php echo $data["id"]?>">
 		        <div class="collapsible-header">
 		        <i class="material-icons">chevron_right</i> <?php echo $data["question"]?> </div>
-		    	<div class="collapsible-body">
+		    	  <div class="collapsible-body">
 		        <label>Vraag</label>
-		        <input class=" col s6" type="text" value="<?php echo $data["question"]?>" placeholder="text vraag"/>
+		        <input name="question" class=" col s6" type="text" value="<?php echo $data["question"]?>" placeholder="text vraag"/>
 
 		        <div class="editquestion row">
 		        <div class="input-field col s5">
-		        <select>
-		       	<option value="" disabled selected>Selecteer de moeilijkheidsgraad</option>
-		        <option value="makkelijk">Makkelijk</option>
+		        <select name="difficulty">
+		       	<option value="" disabled >Selecteer de moeilijkheidsgraad</option>
+
+						<?php
+						foreach ($this->getAllDifficulties() as $difficulty) {
+							?>
+							<option value="<?php echo $difficulty["id"] ?>"
+								<?php
+								if($difficulty["id"] == $data["difficulty"])
+								{
+									?> selected <?php
+								}
+								 ?>
+								><?php echo $difficulty["difficulty"] ?></option>
+
+							<?php
+						}
+						 ?>
+
+		        <!-- <option value="makkelijk">Makkelijk</option>
 		       	<option value="normaal">Normaal</option>
-		        <option value="moeilijk">Moeilijk</option>
+		        <option value="moeilijk">Moeilijk</option> -->
 		        </select>
 		        <label>Moelijkheidsgraad</label>
 
@@ -66,7 +83,8 @@ class View extends UserTools {
 		       <div class="col s4 file-field ">
 		       <div>
 		       	<label>Afbeelding</label>
-		        <img class="materialboxed questionimg" src="<?php echo ($data["imageLink"]!="" ?$data["imageLink"] : "#")  ?>">
+		        <img name="image" class="materialboxed questionimg" src="
+						<?php echo ($data["imageLink"]!="" ?"images/".$data["imageLink"] : "#")  ?>">
 		        </div>
 
 
@@ -76,6 +94,7 @@ class View extends UserTools {
 		        <a data-tooltip="Voeg een foto toe" class=" btn tooltipped btn-small waves-effect waves-light purple">
 		        <i class="material-icons">add_a_photo</i> <input class="imageupload" type="file" accept="image/gif, image/jpeg, image/png">
 		        </a>
+						<?php echo ($data["imageLink"]!="" ? '<a data-tooltip="Verwijder afbeelding" class="removeimage btn tooltipped btn-small waves-effect waves-light red"><i class="material-icons">block</i></a>' : "")  ?>
 
 		        </div>
 		        </div>
@@ -94,14 +113,14 @@ class View extends UserTools {
 		        <div class="row">
 		        <div class="col s6">
 		        <a data-tooltip="Voeg een nieuwe antwoord"
-		     class="newanswer tooltipped btn btn-small waves-effect waves-light blue"><i
-		     class="material-icons">add</i></a>
+		     class="newanswer tooltipped btn btn-small waves-effect waves-light blue "><i
+		     class="material-icons ">add</i></a>
 		        </div>
 
 		        <div class="col s3 offset-s3 ">
 		        <a data-tooltip="Markeer deze antwoord als correct"
-		     class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i
-		     class="material-icons">save</i></a>
+		     class="markcorrect tooltipped btn btn-small waves-effect waves-light green updateQuestion"><i
+		     class="material-icons ">save</i></a>
 		        <a data-tooltip="Verwijder deze antwoord"
 		     class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i
 		    class="material-icons">delete</i></a>
