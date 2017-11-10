@@ -254,7 +254,6 @@ var addNewAnswer = function (e) {
         ' <a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>' +
         '</div></li>';
     $(this).closest('.question').find('.answers').append(newInput);
-    $('.tooltipped').tooltip({delay: 50});
 };
 
 var markCorrectAnswer = function (e) { //TODO

@@ -85,11 +85,11 @@ session_start();
                         </div>
 
                         <div class="col s3 offset-s3 ">
-                            <a data-tooltip="Markeer deze antwoord als correct"
-                               class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i
+                            <a data-tooltip="Sla de vraag op"
+                               class="markcorrect tooltipped pulse btn btn-small waves-effect waves-light purple"><i
                                     class="material-icons">save</i></a>
                             <a
-                               class="removeanswer btn btn-small waves-effect waves-light red"><i
+                               class="removeanswer  btn btn-small waves-effect waves-light red"><i
                                     class="material-icons">delete</i></a>
                         </div>
                     </div>
