@@ -19,11 +19,18 @@ $(document).ready(function () {
     $('.tabel_quiz').on('click', '.remove_quiz', removeQuiz);
     $('.tabel_quiz').on('click', '.save_quiz', saveQuiz);
     //$('.tabel_quiz').on('click', '.edit_questions', edit_questions);
-    //$(".questionbuttons").on('click', '.removeimage', removeImage)
+    $(".questionbuttons").on('click', '.removeimage', removeImage)
 
 
 
 });
+
+var removeImage = function(){
+
+  $(".questionimg").attr("src","#");
+  $(this).remove();
+
+}
 
 
 function addNewQuiz(e) {
@@ -126,12 +133,22 @@ var delqu = function (question) {
 
 var uploadImg = function () {
     var image = $(this).closest('.question').find('.questionimg');
+    var questionId = $(this).closest('.question').attr("questionid");
     var promise = Promise.resolve();
     if (this.files && this.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
             image.attr('src', e.target.result);
-                promise.then(() => addRemoveImageButton(image))
+            promise.then(() => addRemoveImageButton(image));
+
+            $.ajax({
+                url: 'imgUpload.php?id='+questionId,
+                type: 'POST',
+                contentType: 'application/octet-stream;charset=UTF-8',
+                data: e.target.result.split(",", 2)[1], //remove text header
+                processData: false
+            });
+
             };
         reader.readAsDataURL(this.files[0]);
 
@@ -147,7 +164,7 @@ var addRemoveImageButton = (image) =>{
         $('.questionbuttons').on('click', 'a.removeimage', function () {
 
             var image = $(this).closest('.question').find('.questionimg' );
-            console.log(image)
+
             image.attr('src', '#');
             $(".removeimage").remove();
         });
@@ -168,9 +185,7 @@ var addNewQuestion = function (e) {
         '<div class="input-field col s5">'+
         '<select>'+
         '<option value="" disabled selected>Selecteer de moeilijkheidsgraad</option>'+
-        '<option value="makkelijk">Makkelijk</option>'+
-        '<option value="normaal">Normaal</option>'+
-        '<option value="moeilijk">Moeilijk</option>'+
+        ''
         '</select>'+
         '<label>Moelijkheidsgraad</label>'+
 

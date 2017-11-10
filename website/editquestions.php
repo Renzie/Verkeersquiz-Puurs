@@ -36,13 +36,14 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
 			<?php $view->getAllQuestionsById($_GET["id"]) ?>
     </ul>
     <a data-tooltip="Voeg een nieuwe vraag"
-       class="newquestion tooltipped btn btn-small waves-effect waves-light blue"><i
-            class="material-icons">add</i></a>
+       class="newquestion tooltipped btn btn-small waves-effect waves-light blue makeQuestion"><i
+            class="material-icons ">add</i></a>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="assets/js/quiz.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
+<script type="text/javascript" src="assets/js/editquestions.js"></script>
 <?php
 
 require_once "tail.html";

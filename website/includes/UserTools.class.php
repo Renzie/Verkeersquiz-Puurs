@@ -166,8 +166,57 @@ class UserTools extends Database
 	  if (!$stmt->execute()) {
 		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 	  }
+
+
 	  $stmt->close();
 	  $connection->close();
+  }
+
+  private function linkQuestionToQuiz($quizId, $questionId){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("INSERT INTO quiz_questions (quizId, questionId) VALUES (?, ?)")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("ii", $quizId, $questionId)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
+  public function makeQuestion($question, $difficulty, $imgLink, $time, $quizId){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("INSERT INTO question (question, difficulty, imageLink, time) VALUES (?, ?, ?, ?)")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("siss", $question, $difficulty, $imgLink, $time)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+    //echo "<script>console.log('test')</script>";
+    //$this->linkQuestionToQuiz($quizId, $stmt->insert_id);
+
+    $this->linkQuestionToQuiz($quizId, $stmt->insert_id);
+
+	  $stmt->close();
+	  $connection->close();
+
+
+
   }
 
   //DANGER -> This will remove every child
@@ -246,6 +295,26 @@ class UserTools extends Database
 	  }
 
 	  if (!$stmt->bind_param("i", $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
+  public function updateQuestion($id, $question, $difficulty, $imgLink, $time){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("UPDATE question SET question = ? , difficulty = ? , imageLink = ? , time = ? WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("sissi", $question, $difficulty, $imgLink, $time ,$id)) {
 		  echo "FAIL bind";
 	  }
 
@@ -376,6 +445,13 @@ class UserTools extends Database
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM quiz";
+        return $this->getData($sql, $connection);
+    }
+
+    protected function getAllDifficulties()
+    {
+        $connection= $this->connect();
+        $sql = "SELECT * FROM difficulty";
         return $this->getData($sql, $connection);
     }
 

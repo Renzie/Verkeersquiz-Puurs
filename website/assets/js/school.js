@@ -5,7 +5,7 @@ $(document).ready(function () {
     $(".add_new_school").on('click', addNewSchool);
     $('.tabel_school').on('click', '.remove_school', removeSchool);
     $('.tabel_school').on('click', '.save_school', saveSchool);
-})
+});
 
 
 function addNewSchool(e) {
@@ -74,7 +74,7 @@ function saveSchool() {
         $.post(ajaxurl, data, function (response) {
             // Response div goes here.
             Materialize.toast("opgeslagen!",1155);
-            
+
             //alert("action performed successfully");
         });
 
