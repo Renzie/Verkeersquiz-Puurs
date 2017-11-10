@@ -3,10 +3,10 @@
 
 session_start();
 
-if(!$_SESSION['login']){
+/*if(!$_SESSION['login']){
    header("location:logout.php");
    //die;
-}
+}*/
 
 require_once "head.html";
 require_once "includes/Database.class.php";
@@ -19,11 +19,11 @@ $view = new View();
 
 ?>
 
-    <h1>Scholen</h1>
+    <h1>Organisaties</h1>
     <table class="striped ">
         <thead>
         <tr>
-            <th>Naam school</th>
+            <th>Naam organisatie</th>
             <th>Extra info</th>
         </tr>
         </thead>

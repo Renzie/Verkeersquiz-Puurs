@@ -3,10 +3,10 @@
 
 session_start();
 
-if(!$_SESSION['login']){
+/*if(!$_SESSION['login']){
    header("location:logout.php");
    //die;
-}
+}*/
 
 
 

@@ -134,6 +134,7 @@ var uploadImg = function () {
                 promise.then(() => addRemoveImageButton(image))
             };
         reader.readAsDataURL(this.files[0]);
+
     }
 };
 var addRemoveImageButton = (image) =>{

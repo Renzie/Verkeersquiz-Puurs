@@ -9,7 +9,7 @@ require_once "head.html";
 /*if(!$_SESSION['login']){
    header("location:logout.php");
    //die;
-}*/
+}
 
 if(!isset($_GET["id"])){
 	header("location:createquiz.php");
@@ -19,7 +19,7 @@ $userTools = new UserTools();
 $view = new View();
 $data = array();
 $data = $userTools->getQuizInfoById($_GET["id"]);
-
+*/
 
 
 
