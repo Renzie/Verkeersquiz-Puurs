@@ -93,6 +93,26 @@ class UserTools extends Database
 
   }
 
+  public function updateAnswer($id,$answer,$correct){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("UPDATE Answer SET answer = ? , correct = ? WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("sii", $id, $answer, $correct)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
   public function deleteOrganization($id){
 
     $connection= $this->connect();
@@ -346,7 +366,7 @@ class UserTools extends Database
 
   }
 
-  protected function makeAnswer($answer, $questionid, $correct)
+  public function makeAnswer($questionid,$answer, $correct)
   {
 	  $connection= $this->connect();
 

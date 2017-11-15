@@ -39,11 +39,11 @@ if (isset($_POST['action'])) {
         case 'deleteQuestion':
 
             break;
-        case 'createAnswer':
-
+        case 'makeAnswer':
+            $usertools->makeAnswer($_POST['questionId'],$_POST['answer'],$_POST['correct']);
             break;
         case 'updateAnswer':
-
+            $usertools->makeAnswer($_POST['questionId'],$_POST['answer'],$_POST['correct']);
             break;
         case 'deleteAnswer':
 

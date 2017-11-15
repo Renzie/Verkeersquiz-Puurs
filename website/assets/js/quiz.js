@@ -5,7 +5,7 @@ $(document).ready(function () {
     $('.modal').modal();
     $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
-    $('.questions').on('click', '.newanswer', addNewAnswer);
+
     $('.questions').on('click', '.removeanswer', removeAnswer)
     $('.markcorrect').on('click', markCorrectAnswer);
     $('.newquestion').on('click', addNewQuestion);
@@ -262,15 +262,7 @@ var removeAnswer = function (e) {
 
 }
 
-var addNewAnswer = function (e) {
-    e.preventDefault();
-    var newInput = '<li class="answer"><div class="input-field col s12">' +
-        '<input placeholder="Antwoord " type="text" class="validate">' +
-        '<a  class="removeanswer btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>' +
-        ' <a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>' +
-        '</div></li>';
-    $(this).closest('.question').find('.answers').append(newInput);
-};
+
 
 var markCorrectAnswer = function (e) { //TODO
     e.preventDefault();

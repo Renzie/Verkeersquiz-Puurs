@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $('.question').on('click', '.updateQuestion', updateQuestion);
     $('.makeQuestion').on('click', makeQuestion);
+    $('.questions').on('click', '.newanswer', addNewAnswer);
 });
 
 var updateQuestion = function(){
@@ -32,12 +33,29 @@ var updateQuestion = function(){
       //alert("action performed successfully");
   });
 
+ var answerlist = $(this).find('.answer li');
+
+ $('.answer li').each(fucntion(){
+
+   var answerId = $(this).attr("answerid");
+   var answer = $(this).val();
+   var correct = $(this).attr("correct");
 
 
-  //console.log("question: "+question);
-  //console.log("difficulty: "+difficulty);
-  //console.log("img: "+ img);
+   var ajaxurl = 'dbaction.php',
+   data =  {
+     'action': 'updateAnswer',
+     'answerId':questionId,
+     'answer': answer,
+     'correct': correct
+   };
+   $.post(ajaxurl, data, function (response) {
+      //response
+   });
 
+
+
+ });
 
 
 
@@ -70,4 +88,40 @@ var makeQuestion = function(){
         //$.getScript("assets/materialize/js/materialize.min.js");
       //alert("action performed successfully");
   });
+
+
+
+
+
 }
+
+var addNewAnswer = function (e) {
+    e.preventDefault();
+    var newInput = '<li class="answer"><div class="input-field col s12">' +
+        '<input placeholder="Antwoord " type="text" class="validate">' +
+        '<a  class="removeanswer btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>' +
+        ' <a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>' +
+        '</div></li>';
+    $(this).closest('.question').find('.answers').append(newInput);
+
+
+    var questionId = $(this).closest('.question').attr("questionid");
+    var answer = "nieuw antwoord";
+    var correct = 0;
+
+    var ajaxurl = 'dbaction.php',
+      data =  {
+      'action': 'makeAnswer',
+      'questionId': questionId,
+      'answer': answer,
+      'correct': correct
+    };
+    $.post(ajaxurl, data, function (response) {
+        // Response div goes here.
+        Materialize.toast("Nieuw antwoord aangemaakt!",1000);
+
+          $('.questions').load(document.URL +  ' .question');
+    });
+
+
+};

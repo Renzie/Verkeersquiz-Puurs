@@ -14,12 +14,13 @@ require_once "head.html";
 if(!isset($_GET["id"])){
 	header("location:createquiz.php");
 }
+*/
 
 $userTools = new UserTools();
 $view = new View();
 $data = array();
 $data = $userTools->getQuizInfoById($_GET["id"]);
-*/
+
 
 
 

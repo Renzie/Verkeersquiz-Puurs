@@ -140,7 +140,7 @@ class View extends UserTools {
 
 		foreach ($this->getAllAnswersByQuestionId($id) as $data) {
 			?>
-			<li class="answer"><div class="input-field col s12">
+			<li class="answer" answerid="<?php echo $data["id"]?>"  correct = "<?php echo $data["correct"]?>"><div class="input-field col s12">
 				<input placeholder="Antwoord " type="text" class="validate" value="<?php echo $data["answer"]?>">
 				<a data-tooltip="Verwijder deze antwoord" class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
 				 <a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>
