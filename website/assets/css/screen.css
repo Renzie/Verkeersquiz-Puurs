@@ -57,10 +57,20 @@ h1 {
 
 .side-nav li a{
   padding: 0 1vw;
+
+
+}
+.side-nav li a {
+
 }
 
+
+
 .side-nav .collapsible-header, .side-nav.fixed .collapsible-header {
-    padding: 0 1vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .side-nav .collapsible-body {
