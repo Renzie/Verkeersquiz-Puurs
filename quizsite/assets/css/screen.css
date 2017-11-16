@@ -1,3 +1,7 @@
+body{
+    z-index:50;
+}
+
 .preloader-background {
     display: flex;
     align-items: center;
@@ -11,25 +15,44 @@
     right: 0;
     bottom: 0;
 }
+.timer{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 0%;
+
+    height: 100%;
+    background-color: #4CAF50 !important;
+
+}
+
+.progress .determinate{
+
+    transition: 1s linear;
+}
+
+.progress{
+    height:2vh;
+}
+
+.content{
+    z-index:100;
+}
 
 .image {
-    margin: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 1vw;
 }
 
 .card-action .btn {
     margin-bottom: 2vh;
 }
 
-.time {
-    position: absolute;
-    top: 50vh;
+.loginname{
 
 }
 
-.lefttime {
-    left: 10vw;
-}
-
-.righttime {
-    right: 10vw;
+.account{
+    position: fixed;
 }

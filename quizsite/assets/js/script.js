@@ -10,7 +10,6 @@ $(function () {
 
     $('.next').on('click', nextPanel);
     startTimer(60);
-
 })
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -26,9 +25,28 @@ var nextPanel = (e) =>{
 }
 
 var startTimer = function(time){
-    setInterval(function() {
-        console.log(time);
-        $('.seconds').text(time-- + " sec  ");
+    var width = 0;
+    var total = time;
+    var interval = setInterval(update,1000);
 
-    },1000);
-}
+
+    function update() {
+
+        if (time < 0) {
+            endTimer();
+        } else {
+            width += 100 / total;
+            $('.determinate').css('width', width + '%')
+            //$('.timer').css('width', (time/total)*100 + 'vw')
+            $('.seconds').text(time-- + " sec");
+
+            console.log(width);
+        }
+    };
+
+    function endTimer(){
+        clearInterval(interval);
+        $('.answers p input').attr('disabled', true)
+    }
+};
+

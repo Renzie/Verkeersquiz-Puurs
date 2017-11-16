@@ -6,9 +6,12 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="assets/materialize/css/materialize.css" rel="stylesheet" media="screen,projection"/>
-    <link href="assets/css/screen.css" rel="stylesheet" >
+    <link href="assets/css/screen.css" rel="stylesheet">
 </head>
 <body class="green">
+<div class="account">
+    <h5 class="white-text"><span class="loginname">VandenBussche Saprunov</span></h5>
+</div>
 <div class="preloader-background">
     <div class="preloader-wrapper big active">
         <div class="spinner-layer spinner-blue-only">
@@ -24,63 +27,51 @@
         </div>
     </div>
 </div>
-
+<div class="timer"></div>
 <main class="container">
-
-    <div class="row">
-        <h2 class="white-text center">(QuizNaam)</h2>
-
-
-    </div>
-    <div class="container">
+    <div class="content">
         <div class="row">
-            <div class="card">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img style="width:35vw ;height: 20vw" class="activator image" src="assets/image/frog.jpg">
+            <h2 class="white-text center">(QuizNaam)</h2>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img style="width:35vw ;height: 20vw" class="activator image" src="assets/image/Afbeelding1.jpg">
+                    </div>
+                    <div class="card-content row question">
+                        In een Zone 30 mag je op straat spelen:
+
+                        <div class="progress">
+                            <div class="determinate"></div>
+                        </div>
+                        <div class="time col offset-s8">
+                            <h4>Tijd: <span class="seconds"></span></h4>
+                        </div>
+                    </div>
+                    <div class="card-action answers">
+                        <p>
+                            <input name="group1" type="radio" id="answer-1"/>
+                            <label for="answer-1">Mag je op straat spelen</label>
+                        </p>
+                        <p>
+                            <input name="group1" type="radio" id="answer-2"/>
+                            <label for="answer-2">Mogen er geen zebrapaden 	gemarkeerd worden</label>
+                        </p>
+                        <p>
+                            <input name="group1" type="radio" id="answer-3"/>
+                            <label for="answer-3">Mag een fietser niet sneller 	dan 30 rijden</label>
+                        </p>
+                    </div>
+                    <div class="card-action">
+                        <input type="submit" value="Volgende vraag" class="btn">
+                    </div>
                 </div>
-                <div class="card-content">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet aspernatur at consequatur culpa cumque, dolores facilis illo ipsa labore laboriosam laborum laudantium numquam odio placeat quas quisquam rerum totam!
-                </div>
-                <div class="card-action">
-                    <p>
-                        <input name="group1" type="radio" id="test1" />
-                        <label for="test1">Red</label>
-                    </p>
-                    <p>
-                        <input name="group1" type="radio" id="test2" />
-                        <label for="test2">Yellow</label>
-                    </p>
-                    <p>
-                        <input name="group1" type="radio" id="test1" />
-                        <label for="test1">Red</label>
-                    </p>
-                    <p>
-                        <input name="group1" type="radio" id="test2" />
-                        <label for="test2">Yellow</label>
-                    </p>
-                    <p>
-                        <input name="group1" type="radio" id="test2" />
-                        <label for="test2">Yellow</label>
-                    </p><p>
-                    <input name="group1" type="radio" id="test2" />
-                    <label for="test2">Yellow</label>
-                </p><p>
-                    <input name="group1" type="radio" id="test2" />
-                    <label for="test2">Yellow</label>
-                </p>
-                </div>
+
             </div>
         </div>
     </div>
 </main>
-
-<div class="time lefttime ">
-    <h2 class="seconds white-text thin">60</h2>
-</div>
-
-<div class="time righttime">
-    <h2 class="seconds white-text thin">60</h2>
-</div>
 
 <script src="assets/js/jquery-3.2.1.js"></script>
 <script src="assets/materialize/js/materialize.js"></script>
