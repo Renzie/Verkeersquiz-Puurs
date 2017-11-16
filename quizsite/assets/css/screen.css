@@ -1,5 +1,6 @@
 body{
     z-index:50;
+    font-family: 'Patrick Hand', cursive;
 }
 
 .preloader-background {
@@ -27,7 +28,6 @@ body{
 }
 
 .progress .determinate{
-
     transition: 1s linear;
 }
 
@@ -55,4 +55,5 @@ body{
 
 .account{
     position: fixed;
+    margin-right: 2vw;
 }

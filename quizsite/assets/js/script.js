@@ -24,7 +24,7 @@ var nextPanel = (e) =>{
     $('.carousel').carousel('next');
 }
 
-var startTimer = function(time){
+var startTimer = function(time){ //todo wat als er geen tijd voorzien wordt?
     var width = 0;
     var total = time;
     var interval = setInterval(update,1000);
@@ -36,7 +36,7 @@ var startTimer = function(time){
             endTimer();
         } else {
             width += 100 / total;
-            $('.determinate').css('width', width + '%')
+            $('.determinate').css('width', width + '%');
             //$('.timer').css('width', (time/total)*100 + 'vw')
             $('.seconds').text(time-- + " sec");
 
