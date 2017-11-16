@@ -104,9 +104,9 @@ class View extends UserTools {
 		        <li>
 		        <h4>Antwoorden</h4>
 		        </li>
-		        <li class="answer">
+		        
 					<?php $this->getAnswerByQuestionId($data["id"]) ?>
-		        </li>
+
 
 		        </ul>
 

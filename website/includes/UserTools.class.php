@@ -101,7 +101,7 @@ class UserTools extends Database
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("sii", $id, $answer, $correct)) {
+	  if (!$stmt->bind_param("sii", $answer,$correct, $id)) {
 		  echo "FAIL bind";
 	  }
 

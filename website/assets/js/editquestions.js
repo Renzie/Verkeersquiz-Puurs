@@ -34,18 +34,22 @@ var updateQuestion = function(){
   });
 
  var answerlist = $(this).find('.answer li');
-
- $('.answer li').each(fucntion(){
+console.log("before");
+//console.log($(this).parent().parent().parent().find(".answers"));
+var ul = $(this).closest(".collapsible-body").find(".answers");
+ $(ul).find(".answer").each(function(){
 
    var answerId = $(this).attr("answerid");
-   var answer = $(this).val();
+   var answer = $(this).find("input").val();
    var correct = $(this).attr("correct");
-
+   console.log("answerid:"+answerId );
+   console.log("answer:"+answer);
+   console.log("correct:"+correct );
 
    var ajaxurl = 'dbaction.php',
    data =  {
      'action': 'updateAnswer',
-     'answerId':questionId,
+     'answerId':answerId,
      'answer': answer,
      'correct': correct
    };
@@ -53,11 +57,7 @@ var updateQuestion = function(){
       //response
    });
 
-
-
  });
-
-
 
 }
 
@@ -108,6 +108,8 @@ var addNewAnswer = function (e) {
     var questionId = $(this).closest('.question').attr("questionid");
     var answer = "nieuw antwoord";
     var correct = 0;
+    var that = this;
+
 
     var ajaxurl = 'dbaction.php',
       data =  {
@@ -120,7 +122,20 @@ var addNewAnswer = function (e) {
         // Response div goes here.
         Materialize.toast("Nieuw antwoord aangemaakt!",1000);
 
+        //refresh
+
           $('.questions').load(document.URL +  ' .question');
+
+          var id = $(that).closest('.question').attr("questionid");
+          console.log("id: "+id);
+          $("[questionid="+id+"]").addClass("active");
+
+          //console.log($(that).closest(".question"));
+
+          //$(that).closest(".collapsible-body").css('display', 'block');
+
+          $("[questionid="+id+"]").addClass("active")
+          //$("[questionid="+id+"]").addClass("active").find(".collapsible-body").css('display', 'block');
     });
 
 

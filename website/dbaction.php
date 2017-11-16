@@ -43,7 +43,7 @@ if (isset($_POST['action'])) {
             $usertools->makeAnswer($_POST['questionId'],$_POST['answer'],$_POST['correct']);
             break;
         case 'updateAnswer':
-            $usertools->makeAnswer($_POST['questionId'],$_POST['answer'],$_POST['correct']);
+            $usertools->updateAnswer($_POST['answerId'],$_POST['answer'],$_POST['correct']);
             break;
         case 'deleteAnswer':
 
