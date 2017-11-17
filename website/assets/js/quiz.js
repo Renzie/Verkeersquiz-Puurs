@@ -19,10 +19,7 @@ $(document).ready(function () {
     $('.tabel_quiz').on('click', '.remove_quiz', removeQuiz);
     $('.tabel_quiz').on('click', '.save_quiz', saveQuiz);
     //$('.tabel_quiz').on('click', '.edit_questions', edit_questions);
-    $(".questionbuttons").on('click', '.removeimage', removeImage)
-
-
-
+    $(".questionbuttons").on('click', '.removeimage', removeImage);
 });
 
 var removeImage = function(){
