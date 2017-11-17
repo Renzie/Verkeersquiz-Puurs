@@ -6,7 +6,7 @@ $(document).ready(function () {
     $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
 
-    $('.questions').on('click', '.removeanswer', removeAnswer)
+    
     $('.markcorrect').on('click', markCorrectAnswer);
     $('.newquestion').on('click', addNewQuestion);
     $('.questions').on('change', '.imageupload', uploadImg);
@@ -250,17 +250,7 @@ var addNewQuestion = function (e) {
 
 }
 
-var removeAnswer = function (e) {
-    e.preventDefault();
-    var parent = $(this).closest('.answers');
-    var currentAnswer = $(this).closest('.answer');
-    if (parent.children().length <= 1) {
-        Materialize.toast('Je hebt geen antwoorden meer!', 4000)
-    } else {
-        currentAnswer.remove();
-    }
 
-}
 
 
 

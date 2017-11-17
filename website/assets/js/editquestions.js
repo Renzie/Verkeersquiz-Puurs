@@ -2,6 +2,8 @@ $(document).ready(function () {
     $('.question').on('click', '.updateQuestion', updateQuestion);
     $('.makeQuestion').on('click', makeQuestion);
     $('.questions').on('click', '.newanswer', addNewAnswer);
+    $('.questions').on('click', '.removeanswer', removeAnswer);
+    $('.answers').on('click', '.markcorrect', markCorrect);
 });
 
 var updateQuestion = function(){
@@ -21,7 +23,7 @@ var updateQuestion = function(){
   var ajaxurl = 'dbaction.php',
   data =  {
     'action': 'updateQuestion',
-    'id': questionId,
+    'questionId': questionId,
     'question': question,
     'difficulty': difficulty,
     'imgLink': imgLink,
@@ -122,21 +124,63 @@ var addNewAnswer = function (e) {
         // Response div goes here.
         Materialize.toast("Nieuw antwoord aangemaakt!",1000);
 
+
+
+        //TODO
         //refresh
+        var id = $(that).closest('.question').attr("questionid");
+        var div = $(that).closest('.answers');
+        console.log(div);
+        console.log("id: "+id);
+          var thegodrow = $(that).parent().parent().parent().find(".answers");
+          $(div).load(document.URL +  ' .answer');
 
-          $('.questions').load(document.URL +  ' .question');
+          //$(that).closest(".answers").load(document.URL +  ' .answer');
 
-          var id = $(that).closest('.question').attr("questionid");
-          console.log("id: "+id);
-          $("[questionid="+id+"]").addClass("active");
-
-          //console.log($(that).closest(".question"));
-
-          //$(that).closest(".collapsible-body").css('display', 'block');
-
-          $("[questionid="+id+"]").addClass("active")
-          //$("[questionid="+id+"]").addClass("active").find(".collapsible-body").css('display', 'block');
     });
-
-
 };
+
+var removeAnswer = function (e) {
+    e.preventDefault();
+    var parent = $(this).closest('.answers');
+    var currentAnswer = $(this).closest('.answer');
+    if (parent.children().length <= 1) {
+        Materialize.toast('Je hebt geen antwoorden meer!', 4000)
+    } else {
+        currentAnswer.remove();
+    }
+
+    var answerId = $(this).closest(".answer").attr("answerid");
+    console.log("te verwijderen id: "+answerId);
+
+
+    var ajaxurl = 'dbaction.php',
+      data =  {
+      'action': 'deleteAnswer',
+      'answerId': answerId
+    };
+    $.post(ajaxurl, data, function (response) {
+        // Response div goes here.
+        Materialize.toast("Antwoord is verwijderd",1000);
+
+    });
+}
+
+var markCorrect = function(){
+  console.log("correct!");
+
+  $(this).removeClass("orange").addClass("green");
+  $(this).closest(".answer").attr("correct", 1);
+  var clickedAnswerId = $(this).closest(".answer").attr("answerid");
+
+  var ul = $(this).closest(".collapsible-body").find(".answers");
+   $(ul).find(".answer").each(function(){
+     if($(this).attr("answerid") != clickedAnswerId){
+       $(this).find(".markcorrect").removeClass("orange").removeClass("green").addClass("red");
+       $(this).attr("correct", 0)
+
+     }
+   });
+
+
+}
