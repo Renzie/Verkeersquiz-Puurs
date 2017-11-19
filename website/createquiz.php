@@ -1,6 +1,4 @@
 <?php
-//This is the Roels Special
-
 session_start();
 
 /*if(!$_SESSION['login']){

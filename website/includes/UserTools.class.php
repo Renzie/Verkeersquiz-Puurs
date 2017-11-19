@@ -587,7 +587,7 @@ class UserTools extends Database
 			if (!$stmt->execute()) {
 				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 			}
-			$stmt->bind_result($id, $answer, $quistionId,$correct);
+			$stmt->bind_result($id, $answer, $quistionId,$correct,$category);
 			$data = array();
 
 			while($stmt -> fetch()){
@@ -595,7 +595,8 @@ class UserTools extends Database
 				"id"=>$id,
 				"answer"=>$answer,
 				"quistionId"=>$questionId,
-				"correct"=>$correct
+				"correct"=>$correct,
+        "category"=>$category
 			  ];
 			  array_push($data,$subarray);
 			}

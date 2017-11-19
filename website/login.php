@@ -93,9 +93,7 @@ $usertools = new UserTools();
 
 
     }
-
-
-
-    require_once "tail.html";
-
     ?>
+
+  </body>
+  </html>

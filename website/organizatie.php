@@ -1,5 +1,4 @@
 <?php
-//This is the Roels Special
 
 session_start();
 

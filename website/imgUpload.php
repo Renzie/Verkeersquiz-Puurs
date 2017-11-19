@@ -1,3 +1,5 @@
+//TODO this should be in the same page, not here
+
 <?php
     $id = $_GET["id"];
     $file = file_get_contents('php://input');

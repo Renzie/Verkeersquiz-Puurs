@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: localhost    Database: puurs
+-- Host: 127.0.0.1    Database: puurs
 -- ------------------------------------------------------
--- Server version	5.6.17
+-- Server version	5.7.9
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,11 +26,12 @@ CREATE TABLE `answer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `answer` longtext NOT NULL,
   `questionId` int(11) NOT NULL,
-  `correct` tinyint(1) NOT NULL,
+  `correct` bit(1) NOT NULL,
+  `category` int(11) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
   KEY `Question_idx` (`questionId`),
   CONSTRAINT `QuestionForAwnser` FOREIGN KEY (`questionId`) REFERENCES `question` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +40,7 @@ CREATE TABLE `answer` (
 
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
+INSERT INTO `answer` VALUES (1,'Ja, Dit is de perfecte systeem',3,'',0),(2,'Nee',3,'\0',0),(3,'Maybe',3,'\0',0),(19,'Mag je op straat spelen',5,'\0',3),(20,'Mogen er geen zebrapaden gemarkeerd worden',5,'\0',3),(21,'Mag een fietser niet sneller dan 30 rijden',5,'',3),(22,'Dit is geen afbeelding van een verkeersbord',6,'\0',3),(23,'Dit duidt de voorrang aan bij het eerstvolgende kruispunt',6,'',3),(24,'Op deze weg moet je voorrang geven',6,'\0',3),(25,'Fietsers',7,'\0',3),(26,'Fietsers en bromfietsers A (geel plaatje)',7,'\0',3),(27,'Fietsers, bromfietsers A en bromfietsers B',7,'',3);
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,6 +74,30 @@ LOCK TABLES `answer_user` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `category`
+--
+
+LOCK TABLES `category` WRITE;
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (1,'Verkeersborden'),(2,'Situaties'),(3,'Allerlei');
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `department`
 --
 
@@ -82,7 +108,7 @@ CREATE TABLE `department` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `organizationId` int(11) NOT NULL,
-  PRIMARY KEY (`Id`),
+  PRIMARY KEY (`id`),
   KEY `School_idx` (`organizationId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -108,7 +134,7 @@ CREATE TABLE `difficulty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `difficulty` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,6 +143,7 @@ CREATE TABLE `difficulty` (
 
 LOCK TABLES `difficulty` WRITE;
 /*!40000 ALTER TABLE `difficulty` DISABLE KEYS */;
+INSERT INTO `difficulty` VALUES (1,'Makkelijk'),(2,'Gemiddeld'),(3,'Moeilijk');
 /*!40000 ALTER TABLE `difficulty` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,7 +209,7 @@ CREATE TABLE `organization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `extraInfo` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`Id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -207,12 +234,12 @@ CREATE TABLE `question` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `question` mediumtext NOT NULL,
   `difficulty` int(11) NOT NULL,
-  `imageLink` longtext,
+  `imageLink` blob,
   `time` time DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Diff_idx` (`difficulty`),
   CONSTRAINT `Diff` FOREIGN KEY (`difficulty`) REFERENCES `difficulty` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,6 +248,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
+INSERT INTO `question` VALUES (3,'Is dit een goeie quiz system',1,'imageQuestion_3.png','00:00:00'),(4,'Is dit een goeie admin panel',1,NULL,'00:00:30'),(5,'In een Zone 30',1,'','00:00:00'),(6,'Wat betekent dit bord',1,'imageQuestion_6.png','00:00:00'),(7,'Wie mag gebruik maken van een fietspad aangeduid met dit bord',1,'imageQuestion_7.png','00:00:00'),(8,'Je mag dit verbodsbord voorbij fietsen als',1,'imageQuestion_8.png','00:00:00'),(9,'nieuwe vraag',1,'','00:00:00'),(10,'nieuwe vraag',1,'','00:00:00');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,7 +264,7 @@ CREATE TABLE `quiz` (
   `name` varchar(45) DEFAULT NULL,
   `extraInfo` mediumtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,7 +273,7 @@ CREATE TABLE `quiz` (
 
 LOCK TABLES `quiz` WRITE;
 /*!40000 ALTER TABLE `quiz` DISABLE KEYS */;
-INSERT INTO `quiz` VALUES (1,'Howest Quiz','Dit is een test quiz'),(2,'Howest Quiz 2','Dit is een 2de test quiz');
+INSERT INTO `quiz` VALUES (1,'Howest Quiz','Dit is een dummy quiz'),(3,'Verkeersquiz Puurs','Quiz van 2015');
 /*!40000 ALTER TABLE `quiz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,11 +287,8 @@ DROP TABLE IF EXISTS `quiz_questions`;
 CREATE TABLE `quiz_questions` (
   `quizId` int(11) NOT NULL,
   `questionId` int(11) NOT NULL,
-  PRIMARY KEY (`quizId`),
-  KEY `Question_idx` (`questionId`),
-  KEY `_idx` (`questionId`),
-  CONSTRAINT `QuestionForQuiz` FOREIGN KEY (`questionId`) REFERENCES `question` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Quiz` FOREIGN KEY (`quizId`) REFERENCES `quiz` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`quizId`,`questionId`),
+  KEY `_idx` (`questionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -273,6 +298,7 @@ CREATE TABLE `quiz_questions` (
 
 LOCK TABLES `quiz_questions` WRITE;
 /*!40000 ALTER TABLE `quiz_questions` DISABLE KEYS */;
+INSERT INTO `quiz_questions` VALUES (1,3),(1,4),(3,5),(3,6),(3,7),(3,8),(3,9),(3,10);
 /*!40000 ALTER TABLE `quiz_questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,4 +338,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-06  9:05:16
+-- Dump completed on 2017-11-19 19:00:15

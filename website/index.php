@@ -1,11 +1,5 @@
 <?php
-//This is the Roels Special
 require_once "head.html";
-
-
-
-
-
 require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
 require_once "includes/View.class.php";
@@ -31,8 +25,8 @@ require_once "includes/View.class.php";
 
     <article>
         <h3>School</h3>
-        <h3><a href="school.php" class="btn">Scholen</a></h3>
-        <p class="flow-text">Bekijk hier de scholen en wijzig ze indien nodig.</p>
+        <h3><a href="organizatie.php" class="btn">Organizaties</a></h3>
+        <p class="flow-text">Bekijk hier de organizaties en wijzig ze indien nodig.</p>
     </article>
 </div>
 
