@@ -99,16 +99,9 @@ var makeQuestion = function(){
 
 var addNewAnswer = function (e) {
     e.preventDefault();
-    var newInput = '<li class="answer"><div class="input-field col s12">' +
-        '<input placeholder="Antwoord " type="text" class="validate">' +
-        '<a  class="removeanswer btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>' +
-        ' <a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>' +
-        '</div></li>';
-    $(this).closest('.question').find('.answers').append(newInput);
-
 
     var questionId = $(this).closest('.question').attr("questionid");
-    var answer = "nieuw antwoord";
+    var answer = "";
     var correct = 0;
     var that = this;
 
@@ -124,8 +117,9 @@ var addNewAnswer = function (e) {
         // Response div goes here.
         Materialize.toast("Nieuw antwoord aangemaakt!",1000);
 
+        $('.body').load(document.URL +  ' .body');
 
-
+/*
         //TODO
         //refresh
         var id = $(that).closest('.question').attr("questionid");
@@ -136,7 +130,7 @@ var addNewAnswer = function (e) {
           $(div).load(document.URL +  ' .answer');
 
           //$(that).closest(".answers").load(document.URL +  ' .answer');
-
+*/
     });
 };
 

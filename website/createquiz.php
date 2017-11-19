@@ -22,7 +22,7 @@ $view = new View();
 ?>
 
     <h1>Maak een quiz</h1>
-    <table class="striped ">
+    <table class="striped quizzes">
         <thead>
         <tr>
             <th>Naam quiz</th>
@@ -30,9 +30,7 @@ $view = new View();
         </tr>
         </thead>
         <tbody class="tabel_quiz">
-          <?php
-         $view->getQuizzes();
-           ?>
+          <?php $view->getQuizzes(); ?>
         </tbody>
 
 

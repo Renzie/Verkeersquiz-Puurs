@@ -48,7 +48,7 @@ class View extends UserTools {
 		        <i class="material-icons">chevron_right</i> <?php echo $data["question"]?> </div>
 		    	  <div class="collapsible-body">
 		        <label>Vraag</label>
-		        <input name="question" class=" col s6" type="text" value="<?php echo $data["question"]?>" placeholder="text vraag"/>
+		        <input name="question" class="col s6" type="text" value="<?php echo $data["question"]?>" placeholder="vraag"/>
 
 		        <div class="editquestion row">
 		        <div class="input-field col s5">
@@ -83,8 +83,7 @@ class View extends UserTools {
 		       <div class="col s4 file-field ">
 		       <div>
 		       	<label>Afbeelding</label>
-		        <img name="image" class="materialboxed questionimg" src="
-						<?php echo ($data["imageLink"]!="" ?"images/".$data["imageLink"] : "#")  ?>">
+		        <img name="image" class="materialboxed questionimg" src="<?php echo ($data["imageLink"]!="" ?"images/".$data["imageLink"] : "#")  ?>">
 		        </div>
 
 

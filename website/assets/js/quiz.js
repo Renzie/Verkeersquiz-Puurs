@@ -6,7 +6,7 @@ $(document).ready(function () {
     $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
 
-    
+
     $('.markcorrect').on('click', markCorrectAnswer);
     $('.newquestion').on('click', addNewQuestion);
     $('.questions').on('change', '.imageupload', uploadImg);
@@ -77,8 +77,9 @@ function saveQuiz() {
         $.post(ajaxurl, data, function (response) {
             // Response div goes here.
             //alert("action performed successfully");
-            Materialize.toast("opgeslagen!",1155);
-            $('.tabel_quiz').load(document.URL +  ' .tabel_quiz');
+            Materialize.toast("Opgeslagen!",1155);
+            $('.body').load(document.URL +  ' .body');
+
         });
 
 
