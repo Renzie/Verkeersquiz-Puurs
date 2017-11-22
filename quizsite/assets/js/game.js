@@ -1,4 +1,7 @@
 /**
+ * Created by Renzie on 22/11/2017.
+ */
+/**
  * Created by Renzie on 10/11/2017.
  */
 $(function () {
@@ -24,7 +27,7 @@ function Question(text, time) {
 
 
     this.update = () => {
-        console.log("updating")
+        console.log("updating");
         if (time < 0) {
             that.stopTimer();
         } else if (time == Math.round((this.total / 2) * 10 / 10)) {
@@ -40,18 +43,23 @@ function Question(text, time) {
     };
 
     this.stopTimer = () => {
+        this.width += 100 / this.total;
+        $('.determinate').css('width', this.width + '%');
+        Materialize.toast('Je tijd is op!', 4000);
         $('.answers p input').attr('disabled', true)
         console.log(time);
         clearInterval(startQuestion);
     }
+
+
 }
 
 /*document.addEventListener("DOMContentLoaded", function () {
-    $('.preloader-background').delay(1000).fadeOut('slow');
+ $('.preloader-background').delay(1000).fadeOut('slow');
 
-    $('.preloader-wrapper')
-        .delay(1000)
-        .fadeOut();
-});
+ $('.preloader-wrapper')
+ .delay(1000)
+ .fadeOut();
+ });
 
-*/
+ */
