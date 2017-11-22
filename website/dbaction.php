@@ -33,11 +33,11 @@ if (isset($_POST['action'])) {
 
             break;
         case 'updateQuestion':
-            $usertools->updateQuestion($_POST['id'],$_POST['question'],$_POST['difficulty'],$_POST['imgLink'], $_POST['time']);
+            $usertools->updateQuestion($_POST['questionId'],$_POST['question'],$_POST['difficulty'],$_POST['imgLink'], $_POST['time']);
 
             break;
         case 'deleteQuestion':
-
+			      $usertools->deleteQuestion($_POST['questionId']);
             break;
         case 'makeAnswer':
             $usertools->makeAnswer($_POST['questionId'],$_POST['answer'],$_POST['correct']);
@@ -46,6 +46,7 @@ if (isset($_POST['action'])) {
             $usertools->updateAnswer($_POST['answerId'],$_POST['answer'],$_POST['correct']);
             break;
         case 'deleteAnswer':
+            $usertools->deleteAnswerWithId($_POST['answerId']);
 
             break;
     }

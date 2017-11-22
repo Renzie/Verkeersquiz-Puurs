@@ -424,6 +424,24 @@ class UserTools extends Database
     $connection->close();
   }
 
+  public function deleteAnswerWithId($aid){
+    $connection= $this->connect();
+
+    if (!$stmt = $connection->prepare("DELETE FROM answer WHERE id = ?")) {
+      echo "FAIL prepare";
+    }
+
+    if (!$stmt->bind_param("i", $aid)) {
+      echo "FAIL bind";
+    }
+
+    if (!$stmt->execute()) {
+      echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
+    $stmt->close();
+    $connection->close();
+  }
+
 
   protected function makeUserAnswer($userid, $answerid, $time)
   {

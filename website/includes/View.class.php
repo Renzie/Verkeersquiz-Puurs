@@ -48,7 +48,7 @@ class View extends UserTools {
 		        <i class="material-icons">chevron_right</i> <?php echo $data["question"]?> </div>
 		    	  <div class="collapsible-body">
 		        <label>Vraag</label>
-		        <input name="question" class=" col s6" type="text" value="<?php echo $data["question"]?>" placeholder="text vraag"/>
+		        <input name="question" class="col s6" type="text" value="<?php echo $data["question"]?>" placeholder="vraag"/>
 
 		        <div class="editquestion row">
 		        <div class="input-field col s5">
@@ -83,8 +83,7 @@ class View extends UserTools {
 		       <div class="col s4 file-field ">
 		       <div>
 		       	<label>Afbeelding</label>
-		        <img name="image" class="materialboxed questionimg" src="
-						<?php echo ($data["imageLink"]!="" ?"images/".$data["imageLink"] : "#")  ?>">
+		        <img name="image" class="materialboxed questionimg" src="<?php echo ($data["imageLink"]!="" ?"images/".$data["imageLink"] : "#")  ?>">
 		        </div>
 
 
@@ -104,7 +103,7 @@ class View extends UserTools {
 		        <li>
 		        <h4>Antwoorden</h4>
 		        </li>
-		        
+
 					<?php $this->getAnswerByQuestionId($data["id"]) ?>
 
 
@@ -112,8 +111,8 @@ class View extends UserTools {
 
 		        <div class="row">
 		        <div class="col s6">
-		        <a data-tooltip="Voeg een nieuwe antwoord"
-		     class="newanswer tooltipped btn btn-small waves-effect waves-light blue "><i
+		        <a
+		     class="newanswer  btn btn-small waves-effect waves-light blue "><i
 		     class="material-icons ">add</i></a>
 		        </div>
 
@@ -142,8 +141,14 @@ class View extends UserTools {
 			?>
 			<li class="answer" answerid="<?php echo $data["id"]?>"  correct = "<?php echo $data["correct"]?>"><div class="input-field col s12">
 				<input placeholder="Antwoord " type="text" class="validate" value="<?php echo $data["answer"]?>">
-				<a data-tooltip="Verwijder deze antwoord" class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
-				 <a data-tooltip="Markeer deze antwoord als correct" class="markcorrect tooltipped btn btn-small waves-effect waves-light green"><i class="material-icons">done</i></a>
+				<a class="removeanswer btn btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
+				 <a class="markcorrect btn btn-small waves-effect waves-light <?php
+				 if($data["correct"] == 0){
+					 echo "red";
+				 }else{
+					 echo "green";
+				 }
+				 ?>"><i class="material-icons">done</i></a>
 				</div></li>
 
 			<?php
