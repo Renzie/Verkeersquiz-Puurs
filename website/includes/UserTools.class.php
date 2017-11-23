@@ -171,6 +171,25 @@ class UserTools extends Database
 	  $connection->close();
   }
 
+  protected function makeCategory($category)
+  {
+	  $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("INSERT INTO category (category) VALUES (?)")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("s",$category)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+  }
+
   public function makeQuiz($name, $extrainfo)
   {
 	  $connection= $this->connect();
@@ -212,15 +231,15 @@ class UserTools extends Database
 
   }
 
-  public function makeQuestion($question, $difficulty, $imgLink, $time, $quizId){
+  public function makeQuestion($question, $difficulty, $imgLink, $time, $category, $quizId){
 
     $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO question (question, difficulty, imageLink, time) VALUES (?, ?, ?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO question (question, difficulty, imageLink, time, category) VALUES (?, ?, ?, ?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("siss", $question, $difficulty, $imgLink, $time)) {
+	  if (!$stmt->bind_param("sisss", $question, $difficulty, $imgLink, $time, $category)) {
 		  echo "FAIL bind";
 	  }
 
@@ -325,6 +344,29 @@ class UserTools extends Database
 	  $connection->close();
 
   }
+
+
+  public function deleteCategory($id){
+
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("DELETE FROM category WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("i", $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
 
   public function updateQuestion($id, $question, $difficulty, $imgLink, $time){
 
@@ -490,6 +532,13 @@ class UserTools extends Database
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM difficulty";
+        return $this->getData($sql, $connection);
+    }
+
+    protected function getAllCategories()
+    {
+        $connection= $this->connect();
+        $sql = "SELECT * FROM category";
         return $this->getData($sql, $connection);
     }
 
