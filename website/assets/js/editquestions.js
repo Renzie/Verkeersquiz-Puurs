@@ -1,11 +1,17 @@
 $(document).ready(function () {
+    bindEvents();
+});
+
+function bindEvents(){
     $('.question').on('click', '.updateQuestion', updateQuestion);
     $('.makeQuestion').on('click', makeQuestion);
     $('.questions').on('click', '.newanswer', addNewAnswer);
     $('.questions').on('click', '.removeanswer', removeAnswer);
     $('.answers').on('click', '.markcorrect', markCorrect);
     $('.question').on('click','.removeQuestion',removeQuestion);
-});
+    $(".dropdown-button").dropdown();
+    $(".button-collapse").sideNav();
+}
 
 var updateQuestion = function(){
   //console.log("updating question");
@@ -84,12 +90,12 @@ var makeQuestion = function(){
     'quizId':quizId
   };
   $.post(ajaxurl, data, function (response) {
-      // Response div goes here.
+
       Materialize.toast("Nieuwe vraag aangemaakt!",1000);
 
-        $('.questions').load(document.URL +  ' .question');
-        //$.getScript("assets/materialize/js/materialize.min.js");
-      //alert("action performed successfully");
+      //Dirty way, just reload the entire page!
+      location.reload();
+
   });
 
 
@@ -100,8 +106,12 @@ var makeQuestion = function(){
 
 var removeQuestion = function(e){
     e.preventDefault();
+
     var currentQuestion = $(this).closest('.question');
     var questionId = currentQuestion.attr('questionid');
+
+
+
 
     var ajaxurl = 'dbaction.php',
       data =  {
@@ -111,7 +121,9 @@ var removeQuestion = function(e){
     $.post(ajaxurl, data, function (response) {
 
         Materialize.toast("Vraag is verwijderd!",1155);
-        currentQuestion.remove();
+        //Dirty way
+        location.reload();
+
     });
 
 }

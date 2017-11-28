@@ -616,7 +616,7 @@ class UserTools extends Database
 			if (!$stmt->execute()) {
 				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 			}
-			$stmt->bind_result($id, $question, $difficulty, $imageLink, $time,$quizidextra,$questionidextra);
+			$stmt->bind_result($id, $question, $difficulty, $imageLink, $time,$category,$quizidextra,$questionidextra);
 			$data = array();
 
 			while($stmt -> fetch()){
@@ -625,7 +625,8 @@ class UserTools extends Database
 				"question"=>$question,
 				"difficulty"=>$difficulty,
 				"imageLink"=>$imageLink,
-				"time"=>$time
+				"time"=>$time,
+                "category"=>$category
 			  ];
 			  array_push($data,$subarray);
 			}
@@ -653,7 +654,7 @@ class UserTools extends Database
 				"answer"=>$answer,
 				"quistionId"=>$questionId,
 				"correct"=>$correct,
-        "category"=>$category
+                "category"=>$category
 			  ];
 			  array_push($data,$subarray);
 			}
