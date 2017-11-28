@@ -4,6 +4,7 @@ $(document).ready(function () {
     $('.questions').on('click', '.newanswer', addNewAnswer);
     $('.questions').on('click', '.removeanswer', removeAnswer);
     $('.answers').on('click', '.markcorrect', markCorrect);
+    $('.question').on('click','.removeQuestion',removeQuestion);
 });
 
 var updateQuestion = function(){
@@ -36,10 +37,10 @@ var updateQuestion = function(){
   });
 
  var answerlist = $(this).find('.answer li');
-console.log("before");
-//console.log($(this).parent().parent().parent().find(".answers"));
-var ul = $(this).closest(".collapsible-body").find(".answers");
- $(ul).find(".answer").each(function(){
+ console.log("before");
+  //console.log($(this).parent().parent().parent().find(".answers"));
+  var ul = $(this).closest(".collapsible-body").find(".answers");
+  $(ul).find(".answer").each(function(){
 
    var answerId = $(this).attr("answerid");
    var answer = $(this).find("input").val();
@@ -97,6 +98,23 @@ var makeQuestion = function(){
 
 }
 
+var removeQuestion = function(e){
+    e.preventDefault();
+    var currentQuestion = $(this).closest('.question');
+    var questionId = currentQuestion.attr('questionid');
+
+    var ajaxurl = 'dbaction.php',
+      data =  {
+      'action': 'deleteQuestion',
+      'questionId': questionId
+    };
+    $.post(ajaxurl, data, function (response) {
+
+        Materialize.toast("Vraag is verwijderd!",1155);
+        currentQuestion.remove();
+    });
+
+}
 var addNewAnswer = function (e) {
     e.preventDefault();
     var newInput = '<li class="answer"><div class="input-field col s12">' +

@@ -45,7 +45,8 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
 <script type="text/javascript" src="assets/js/quiz.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
 <script type="text/javascript" src="assets/js/editquestions.js"></script>
-<?php
 
+
+<?php
 require_once "tail.html";
 ?>

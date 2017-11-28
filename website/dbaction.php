@@ -32,7 +32,7 @@ if (isset($_POST['action'])) {
             $usertools->updateQuestion($_POST['questionId'],$_POST['question'],$_POST['difficulty'],$_POST['imgLink'], $_POST['time']);
             break;
         case 'deleteQuestion':
-			      $usertools->deleteQuestion($_POST['questionId']);
+			$usertools->deleteQuestionWithId($_POST['questionId']);
             break;
         case 'makeAnswer':
             $usertools->makeAnswer($_POST['questionId'],$_POST['answer'],$_POST['correct']);

@@ -429,7 +429,7 @@ class UserTools extends Database
 
 
 
-  protected function deleteQuestionWithId($qid){
+  public function deleteQuestionWithId($qid){
 
     $connection= $this->connect();
 

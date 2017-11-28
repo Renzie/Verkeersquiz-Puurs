@@ -98,30 +98,25 @@ class View extends UserTools {
 		        </div>
 		        </div>
 
-
+						<h4>Antwoorden</h4>
 		        <ul class="answers row">
-		        <li>
-		        <h4>Antwoorden</h4>
-		        </li>
 
-					<?php $this->getAnswerByQuestionId($data["id"]) ?>
+							<?php $this->getAnswerByQuestionId($data["id"]) ?>
 
 
 		        </ul>
 
 		        <div class="row">
 		        <div class="col s6">
-		        <a
-		     class="newanswer  btn btn-small waves-effect waves-light blue "><i
-		     class="material-icons ">add</i></a>
+		        <a class="newanswer  btn btn-small waves-effect waves-light blue "><i class="material-icons ">add</i></a>
 		        </div>
 
 		        <div class="col s3 offset-s3 ">
-		        <a data-tooltip="Markeer deze antwoord als correct"
+		        <a data-tooltip="Sla deze vraag op!"
 		     class="markcorrect tooltipped btn btn-small waves-effect waves-light green updateQuestion"><i
 		     class="material-icons ">save</i></a>
-		        <a data-tooltip="Verwijder deze antwoord"
-		     class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i
+		        <a data-tooltip="Verwijder deze vraag!"
+		     class="removeQuestion tooltipped btn btn-small waves-effect waves-light red"><i
 		    class="material-icons">delete</i></a>
 		        </div>
 		        </div>
