@@ -4,6 +4,13 @@ require_once 'Database.class.php';
 
 class UserTools extends Database
 {
+    private function zuiverData($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlentities($data, ENT_QUOTES);
+        return $data;
+    }
+
     protected function getAllUsers()
     {
         $connection= $this->connect();
@@ -56,13 +63,14 @@ class UserTools extends Database
 
   public function makeOrganization($name, $extrainfo)
   {
+
 	  $connection= $this->connect();
 
 	  if (!$stmt = $connection->prepare("INSERT INTO organization (name, extraInfo) VALUES (?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("ss", $name, $extrainfo)) {
+	  if (!$stmt->bind_param("ss", $this->zuiverData($name), $this->zuiverData($extrainfo))) {
 		  echo "FAIL bind";
 	  }
 
@@ -101,7 +109,7 @@ class UserTools extends Database
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("sii", $answer,$correct, $id)) {
+	  if (!$stmt->bind_param("sii", $this->zuiverData($answer),$this->zuiverData($correct), $this->zuiverData($id))) {
 		  echo "FAIL bind";
 	  }
 
@@ -198,7 +206,7 @@ class UserTools extends Database
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("ss", $name, $extrainfo)) {
+	  if (!$stmt->bind_param("ss", $this->zuiverData($name), $this->zuiverData($extrainfo))) {
 		  echo "FAIL bind";
 	  }
 
@@ -239,7 +247,7 @@ class UserTools extends Database
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("sisss", $question, $difficulty, $imgLink, $time, $category)) {
+	  if (!$stmt->bind_param("sisss", $this->zuiverData($question), $difficulty, $imgLink, $time, $category)) {
 		  echo "FAIL bind";
 	  }
 
