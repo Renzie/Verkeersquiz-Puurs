@@ -27,7 +27,6 @@ function Question(text, time) {
 
 
     this.update = () => {
-        console.log("updating");
         if (time < 0) {
             that.stopTimer();
         } else if (time == Math.round((this.total / 2) * 10 / 10)) {
@@ -38,7 +37,7 @@ function Question(text, time) {
         else {
             this.width += 100 / this.total;
             $('.determinate').css('width', this.width + '%');
-            $('.seconds').text(time-- + " sec");
+            $('.seconds').text(time-- );
         }
     };
 
