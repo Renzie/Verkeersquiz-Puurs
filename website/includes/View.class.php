@@ -154,6 +154,18 @@ class View extends UserTools {
 	}
 
 
+public function amountQuestionsQuiz($id){
+
+	foreach ($this->getAllDifficulties() as $difficulty) {
+		?>
+		<div style="width:20%;display:inline-block;">
+			<label><?php echo $difficulty["difficulty"] ?></label><input class="diff<?php echo $difficulty["id"] ?>" type="number" min="0" max="100">
+		</div>
+		<?php
+	}
+
+}
+
 
 
 	public function test(){

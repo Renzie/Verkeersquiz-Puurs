@@ -18,6 +18,35 @@ class UserTools extends Database
         return $this->getData($sql, $connection);
     }
 
+    public function countDifficulties($quizId, $difficultyId){
+
+      /*
+
+      select count(*) from quiz_questions
+      join question on quiz_questions.questionId = question.id
+      where difficulty = 1 AND quiz_questions.quizId = 1
+
+      */
+
+      $connection= $this->connect();
+      $password = password_hash($password, PASSWORD_DEFAULT);
+
+      if (!$stmt = $connection->prepare("SELECT COUNT ")) {
+          echo "FAIL prepare";
+      }
+
+      if (!$stmt->bind_param("ss", $username, $password)) {
+          echo "FAIL bind";
+      }
+
+      if (!$stmt->execute()) {
+          echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+      }
+      $stmt->close();
+      $connection->close();
+
+    }
+
     protected function registerAdmin($username, $password)
     {
         $connection= $this->connect();

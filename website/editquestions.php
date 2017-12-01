@@ -28,6 +28,16 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
 ?>
 <div id="wijzigvragen" class="col s12">
     <h1>Quiz: <?php echo $data["name"]?></h1>
+    <div style="width:100%;height:100px;">
+
+    <?php $view->amountQuestionsQuiz($_GET["id"]); ?>
+
+
+
+    <a href="#" class="btn" style="display:block;"> maak moeilijkheidsgraad</a>
+    </div>
+
+    <h4>voeg vragen toe:</h4>
 
 
 
