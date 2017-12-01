@@ -4,8 +4,35 @@
 $(function () {
     $('select').material_select();
 
-
+    generateRandomTheme();
 });
 
 
 
+var kleur = [{
+    body: "yellow lighten-5",
+    nav: "blue-grey"
+},
+    {
+        body: "light-blue lighten-2",
+        nav: "yellow darken-2"
+    }
+];
+
+
+function generateRandomTheme() {
+    var rand = Math.floor((Math.random() * kleur.length ) + 1);
+    removeColorClasses();
+    addColorClasses(rand);
+}
+
+function removeColorClasses() {
+    $('body').removeClass();
+    $('nav').removeClass();
+}
+
+
+function addColorClasses(rand) {
+    $('body').addClass(kleur[rand - 1].body);
+    $('nav').addClass(kleur[rand - 1].nav);
+}

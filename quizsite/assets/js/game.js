@@ -7,11 +7,14 @@
 $(function () {
     $('select').material_select();
 
+
+
     var question = new Question('derp', 60);
-    //question.startQuestion();
     startQuestion = setInterval(question.update, 1000);
     $('#eindevraag').on('click', question.stopTimer);
+
 });
+
 
 
 
@@ -37,7 +40,7 @@ function Question(text, time) {
         else {
             this.width += 100 / this.total;
             $('.determinate').css('width', this.width + '%');
-            $('.seconds').text(time-- );
+            $('.seconds').text(time--);
         }
     };
 
@@ -46,8 +49,19 @@ function Question(text, time) {
         $('.determinate').css('width', this.width + '%');
         Materialize.toast('Je tijd is op!', 4000);
         $('.answers p input').attr('disabled', true)
-        console.log(time);
         clearInterval(startQuestion);
+        this.nextQuestion()
+    }
+
+    this.nextQuestion = () => {
+        $('.question').fadeOut();
+
+        //TODO question aanpassen
+
+
+        $('.question').fadeIn();
+
+
     }
 
 
