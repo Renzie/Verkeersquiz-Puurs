@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $(".add_new_difficulty").on('click', addNewCategorie);
+    $(".add_new_difficulty").on('click', addNewCategory);
 
     $('.tabel_school').on('click','.deleteCategory',removeCategory);
     $('.tabel_school').on('click','.updateCategory',updateCategory);
@@ -37,10 +37,10 @@ function addNewCategory() {
 }
 
 
-function updateCategory()){
-  var catid = $(this).closest('.categorie').attr("catId");
+function updateCategory(){
+  var catid = $(this).closest('.category').attr("catId");
   var category = $(this).closest('.category').find(".categoryName").val();
-  //console.log("id: , "+diffid+"difficulty: "+difficulty);
+  console.log("id: , "+catid+"difficulty: "+category);
   var ajaxurl = 'dbaction.php',
   data =  {
     'action': "updateCategory",

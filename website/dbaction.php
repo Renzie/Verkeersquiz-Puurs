@@ -54,7 +54,7 @@ if (isset($_POST['action'])) {
             break;
 
         case 'deleteCategory':
-            $usertools->deleteCategoryWithId($_POST['catId']);
+            $usertools->deleteCategory($_POST['catId']);
             break;
         case 'makeCategory':
             $usertools->makeCategory($_POST['category']);

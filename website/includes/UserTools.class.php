@@ -208,7 +208,7 @@ class UserTools extends Database
 	  $connection->close();
   }
 
-  protected function makeCategory($category)
+  public function makeCategory($category)
   {
 	  $connection= $this->connect();
 
@@ -484,6 +484,26 @@ class UserTools extends Database
 
   }
 
+  public function updateCategory($id,$category){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("UPDATE category SET category = ? WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("si", $category, $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
   public function makeAnswer($questionid,$answer, $correct)
   {
 	  $connection= $this->connect();
@@ -502,8 +522,6 @@ class UserTools extends Database
 	  $stmt->close();
 	  $connection->close();
   }
-
-
 
   public function deleteQuestionWithId($qid){
 
