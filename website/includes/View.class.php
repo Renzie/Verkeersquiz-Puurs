@@ -53,9 +53,22 @@ class View extends UserTools {
 					</td>
 					</tr>
 			<?php
-
 		}
+	}
 
+	public function showCategories(){
+
+		foreach ($this->getAllCategories() as $category) {
+
+			?>
+			<tr class="category" catId="<?php echo $category["id"]?>">
+				<td><input  class="categoryName" type="text" value="<?php echo $category["category"]?>"></td>
+				<td><a  class="btn red deleteCategory" buttonAction="deleteCategory"><i class="material-icons">delete</i></a>
+					<a class="btn purple updateCategory" buttonAction="updateCategory" ><i class="material-icons">save</i></a>
+					</td>
+					</tr>
+			<?php
+		}
 	}
 
 	public function getAllQuestionsById($id){

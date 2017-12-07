@@ -52,6 +52,16 @@ if (isset($_POST['action'])) {
         case 'updateDifficulty':
             $usertools->updateDifficulty($_POST['diffid'],$_POST['difficulty']);
             break;
-    }
+
+        case 'deleteCategory':
+            $usertools->deleteCategoryWithId($_POST['catId']);
+            break;
+        case 'makeCategory':
+            $usertools->makeCategory($_POST['category']);
+            break;
+        case 'updateCategory':
+            $usertools->updateCategory($_POST['catid'],$_POST['category']);
+            break;
+}
 }
 ?>
