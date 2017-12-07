@@ -230,7 +230,6 @@ public function amountQuestionsQuiz($id){
 	public function displayQuestion($id, $positionInArray) {
 		$questions = $this->getAllQuestionsById($id);
 
-
 		?>
 		<div class="container">
 			<div class="row">

@@ -67,7 +67,7 @@ class UserTools extends Database
         $connection->close();
     }
 
-	protected function registerUser($firstname, $familyname, $departmentid)
+	public function registerUser($firstname, $familyname, $departmentid)
     {
         $connection= $this->connect();
 
@@ -657,7 +657,7 @@ class UserTools extends Database
 	    $connection = $this->connect();
     }
 
-    protected function getAllQuestionsByQuizId($quizId)
+    public function getAllQuestionsByQuizId($quizId)
     {
 		$connection= $this->connect();
 
@@ -757,4 +757,6 @@ class UserTools extends Database
     protected function getStatisticsByOragnization($organizationId)
     {
     }
+
+
 }
