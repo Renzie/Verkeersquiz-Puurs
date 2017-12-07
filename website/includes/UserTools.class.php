@@ -382,6 +382,26 @@ class UserTools extends Database
 
   }
 
+  public function deleteDifficultyWithId($id){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("DELETE FROM difficulty WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("i", $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
 
   public function deleteCategory($id){
 

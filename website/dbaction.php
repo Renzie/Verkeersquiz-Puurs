@@ -43,6 +43,12 @@ if (isset($_POST['action'])) {
         case 'deleteAnswer':
             $usertools->deleteAnswerWithId($_POST['answerId']);
             break;
+        case 'deleteDifficulty':
+            $usertools->deleteDifficultyWithId($_POST['diffId']);
+            break;
+        case 'makeDifficulty':
+            $usertools->deleteDifficultyWithId($_POST['diffId']);
+            break;
     }
 }
 ?>
