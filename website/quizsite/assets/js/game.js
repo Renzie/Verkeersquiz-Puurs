@@ -1,9 +1,3 @@
-/**
- * Created by Renzie on 22/11/2017.
- */
-/**
- * Created by Renzie on 10/11/2017.
- */
 $(function () {
     $('select').material_select();
 
@@ -39,14 +33,14 @@ function Question(text, time) {
         }
         else {
             this.width += 100 / this.total;
-            $('.determinate').css('width', this.width + '%');
+            $('.timeleft').css('width', this.width + '%');
             $('.seconds').text(time--);
         }
     };
 
     this.stopTimer = () => {
         this.width += 100 / this.total;
-        $('.determinate').css('width', this.width + '%');
+        $('.timeleft').css('width', this.width + '%');
         Materialize.toast('Je tijd is op!', 4000);
         $('.answers p input').attr('disabled', true)
         clearInterval(startQuestion);

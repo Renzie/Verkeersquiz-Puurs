@@ -24,6 +24,10 @@
 
 }
 
+.login{
+    margin-top: 15vh;
+}
+
 .progress .determinate{
     transition: 1s linear;
 }

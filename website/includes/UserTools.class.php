@@ -545,9 +545,11 @@ class UserTools extends Database
             $stmt->close();
         }
 		return $data;
-
-
 	}
+
+	public function getQuestionById($id){
+	    $connection = $this->connect();
+    }
 
     protected function getAllQuestionsByQuizId($quizId)
     {

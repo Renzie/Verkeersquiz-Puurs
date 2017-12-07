@@ -8,14 +8,13 @@ $(function () {
 });
 
 
-
 var kleur = [{
     body: "yellow lighten-5",
     nav: "blue-grey"
 },
     {
-        body: "light-blue lighten-2",
-        nav: "yellow darken-2"
+        body: "light-blue lighten-5",
+        nav: "deep-purple lighten-1"
     }
 ];
 
