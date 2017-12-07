@@ -84,7 +84,7 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,9 +236,12 @@ CREATE TABLE `question` (
   `difficulty` int(11) NOT NULL,
   `imageLink` blob,
   `time` time DEFAULT NULL,
+  `category` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Diff_idx` (`difficulty`),
-  CONSTRAINT `Diff` FOREIGN KEY (`difficulty`) REFERENCES `difficulty` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `Cat_idx` (`category`),
+  CONSTRAINT `Diff` FOREIGN KEY (`difficulty`) REFERENCES `difficulty` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Question_Cat` FOREIGN KEY (`category`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -248,7 +251,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (3,'Is dit een goeie quiz system',1,'imageQuestion_3.png','00:00:00'),(4,'Is dit een goeie admin panel',1,NULL,'00:00:30'),(5,'In een Zone 30',1,'','00:00:00'),(6,'Wat betekent dit bord',1,'imageQuestion_6.png','00:00:00'),(7,'Wie mag gebruik maken van een fietspad aangeduid met dit bord',1,'imageQuestion_7.png','00:00:00'),(8,'Je mag dit verbodsbord voorbij fietsen als',1,'imageQuestion_8.png','00:00:00'),(9,'nieuwe vraag',1,'','00:00:00'),(10,'nieuwe vraag',1,'','00:00:00');
+INSERT INTO `question` VALUES (3,'Is dit een goeie quiz system',1,'imageQuestion_3.png','00:00:00',3),(4,'Is dit een goeie admin panel',1,NULL,'00:00:30',3),(5,'In een Zone 30',1,'','00:00:00',3),(6,'Wat betekent dit bord',1,'imageQuestion_6.png','00:00:00',3),(7,'Wie mag gebruik maken van een fietspad aangeduid met dit bord',1,'imageQuestion_7.png','00:00:00',3),(8,'Je mag dit verbodsbord voorbij fietsen als',1,'imageQuestion_8.png','00:00:00',3);
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -338,4 +341,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-19 19:00:15
+-- Dump completed on 2017-11-28 18:52:30

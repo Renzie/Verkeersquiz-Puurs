@@ -4,11 +4,47 @@ require_once 'Database.class.php';
 
 class UserTools extends Database
 {
+    private function zuiverData($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlentities($data, ENT_QUOTES);
+        return $data;
+    }
+
     protected function getAllUsers()
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM user";
         return $this->getData($sql, $connection);
+    }
+
+    public function countDifficulties($quizId, $difficultyId){
+
+      /*
+
+      select count(*) from quiz_questions
+      join question on quiz_questions.questionId = question.id
+      where difficulty = 1 AND quiz_questions.quizId = 1
+
+      */
+
+      $connection= $this->connect();
+      $password = password_hash($password, PASSWORD_DEFAULT);
+
+      if (!$stmt = $connection->prepare("SELECT COUNT ")) {
+          echo "FAIL prepare";
+      }
+
+      if (!$stmt->bind_param("ss", $username, $password)) {
+          echo "FAIL bind";
+      }
+
+      if (!$stmt->execute()) {
+          echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+      }
+      $stmt->close();
+      $connection->close();
+
     }
 
     protected function registerAdmin($username, $password)
@@ -56,13 +92,14 @@ class UserTools extends Database
 
   public function makeOrganization($name, $extrainfo)
   {
+
 	  $connection= $this->connect();
 
 	  if (!$stmt = $connection->prepare("INSERT INTO organization (name, extraInfo) VALUES (?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("ss", $name, $extrainfo)) {
+	  if (!$stmt->bind_param("ss", $this->zuiverData($name), $this->zuiverData($extrainfo))) {
 		  echo "FAIL bind";
 	  }
 
@@ -101,7 +138,7 @@ class UserTools extends Database
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("sii", $answer,$correct, $id)) {
+	  if (!$stmt->bind_param("sii", $this->zuiverData($answer),$this->zuiverData($correct), $this->zuiverData($id))) {
 		  echo "FAIL bind";
 	  }
 
@@ -171,6 +208,25 @@ class UserTools extends Database
 	  $connection->close();
   }
 
+  protected function makeCategory($category)
+  {
+	  $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("INSERT INTO category (category) VALUES (?)")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("s",$category)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+  }
+
   public function makeQuiz($name, $extrainfo)
   {
 	  $connection= $this->connect();
@@ -179,7 +235,7 @@ class UserTools extends Database
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("ss", $name, $extrainfo)) {
+	  if (!$stmt->bind_param("ss", $this->zuiverData($name), $this->zuiverData($extrainfo))) {
 		  echo "FAIL bind";
 	  }
 
@@ -212,15 +268,15 @@ class UserTools extends Database
 
   }
 
-  public function makeQuestion($question, $difficulty, $imgLink, $time, $quizId){
+  public function makeQuestion($question, $difficulty, $imgLink, $time, $category, $quizId){
 
     $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO question (question, difficulty, imageLink, time) VALUES (?, ?, ?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO question (question, difficulty, imageLink, time, category) VALUES (?, ?, ?, ?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("siss", $question, $difficulty, $imgLink, $time)) {
+	  if (!$stmt->bind_param("sisss", $this->zuiverData($question), $difficulty, $imgLink, $time, $category)) {
 		  echo "FAIL bind";
 	  }
 
@@ -326,6 +382,49 @@ class UserTools extends Database
 
   }
 
+  public function deleteDifficultyWithId($id){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("DELETE FROM difficulty WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("i", $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
+
+  public function deleteCategory($id){
+
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("DELETE FROM category WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("i", $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
+
   public function updateQuestion($id, $question, $difficulty, $imgLink, $time){
 
     $connection= $this->connect();
@@ -387,7 +486,7 @@ class UserTools extends Database
 
 
 
-  protected function deleteQuestionWithId($qid){
+  public function deleteQuestionWithId($qid){
 
     $connection= $this->connect();
 
@@ -493,6 +592,13 @@ class UserTools extends Database
         return $this->getData($sql, $connection);
     }
 
+    protected function getAllCategories()
+    {
+        $connection= $this->connect();
+        $sql = "SELECT * FROM category";
+        return $this->getData($sql, $connection);
+    }
+
     protected function getAllOrganization()
     {
         $connection= $this->connect();
@@ -561,7 +667,7 @@ class UserTools extends Database
 			if (!$stmt->execute()) {
 				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 			}
-			$stmt->bind_result($id, $question, $difficulty, $imageLink, $time,$quizidextra,$questionidextra);
+			$stmt->bind_result($id, $question, $difficulty, $imageLink, $time,$category,$quizidextra,$questionidextra);
 			$data = array();
 
 			while($stmt -> fetch()){
@@ -570,7 +676,8 @@ class UserTools extends Database
 				"question"=>$question,
 				"difficulty"=>$difficulty,
 				"imageLink"=>$imageLink,
-				"time"=>$time
+				"time"=>$time,
+                "category"=>$category
 			  ];
 			  array_push($data,$subarray);
 			}
@@ -589,7 +696,7 @@ class UserTools extends Database
 			if (!$stmt->execute()) {
 				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 			}
-			$stmt->bind_result($id, $answer, $quistionId,$correct);
+			$stmt->bind_result($id, $answer, $quistionId,$correct,$category);
 			$data = array();
 
 			while($stmt -> fetch()){
@@ -597,7 +704,8 @@ class UserTools extends Database
 				"id"=>$id,
 				"answer"=>$answer,
 				"quistionId"=>$questionId,
-				"correct"=>$correct
+				"correct"=>$correct,
+                "category"=>$category
 			  ];
 			  array_push($data,$subarray);
 			}

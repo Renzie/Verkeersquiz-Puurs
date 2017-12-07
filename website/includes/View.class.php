@@ -39,6 +39,25 @@ class View extends UserTools {
 		}
 	}
 
+
+
+	public function showEditDifficulties(){
+
+		foreach ($this->getAllDifficulties() as $difficulty) {
+
+			?>
+			<tr class="difficulty" diffId="<?php echo $difficulty["id"]?>">
+				<td><input  class="difficultyName" type="text" value="<?php echo $difficulty["difficulty"]?>"></td>
+				<td><a  class="btn red deleteDifficulty" buttonAction="deleteDifficulty"><i class="material-icons">delete</i></a>
+					<a class="btn purple save_diff" buttonAction="updateDifficulty" ><i class="material-icons">save</i></a>''
+					</td>
+					</tr>
+			<?php
+
+		}
+
+	}
+
 	public function getAllQuestionsById($id){
 		foreach ($this->getAllQuestionsByQuizId($id) as $data) {
 			?>
@@ -98,30 +117,25 @@ class View extends UserTools {
 		        </div>
 		        </div>
 
-
+						<h4>Antwoorden</h4>
 		        <ul class="answers row">
-		        <li>
-		        <h4>Antwoorden</h4>
-		        </li>
 
-					<?php $this->getAnswerByQuestionId($data["id"]) ?>
+							<?php $this->getAnswerByQuestionId($data["id"]) ?>
 
 
 		        </ul>
 
 		        <div class="row">
 		        <div class="col s6">
-		        <a
-		     class="newanswer  btn btn-small waves-effect waves-light blue "><i
-		     class="material-icons ">add</i></a>
+		        <a class="newanswer  btn btn-small waves-effect waves-light blue "><i class="material-icons ">add</i></a>
 		        </div>
 
 		        <div class="col s3 offset-s3 ">
-		        <a data-tooltip="Markeer deze antwoord als correct"
+		        <a data-tooltip="Sla deze vraag op!"
 		     class="markcorrect tooltipped btn btn-small waves-effect waves-light green updateQuestion"><i
 		     class="material-icons ">save</i></a>
-		        <a data-tooltip="Verwijder deze antwoord"
-		     class="removeanswer tooltipped btn btn-small waves-effect waves-light red"><i
+		        <a data-tooltip="Verwijder deze vraag!"
+		     class="removeQuestion tooltipped btn btn-small waves-effect waves-light red"><i
 		    class="material-icons">delete</i></a>
 		        </div>
 		        </div>
@@ -158,6 +172,18 @@ class View extends UserTools {
 
 	}
 
+
+public function amountQuestionsQuiz($id){
+
+	foreach ($this->getAllDifficulties() as $difficulty) {
+		?>
+		<div style="width:20%;display:inline-block;">
+			<label><?php echo $difficulty["difficulty"] ?></label><input class="diff<?php echo $difficulty["id"] ?>" type="number" min="0" max="100">
+		</div>
+		<?php
+	}
+
+}
 
 
 

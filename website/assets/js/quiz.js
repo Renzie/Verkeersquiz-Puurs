@@ -172,7 +172,7 @@ var addRemoveImageButton = (image) =>{
 var addNewQuestion = function (e) {
     e.preventDefault();
     var newQuestion =
-    '<li class="question">' +
+    '<li class="newQuestion">' +
         '<div class="collapsible-header">' +
         '<i class="material-icons">chevron_right</i> Links of rechts </div>'+
     '<div class="collapsible-body">'+

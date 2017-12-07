@@ -8,11 +8,8 @@ if (isset($_POST['action'])) {
     switch ($_POST['action']) {
 
         case 'updateOrganization':
-            //$usertools->makeOrganization($_POST['schoolName'],$_POST['schoolInfo']);
-            //$usertools->makeOrganization("testtesttest", "myinfo");
             $usertools->updateOrganization($_POST['schoolId'],$_POST['schoolName'],$_POST['schoolInfo']);
             break;
-
         case 'createOrganization':
             $usertools->makeOrganization($_POST['schoolName'],$_POST['schoolInfo']);
             break;
@@ -29,15 +26,13 @@ if (isset($_POST['action'])) {
             $usertools->makeQuiz($_POST['quizName'],$_POST['quizInfo']);
             break;
         case 'createQuestion':
-            $usertools->makeQuestion($_POST['question'],$_POST['difficulty'],$_POST['imgLink'], $_POST['time'], $_POST['quizId']);
-
+            $usertools->makeQuestion($_POST['question'],$_POST['difficulty'],$_POST['imgLink'], $_POST['time'],  $_POST['category'], $_POST['quizId']);
             break;
         case 'updateQuestion':
             $usertools->updateQuestion($_POST['questionId'],$_POST['question'],$_POST['difficulty'],$_POST['imgLink'], $_POST['time']);
-
             break;
         case 'deleteQuestion':
-			      $usertools->deleteQuestion($_POST['questionId']);
+			$usertools->deleteQuestionWithId($_POST['questionId']);
             break;
         case 'makeAnswer':
             $usertools->makeAnswer($_POST['questionId'],$_POST['answer'],$_POST['correct']);
@@ -47,19 +42,13 @@ if (isset($_POST['action'])) {
             break;
         case 'deleteAnswer':
             $usertools->deleteAnswerWithId($_POST['answerId']);
-
+            break;
+        case 'deleteDifficulty':
+            $usertools->deleteDifficultyWithId($_POST['diffId']);
+            break;
+        case 'makeDifficulty':
+            $usertools->deleteDifficultyWithId($_POST['diffId']);
             break;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
- ?>
+?>
