@@ -47,7 +47,10 @@ if (isset($_POST['action'])) {
             $usertools->deleteDifficultyWithId($_POST['diffId']);
             break;
         case 'makeDifficulty':
-            $usertools->deleteDifficultyWithId($_POST['diffId']);
+            $usertools->makeDifficulty($_POST['difficulty']);
+            break;
+        case 'updateDifficulty':
+            $usertools->updateDifficulty($_POST['diffid'],$_POST['difficulty']);
             break;
     }
 }

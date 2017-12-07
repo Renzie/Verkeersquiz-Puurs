@@ -189,7 +189,7 @@ class UserTools extends Database
 	}
 
 
-  protected function makeDifficulty($difficulty)
+  public function makeDifficulty($difficulty)
   {
 	  $connection= $this->connect();
 
@@ -454,6 +454,25 @@ class UserTools extends Database
 	  }
 
 	  if (!$stmt->bind_param("ssi", $name, $extrainfo, $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+  public function updatedifficulty($id,$difficulty){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("UPDATE difficulty SET difficulty = ? WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("si", $difficulty, $id)) {
 		  echo "FAIL bind";
 	  }
 

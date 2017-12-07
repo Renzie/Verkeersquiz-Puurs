@@ -49,7 +49,7 @@ class View extends UserTools {
 			<tr class="difficulty" diffId="<?php echo $difficulty["id"]?>">
 				<td><input  class="difficultyName" type="text" value="<?php echo $difficulty["difficulty"]?>"></td>
 				<td><a  class="btn red deleteDifficulty" buttonAction="deleteDifficulty"><i class="material-icons">delete</i></a>
-					<a class="btn purple save_diff" buttonAction="updateDifficulty" ><i class="material-icons">save</i></a>''
+					<a class="btn purple updateDifficulty" buttonAction="updateDifficulty" ><i class="material-icons">save</i></a>
 					</td>
 					</tr>
 			<?php
