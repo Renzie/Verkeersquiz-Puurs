@@ -1,9 +1,9 @@
 <?php
 class Database {
-	private $db_host = '127.0.0.1';
-	private $db_user = 'puurs';
-	private $db_pass = 'puurs';
-	private $db_name = 'puurs';
+	private $db_host = 'verkeersquiz.eu.mysql';
+	private $db_user = 'verkeersquiz_eu';
+	private $db_pass = '2bYAMrtV7nkUZ2zR3pcEtPNX';
+	private $db_name = 'verkeersquiz_eu';
 
 	protected function connect(){
 		return new mysqli($this->db_host,$this->db_user,$this->db_pass,$this->db_name);

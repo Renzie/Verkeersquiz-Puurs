@@ -227,6 +227,9 @@ public function amountQuestionsQuiz($id){
 
 
 
+
+
+
 	public function displayQuestion($id, $positionInArray) {
 		$questions = $this->getAllQuestionsById($id);
 
@@ -243,7 +246,7 @@ public function amountQuestionsQuiz($id){
 						<img style="width:35vw ;height: 20vw" class="activator image" src="<?php $questions[$positionInArray]["imageLink"]	 ?> ">
 					</div>
 					<div class="col offset-2">
-						In een Zone 30 mag je op straat spelen:
+						<?php $questions[$positionInArray]["question"] ?>
 					</div>
 					<div class="card-content row question">
 
@@ -255,18 +258,20 @@ public function amountQuestionsQuiz($id){
 						</div>
 					</div>
 					<div class="card-action answers">
-						<p>
-							<input name="group1" type="radio" id="answer-1"/>
-							<label for="answer-1">Mag je op straat spelen</label>
-						</p>
-						<p>
-							<input name="group1" type="radio" id="answer-2"/>
-							<label for="answer-2">Mogen er geen zebrapaden 	gemarkeerd worden</label>
-						</p>
-						<p>
-							<input name="group1" type="radio" id="answer-3"/>
-							<label for="answer-3">Mag een fietser niet sneller 	dan 30 rijden</label>
-						</p>
+
+						<?php
+						foreach($this->getAllAnswersByQuestionId($id) as $data){
+							?>
+
+							<p>
+                            <input name="group1" type="radio" id="answer-1"/>
+                            <label for="answer-1"><?php $data["answer"] ?></label>
+                        </p>
+
+							<?php
+						}
+
+						?>
 					</div>
 					<div class="card-action">
 						<input type="submit" id="eindevraag" value="Volgende vraag" class="btn red">

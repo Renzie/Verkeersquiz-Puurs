@@ -68,7 +68,7 @@ $view = new View();
 
         <?php
 
-            $view->displayQuestion()
+
 
         ?>
 
