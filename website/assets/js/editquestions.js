@@ -8,10 +8,11 @@ function bindEvents(){
     $('.makeQuestion').on('click', makeQuestion);
     $('.questions').on('click', '.newanswer', addNewAnswer);
     $('.questions').on('click', '.removeanswer', removeAnswer);
-    $('.answers').on('click', '.markcorrect', markCorrect);
+    $('body').on('click', '.markcorrect', markCorrect);
     $('.question').on('click','.removeQuestion',removeQuestion);
     $(".dropdown-button").dropdown();
     $(".button-collapse").sideNav();
+    addSpecialButton();
 }
 
 var updateQuestion = function(){
@@ -140,7 +141,7 @@ var addNewAnswer = function (e) {
 
 
     var questionId = $(this).closest('.question').attr("questionid");
-    var answer = "";
+    var answer = "new answer";
     var correct = 0;
     var that = this;
 
@@ -164,11 +165,13 @@ var addNewAnswer = function (e) {
         //TODO
         //refresh
         var id = $(that).closest('.question').attr("questionid");
-        var div = $(that).closest('.answers');
+        var div = $(that).parent().parent().parent().find(".answersdiv"+id);
+        console.log(that);
         console.log(div);
         console.log("id: "+id);
           var thegodrow = $(that).parent().parent().parent().find(".answers");
-          $(div).load(document.URL +  ' .answer');
+          console.log("doing reload");
+          $(div).load(document.URL +  ' .answersdiv'+id+' .answers');
 
           //$(that).closest(".answers").load(document.URL +  ' .answer');
 
@@ -213,9 +216,22 @@ var markCorrect = function(){
      if($(this).attr("answerid") != clickedAnswerId){
        $(this).find(".markcorrect").removeClass("orange").removeClass("green").addClass("red");
        $(this).attr("correct", 0)
-
      }
    });
+}
 
+var addSpecialButton= function(){
 
+      var url_string = window.location.href;
+      var url = new URL(url_string);
+  var quizId = url.searchParams.get("id");
+  var html = `<li>
+              <div class="divider"></div>
+              </li>
+              <li>
+                <a href="aantal.php?id=${quizId}"><i class="material-icons">format_list_numbered</i>Aantal Quizvragen</a>
+              </li>`;
+
+  $("#slide-out").append(html);
+  console.log("trying to add button");
 }

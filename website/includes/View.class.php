@@ -131,12 +131,12 @@ class View extends UserTools {
 		        </div>
 
 						<h4>Antwoorden</h4>
+
+						<div class="answersdiv<?php echo $data["id"] ?>">
 		        <ul class="answers row">
-
 							<?php $this->getAnswerByQuestionId($data["id"]) ?>
-
-
 		        </ul>
+					</div>
 
 		        <div class="row">
 		        <div class="col s6">
@@ -145,7 +145,7 @@ class View extends UserTools {
 
 		        <div class="col s3 offset-s3 ">
 		        <a data-tooltip="Sla deze vraag op!"
-		     class="markcorrect tooltipped btn btn-small waves-effect waves-light green updateQuestion"><i
+		     class="tooltipped btn btn-small waves-effect waves-light green updateQuestion"><i
 		     class="material-icons ">save</i></a>
 		        <a data-tooltip="Verwijder deze vraag!"
 		     class="removeQuestion tooltipped btn btn-small waves-effect waves-light red"><i
@@ -236,6 +236,50 @@ public function amountQuestionsQuiz($id){
 		}else{
 			echo "Logs are empty";
 		}
+	}
+
+	public function getAnswersOverview($quizid){
+
+		$allQuizQuestions = $this->getAllQuestionsByQuizId($quizid);
+		$allCategories = $this->getAllCategories();
+		$allDifficulties = $this->getAllDifficulties();
+
+		$stucturedData=[];
+
+		foreach ($allCategories as $category) {
+			$subarray=[];
+			foreach ($allDifficulties as $difficulty) {
+				$counter = 0;
+				foreach($allQuizQuestions as $question){
+					//echo "<p>quest.diff: ".$question["difficulty"]."</p>";
+					//echo "<p>diff.diff: ".$difficulty["id"]."</p>";
+					//echo "<p>qest.cat: ".$question["category"]."</p>";
+					//echo "<p>qest.diff: ".$category["id"]."</p>";
+					if($question["difficulty"]==$difficulty["id"] AND $question["category"] == $category["id"]){
+
+						$counter++;
+					}
+				}
+				$subarray[$difficulty["difficulty"]]=$counter;
+			}
+			$stucturedData[$category["category"]]=$subarray;
+		}
+		//print_r ($stucturedData);
+
+		//aantal kolommen = $allDifficulties
+		echo "<table class='striped'>";
+		echo "<tbody>";
+		//display collumns
+		foreach ($allCategories as $category) {
+			?>
+			<tr><p style="display:inline;"><?php echo $category["category"]?><input style="width:20%;" min=0 name="something" type="number"></p></tr>
+			<?php
+		}
+		echo "</tbody>";
+		echo "</table";
+
+
+
 	}
 
 
