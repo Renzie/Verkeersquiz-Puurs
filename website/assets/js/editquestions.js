@@ -3,6 +3,7 @@ $(document).ready(function () {
 });
 
 function bindEvents(){
+    $('select').material_select();
     $('.question').on('click', '.updateQuestion', updateQuestion);
     $('.makeQuestion').on('click', makeQuestion);
     $('.questions').on('click', '.newanswer', addNewAnswer);
@@ -95,6 +96,7 @@ var makeQuestion = function(){
 
       //Dirty way, just reload the entire page!
       location.reload();
+
 
   });
 
