@@ -606,7 +606,7 @@ class UserTools extends Database
         return $this->getData($sql, $connection);
     }
 
-    protected function getAllDepartmentsById($organizationId)
+    public function getAllDepartmentsById($organizationId)
     {
 
         $connection= $this->connect();
@@ -631,6 +631,14 @@ class UserTools extends Database
             $stmt->close();
             return $data;
         }
+    }
+
+    public function getAllDepartments(){
+        $connection= $this->connect();
+        $sql = "SELECT * FROM department";
+        return $this->getData($sql, $connection);
+
+
     }
 
 	public function getQuizInfoById($id){
@@ -685,6 +693,8 @@ class UserTools extends Database
 			return $data;
 		}
     }
+
+
 
     protected function getAllAnswersByQuestionId($questionId)
     {
@@ -748,6 +758,13 @@ class UserTools extends Database
 			return $data;
 		}
     }
+
+
+    protected function getRandomQuestionsByQuizId($id){
+        return shuffle($this->getAllQuestionsByQuizId($id));
+    }
+
+
 
 	protected function getStatisticsByDepartment($demapartmentId)
 	{
