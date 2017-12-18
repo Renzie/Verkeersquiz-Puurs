@@ -6,7 +6,9 @@ session_start();
    //die;
 }*/
 
-
+if(!isset($_GET["id"])){
+	header("location:organizatie.php");
+}
 
 require_once "head.html";
 require_once "includes/Database.class.php";

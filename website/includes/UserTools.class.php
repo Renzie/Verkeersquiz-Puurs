@@ -174,7 +174,24 @@ class UserTools extends Database
 
   public function deleteOrganization($id){
 
-    $connection= $this->connect();
+	  $connection= $this->connect();
+
+  	  if (!$stmt = $connection->prepare("DELETE FROM department WHERE organizationId = ?")) {
+  		  echo "FAIL prepare";
+  	  }
+
+	  if (!$stmt->bind_param("i", $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+
+	  $stmt->close();
+
+	  $connection->close();
+	  $connection= $this->connect();
 
 	  if (!$stmt = $connection->prepare("DELETE FROM organization WHERE id = ?")) {
 		  echo "FAIL prepare";
@@ -189,9 +206,6 @@ class UserTools extends Database
 	  }
 	  $stmt->close();
 	  $connection->close();
-
-    //deleteDepartment($id);
-    //TODO delete all related departments
 
   }
 

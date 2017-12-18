@@ -10,11 +10,11 @@ require_once "head.html";
    header("location:logout.php");
    //die;
 }
-
+*/
 if(!isset($_GET["id"])){
 	header("location:createquiz.php");
 }
-*/
+
 
 $userTools = new UserTools();
 $view = new View();
