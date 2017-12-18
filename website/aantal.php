@@ -20,9 +20,11 @@ $view = new View();
 ?>
 
     <h1>Aantal vragen per categorie</h1>
+    <form>
     <?php
     $view->getAnswersOverview($_GET["id"]);
     ?>
+    </form>
 
 </section>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

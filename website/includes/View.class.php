@@ -264,19 +264,24 @@ public function amountQuestionsQuiz($id){
 			}
 			$stucturedData[$category["category"]]=$subarray;
 		}
-		//print_r ($stucturedData);
+		print_r ($stucturedData);
 
-		//aantal kolommen = $allDifficulties
-		echo "<table class='striped'>";
-		echo "<tbody>";
+
 		//display collumns
 		foreach ($allCategories as $category) {
-			?>
-			<tr><p style="display:inline;"><?php echo $category["category"]?><input style="width:20%;" min=0 name="something" type="number"></p></tr>
-			<?php
+			echo "<div id='kolom' class='row s12'>";
+			echo "<h5>".$category["category"]."</h5>";
+			foreach ($allDifficulties as $difficulty) {
+				echo "<div id='kolom' class='col s3'>";
+				echo '<label>'.$difficulty["difficulty"].' ('.$stucturedData[$category["category"]][$difficulty["difficulty"]].')</label>';
+				echo '<input name "'.$category["category"].'_'.$difficulty["difficulty"].'" min="0" max="'.$stucturedData[$category["category"]][$difficulty["difficulty"]].'" name="something" type="number"/>';
+				echo "</div>";
+			}
+
+			echo "</div>";
+
 		}
-		echo "</tbody>";
-		echo "</table";
+		echo "</div>";
 
 
 
