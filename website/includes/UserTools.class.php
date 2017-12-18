@@ -425,15 +425,15 @@ class UserTools extends Database
   }
 
 
-  public function updateQuestion($id, $question, $difficulty, $imgLink, $time){
+  public function updateQuestion($id, $question, $difficulty,$category, $imgLink, $time){
 
     $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("UPDATE question SET question = ? , difficulty = ? , imageLink = ? , time = ? WHERE id = ?")) {
+	  if (!$stmt = $connection->prepare("UPDATE question SET question = ? , difficulty = ? , category = ? , imageLink = ? , time = ? WHERE id = ?")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("sissi", $question, $difficulty, $imgLink, $time ,$id)) {
+	  if (!$stmt->bind_param("siissi", $question, $difficulty, $category, $imgLink, $time ,$id)) {
 		  echo "FAIL bind";
 	  }
 

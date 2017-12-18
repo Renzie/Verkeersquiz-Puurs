@@ -5,6 +5,7 @@ $(document).ready(function () {
 function bindEvents(){
     $('select').material_select();
     $('.question').on('click', '.updateQuestion', updateQuestion);
+
     $('.makeQuestion').on('click', makeQuestion);
     $('.questions').on('click', '.newanswer', addNewAnswer);
     $('.questions').on('click', '.removeanswer', removeAnswer);
@@ -13,15 +14,19 @@ function bindEvents(){
     $(".dropdown-button").dropdown();
     $(".button-collapse").sideNav();
     addSpecialButton();
+    $('form').on('change',updateQuestion);
 }
 
 var updateQuestion = function(){
   //console.log("updating question");
   //getting data
+  console.log("updating");
 
   var questionId = $(this).closest('.question').attr("questionid");
   var question = $(this).closest('.question').find("[name='question']").val();
   var difficulty = $(this).closest('.question').find("[name='difficulty']").val();
+  var category = $(this).closest('.question').find("[name='category']").val();
+
   var img = $(this).closest('.question').find("[name='image']").attr("src");
   var imgLink="";
   if(img != "#"){
@@ -35,6 +40,7 @@ var updateQuestion = function(){
     'questionId': questionId,
     'question': question,
     'difficulty': difficulty,
+    'category':category,
     'imgLink': imgLink,
     'time': '00:00:00'
   };

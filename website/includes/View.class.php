@@ -79,11 +79,13 @@ class View extends UserTools {
 		        <div class="collapsible-header">
 		        <i class="material-icons">chevron_right</i> <?php echo $data["question"]?> </div>
 		    	  <div class="collapsible-body">
+							<form>
 		        <label>Vraag</label>
 		        <input name="question" class="col s6" type="text" value="<?php echo $data["question"]?>" placeholder="vraag"/>
 
 		        <div class="editquestion row">
-		        <div class="input-field col s5">
+		        <div class=" col s5">
+							<div class="input-field">
 		        <select name="difficulty">
 		       	<option value="" disabled >Selecteer de moeilijkheidsgraad</option>
 
@@ -107,7 +109,30 @@ class View extends UserTools {
 		       	<option value="normaal">Normaal</option>
 		        <option value="moeilijk">Moeilijk</option> -->
 		        </select>
-		        <label>Moelijkheidsgraad</label>
+		        <label for="difficulty">Moelijkheidsgraad</label>
+					</div>
+					<div class="input-field">
+
+						 <select name="category">
+							 <option disabled>selecteer een categorie</option>
+							 <?php
+	 						foreach ($this->getAllCategories() as $categorie) {
+	 							?>
+	 							<option value="<?php echo $categorie["id"] ?>"
+	 								<?php
+	 								if($categorie["id"] == $data["category"])
+	 								{
+	 									?> selected <?php
+	 								}
+	 								 ?>
+	 								><?php echo $categorie["category"] ?></option>
+
+	 							<?php
+	 						}
+	 						 ?>
+						 </select>
+						 <label for="category">Categorie</label>
+					 </div>
 
 
 
@@ -152,6 +177,7 @@ class View extends UserTools {
 		    class="material-icons">delete</i></a>
 		        </div>
 		        </div>
+					</form>
 		        </div>
 		        </li>
 
@@ -180,11 +206,7 @@ class View extends UserTools {
 
 			<?php
 		}
-
-
-
 	}
-
 
 public function amountQuestionsQuiz($id){
 
