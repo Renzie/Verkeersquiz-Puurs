@@ -3,8 +3,14 @@ $(function () {
     getQuestion();
 });
 
+
+
+
 var currentQuestion;
 var timer;
+
+var currentQuiz = [];
+
 
 function getQuestion() {
     $.ajax({
@@ -20,59 +26,77 @@ function getQuestion() {
         }
     });
 }
-
-
 function Question(obj) {
-    this.tijd = obj.time.split(':');
+
+    this.time = obj.time.split(':');
     this.setupTime = function () {
-        if(this.tijd[1] !== "00"){
-            if (this.tijd[2] !== "00"){
-
-                return this.tijd[2]*this.tijd[1]*this.tijd[0];
-            } else {
-
-                return this.tijd[2]*this.tijd[1];
-            }
-        } else {
-
-            return this.tijd[1];
-        }
-        return null;
-
-    }
+        var hour = this.time[0]*60*60;
+        var minute = this.time[1]*60;
+        var second = this.time[2];
+        return parseInt(hour + minute + second);
+    };
+    this.answers = [];
     this.currentTime = this.setupTime();
-
-    console.log(this.tijd)
-
 
     var that = this;
     this.text = obj.question;
     this.width = 0;
-    this.total = obj.time;
+    this.total = this.currentTime;
+
+    this.getAnswers = function () {
+        $.ajax({
+            type : "POST",
+            url : "../dbaction.php",
+            data : {
+                action : "getAnswersByQuestionId",
+                questionId: 3
+            },
+            success: function (data) {
+                that.answers = JSON.parse(data);
+                console.log(that.answers)
+                that.setupAnswers(that.answers);
+            }
+        })
+    };
+
+    this.setupAnswers = function (answers) {
+        $(answers).each(function (data) {
+
+            var html = '<p>' +
+                '<input name="group1" type="radio" id="answer-' +answers[data].id + '"/>' +
+                '<label for="answer-' + answers[data].id + '">' + answers[data].answer +'</label>' +
+            '</p>';
+
+            $('[data-role="answers"]').append(html);
+        })
+    };
 
     $('#eindevraag').on('click', this.stopTimer);
     this.setupText = function () {
         $("[data-role='question']").text(obj.question);
     };
     this.setup = function () {
-        console.log(this.currentTime)
-        timer = setInterval(this.update(that.currentTime), 1000);
+        timer = setInterval(this.update, 1000);
         this.setupText();
+        this.getAnswers();
     };
 
 
-    this.update = (time) => {
-        if (time < 0) {
+
+
+    this.update = () => {
+        if (this.currentTime < 0) {
             that.stopTimer();
-        } else if (time == Math.round((this.total / 2) * 10 / 10)) {
-            Materialize.toast('Je hebt nog ' + time-- + ' Seconden!', 4000);
-        } else if (time == 10) {
-            Materialize.toast('Je hebt nog ' + time-- + ' Seconden! Schiet op!', 4000);
+        } else if (this.currentTime == Math.round((this.total / 2) * 10 / 10)) {
+            Materialize.toast('Je hebt nog ' + this.currentTime-- + ' Seconden!', 4000);
+
+        } else if (this.currentTime == 10) {
+            Materialize.toast('Je hebt nog ' + this.currentTime-- + ' Seconden! Schiet op!', 4000);
         }
         else {
             this.width += 100 / this.total;
             $('.timeleft').css('width', this.width + '%');
-            $('.seconds').text(time--);
+            $('.seconds').text(this.currentTime--);
         }
     };
 
@@ -92,8 +116,6 @@ function Question(obj) {
 
 
         $('.question').fadeIn();
-
-
     }
 
 

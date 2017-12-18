@@ -12,9 +12,6 @@ $questions = $usertools->getAllQuestionsByQuizId($quiz['id']);
 
 $currentQuestion = 0;
 
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -103,18 +100,9 @@ $currentQuestion = 0;
                                 <span class="seconds flow-text">0</span>
                             </div>
                         </div>
-                        <div class="card-action answers">
+                        <div class="card-action answers" data-role="answers">
 
-                            <?php
-                                foreach ($usertools->getAllAnswersByQuestionId($questions[$currentQuestion]['id']) as $data){
-                           ?>
-                                    <p>
-                                <input name="group1" type="radio" id="answer-<?php echo $data['id'] ?>"/>
-                                <label for="answer-<?php echo $data['id'] ?>"><?php echo $data['answer'] ?></label>
-                            </p>
-                            <?php
-                                }
-                            ?>
+
 
 
                         </div>

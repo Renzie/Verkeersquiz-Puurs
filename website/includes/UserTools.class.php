@@ -706,7 +706,7 @@ class UserTools extends Database
             ];
             $stmt->close();
         }
-        return json_encode($data);
+        return $data;
     }
 
     public function getAllQuestionsByQuizId($quizId)
@@ -767,6 +767,8 @@ class UserTools extends Database
 			return $data;
 		}
     }
+
+
 
     protected function getLogs()
     {

@@ -8,8 +8,11 @@ if (isset($_POST['action'])) {
     switch ($_POST['action']) {
 
         case 'getCurrentQuestion' :
-            echo $usertools->getQuestionById($_POST['questionId']);
+            echo json_encode($usertools->getQuestionById($_POST['questionId']));
                 break;
+        case 'getAnswersByQuestionId' :
+            echo json_encode($usertools->getAllAnswersByQuestionId($_POST['questionId']));
+            break;
         case 'updateOrganization':
             $usertools->updateOrganization($_POST['schoolId'], $_POST['schoolName'], $_POST['schoolInfo']);
             break;
