@@ -62,6 +62,15 @@ if (isset($_POST['action'])) {
         case 'updateCategory':
             $usertools->updateCategory($_POST['catid'],$_POST['category']);
             break;
+        case 'deleteDepartment':
+            $usertools->deleteDepartment($_POST['departmentId']);
+            break;
+        case 'updateDepartment':
+            $usertools->updateDepartment($_POST['departmentId'],$_POST['departmentName']);
+            break;
+        case 'makeDepartment':
+            $usertools->makeDepartment($_POST['departmentName'], $_POST['organizationId']);
+            break;
 }
 }
 ?>

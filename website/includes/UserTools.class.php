@@ -11,7 +11,7 @@ class UserTools extends Database
         return $data;
     }
 
-    protected function getAllUsers()
+    public function getAllUsers()
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM user";
@@ -47,7 +47,7 @@ class UserTools extends Database
 
     }
 
-    protected function registerAdmin($username, $password)
+    public function registerAdmin($username, $password)
     {
         $connection= $this->connect();
         $password = password_hash($password, PASSWORD_DEFAULT);
@@ -67,7 +67,7 @@ class UserTools extends Database
         $connection->close();
     }
 
-	protected function registerUser($firstname, $familyname, $departmentid)
+	public function registerUser($firstname, $familyname, $departmentid)
     {
         $connection= $this->connect();
 
@@ -150,6 +150,28 @@ class UserTools extends Database
 
   }
 
+  public function deleteDepartment($id){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("DELETE FROM department WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("i", $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+
+
+  }
+
   public function deleteOrganization($id){
 
     $connection= $this->connect();
@@ -168,9 +190,12 @@ class UserTools extends Database
 	  $stmt->close();
 	  $connection->close();
 
+    //deleteDepartment($id);
+    //TODO delete all related departments
+
   }
 
-  protected function makeDepartment($name, $organizationid){
+  public function makeDepartment($name, $organizationid){
 		$connection= $this->connect();
 
 		if (!$stmt = $connection->prepare("INSERT INTO department (name, organizationId) VALUES (?, ?)")) {
@@ -445,6 +470,26 @@ class UserTools extends Database
 
   }
 
+  public function updateDepartment($id, $name){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("UPDATE department SET name = ? WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("si", $name, $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
   public function updateQuiz($id,$name,$extrainfo){
 
     $connection= $this->connect();
@@ -579,7 +624,7 @@ class UserTools extends Database
   }
 
 
-  protected function makeUserAnswer($userid, $answerid, $time)
+  public function makeUserAnswer($userid, $answerid, $time)
   {
 	  $connection= $this->connect();
 
@@ -615,35 +660,35 @@ class UserTools extends Database
         return password_verify($password, $resultPassword);
     }
 
-    protected function getAllQuizzes()
+    public function getAllQuizzes()
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM quiz";
         return $this->getData($sql, $connection);
     }
 
-    protected function getAllDifficulties()
+    public function getAllDifficulties()
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM difficulty";
         return $this->getData($sql, $connection);
     }
 
-    protected function getAllCategories()
+    public function getAllCategories()
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM category";
         return $this->getData($sql, $connection);
     }
 
-    protected function getAllOrganization()
+    public function getAllOrganization()
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM organization";
         return $this->getData($sql, $connection);
     }
 
-    protected function getAllDepartmentsById($organizationId)
+    public function getAllDepartmentsById($organizationId)
     {
 
         $connection= $this->connect();
@@ -692,7 +737,7 @@ class UserTools extends Database
 
 	}
 
-    protected function getAllQuestionsByQuizId($quizId)
+    public function getAllQuestionsByQuizId($quizId)
     {
 		$connection= $this->connect();
 
@@ -721,7 +766,7 @@ class UserTools extends Database
 		}
     }
 
-    protected function getAllAnswersByQuestionId($questionId)
+    public function getAllAnswersByQuestionId($questionId)
     {
 		$connection= $this->connect();
 
@@ -749,7 +794,7 @@ class UserTools extends Database
 		}
     }
 
-    protected function getLogs()
+    public function getLogs()
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM logs";
@@ -757,7 +802,7 @@ class UserTools extends Database
         return $this->getData($sql, $connection);
     }
 
-    protected function getAnswersByUser($userId)
+    public function getAnswersByUser($userId)
     {
 		$connection= $this->connect();
 
@@ -784,12 +829,12 @@ class UserTools extends Database
 		}
     }
 
-	protected function getStatisticsByDepartment($demapartmentId)
+	public function getStatisticsByDepartment($demapartmentId)
 	{
 
 	}
 
-    protected function getStatisticsByOragnization($organizationId)
+    public function getStatisticsByOragnization($organizationId)
     {
     }
 }

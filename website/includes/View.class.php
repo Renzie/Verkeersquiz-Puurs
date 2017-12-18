@@ -20,6 +20,26 @@ class View extends UserTools {
 		}
 	}
 
+	public function getAllDepartmentsByOrganizationId($organizationId){
+
+		foreach($this->getAllDepartmentsById($organizationId) as $department)
+		{
+			//echo $school["Name"];
+			?>
+			<tr class="klas" klasId="<?php echo $department["id"]?>" >
+				<td><input class="klasName" type="text" value="<?php echo $department["name"]?>" klasIdName="<?php echo $department["id"]?>" ></td>
+				<td>
+					<a  class="btn red remove_department" buttonAction="deleteDepartment"><i class="material-icons">delete</i></a>
+					<a class="btn purple update_department" buttonAction="updateDepartment" ><i class="material-icons">save</i></a>
+					</td>
+					</tr>
+			<?php
+
+		}
+
+
+	}
+
 	public function getQuizzes(){
 
 
