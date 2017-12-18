@@ -341,6 +341,12 @@ class View extends UserTools
     }
 
 
+    public function listQuizzes(){
+        foreach ($this->getAllQuizzes() as $quiz) {
+            ?><option value="<?php echo $quiz["id"] ?>"><?php echo $quiz["name"] ?></option>
+            <?php
+        }
+    }
 
 
     public function listOrganization()
