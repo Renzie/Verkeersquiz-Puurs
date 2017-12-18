@@ -46,7 +46,7 @@ var updateQuestion = function(){
   };
   $.post(ajaxurl, data, function (response) {
       // Response div goes here.
-      Materialize.toast("Nieuwe vraag aangemaakt!",1000);
+      Materialize.toast("Vraag opgeslaan",1000);
       //alert("action performed successfully");
   });
 

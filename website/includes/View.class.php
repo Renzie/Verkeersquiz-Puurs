@@ -9,7 +9,9 @@ class View extends UserTools {
 			<tr class="school" schoolId="<?php echo $school["id"]?>" >
 				<td><input class="schoolName" type="text" value="<?php echo $school["name"]?>" schoolIdName="<?php echo $school["id"]?>" ></td>
 				<td><input class="schoolInfo" type="text" value="<?php echo $school["extraInfo"]?>" schoolIdInfo="<?php echo $school["id"]?>"  ></td>
-				<td><a  class="btn red remove_school" buttonAction="deleteOrganization"><i class="material-icons">delete</i></a>
+				<td>
+					<a  href="editorganization.php?id=<?php echo $school["id"]?>" class="btn edit_school" buttonAction="editOrganization"><i class="material-icons">edit</i></a>
+					<a  class="btn red remove_school" buttonAction="deleteOrganization"><i class="material-icons">delete</i></a>
 					<a class="btn purple save_school" buttonAction="updateOrganization" ><i class="material-icons">save</i></a>
 					</td>
 					</tr>
