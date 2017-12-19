@@ -110,6 +110,26 @@ class UserTools extends Database
 	  $connection->close();
   }
 
+  public function makeTemplate($quizId, $name, $template)
+  {
+
+	  $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("INSERT INTO quiz_template (quizId, name, template) VALUES (?, ?, ?)")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("iss", $this->zuiverData($quizId), $this->zuiverData($name), $template)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+  }
+
   public function updateOrganization($id,$name,$extrainfo){
 
     $connection= $this->connect();
@@ -678,6 +698,13 @@ class UserTools extends Database
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM quiz";
+        return $this->getData($sql, $connection);
+    }
+
+    public function getAllTemplates()
+    {
+        $connection= $this->connect();
+        $sql = "SELECT * FROM quiz_template";
         return $this->getData($sql, $connection);
     }
 

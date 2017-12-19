@@ -71,6 +71,9 @@ if (isset($_POST['action'])) {
         case 'makeDepartment':
             $usertools->makeDepartment($_POST['departmentName'], $_POST['organizationId']);
             break;
+        case 'submitTemplate':
+            $usertools->makeTemplate($_POST['quizId'], $_POST['name'], $_POST['template']);
+            break;
 }
 }
 ?>

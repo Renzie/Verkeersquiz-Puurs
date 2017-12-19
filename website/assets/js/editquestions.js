@@ -235,7 +235,7 @@ var addSpecialButton= function(){
               <div class="divider"></div>
               </li>
               <li>
-                <a href="aantal.php?id=${quizId}"><i class="material-icons">format_list_numbered</i>Aantal Quizvragen</a>
+                <a href="aantal.php?id=${quizId}"><i class="material-icons">format_list_numbered</i>Quiz Template</a>
               </li>`;
 
   $("#slide-out").append(html);
