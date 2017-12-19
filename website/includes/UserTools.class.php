@@ -150,6 +150,26 @@ class UserTools extends Database
 
   }
 
+  public function updateTemplate($id,$quizId,$name,$template){
+
+    $connection= $this->connect();
+
+	  if (!$stmt = $connection->prepare("UPDATE quiz_template SET name = ? , quizId = ?, template=? WHERE id = ?")) {
+		  echo "FAIL prepare";
+	  }
+
+	  if (!$stmt->bind_param("sisi", $name, $quizId, $template, $id)) {
+		  echo "FAIL bind";
+	  }
+
+	  if (!$stmt->execute()) {
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  }
+	  $stmt->close();
+	  $connection->close();
+
+  }
+
   public function updateAnswer($id,$answer,$correct){
 
     $connection= $this->connect();
@@ -187,9 +207,6 @@ class UserTools extends Database
 	  }
 	  $stmt->close();
 	  $connection->close();
-
-
-
   }
 
   public function deleteOrganization($id){
@@ -458,6 +475,26 @@ class UserTools extends Database
 	  }
 	  $stmt->close();
 	  $connection->close();
+
+  }
+
+  public function deleteTemplate($id){
+
+    $connection= $this->connect();
+
+    if (!$stmt = $connection->prepare("DELETE FROM quiz_template WHERE id = ?")) {
+      echo "FAIL prepare";
+    }
+
+    if (!$stmt->bind_param("i", $id)) {
+      echo "FAIL bind";
+    }
+
+    if (!$stmt->execute()) {
+      echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
+    $stmt->close();
+    $connection->close();
 
   }
 

@@ -36,7 +36,14 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
         </div>
 
 			</div>
-      <div class="col s4"></div>
+      <div class="col s4">
+        <br>
+        <div id="back" class="hide">
+        <p>terug naar :</p>
+        <br>
+        <a type="submit" class="waves-effect waves-light btn blue " href="javascript:location.reload()">Nieuwe template</a>
+      </div>
+      </div>
       <div class="col s4">
         <p>of wijzig een template:</p>
         <br>
@@ -61,6 +68,8 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
 
     </form>
 		<a type="submit" class="waves-effect waves-light btn" id="submitTemplate">Aanmaken</a>
+    <a type="submit" class="waves-effect waves-light btn hide" id="updateTemplate">Update</a>
+    <a type="submit" class="waves-effect waves-light btn hide red" id="deleteTemplate">Delete</a>
     <br><br>
 
 </section>
