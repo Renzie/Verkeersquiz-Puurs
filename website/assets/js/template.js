@@ -55,12 +55,40 @@ var loadTemplate = function(){
   var id = $(".templateSelect :selected").val();
   var name = $(".templateSelect :selected").text();
 
+  $("#template_name").val(name);
+
   template = JSON.parse(template);
   console.log(template);
 
-  template.forEach(function(category){
+  for(var category in template){
+      console.log(category);
+      var obj = template[category]
+    for(var difficulty in obj){
+      //console.log(difficulty);
+      //var cat = template[category]
+      //console.log(cat[difficulty]);
+      console.log(obj[difficulty]);
 
-  });
+
+        $('[subcategory="'+category+'"][difficulty="'+difficulty+'"]').val(obj[difficulty]);
+
+      //console.log(template[category]["Makkelijk"]);
+    }
+  }
+
+//   for (var key in template) {
+//     // skip loop if the property is from prototype
+//     if (!template.hasOwnProperty(key)) continue;
+//
+//     var obj = template[key];
+//     for (var prop in obj) {
+//         // skip loop if the property is from prototype
+//         if(!obj.hasOwnProperty(prop)) continue;
+//
+//         // your code
+//         console.log(prop + " = " + obj[prop]);
+//     }
+// }
 
   $("#submitTemplate").text("update").attr("id", "updateTemplate").attr("templateId",id);
 
