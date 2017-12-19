@@ -1,29 +1,67 @@
 $(function () {
     $('select').material_select();
-    getQuestion();
+    getCurrentQuiz();
+    getUser();
 });
 
-
-
-
-var currentQuestion;
 var timer;
+var currentQuiz = {};
+var allQuestions = [];
+var currentQuestion;
+var currentQuestionPosition = 0;
+var currentUser;
 
-var currentQuiz = [];
-
-
-function getQuestion() {
+function doDbAction(action, callback) {
     $.ajax({
         type: "POST",
         url: "../dbaction.php",
-        data: {
-            action: "getCurrentQuestion",
-            questionId: 4
-        },
-        success: function (data) {
-            currentQuestion = new Question(JSON.parse(data));
-            currentQuestion.setup();
+        data: action,
+        error: function () {
+            console.log("error")
         }
+    }).then(function (data) {
+        callback(JSON.parse(data));
+    })
+}
+
+function getUser(){
+    doDbAction({action : "getUser"}, function (data) {
+        currentUser = data;
+        setupUser(currentUser.name,currentUser.familyName);
+    })
+}
+
+function setupUser(firstname, lastname) {
+    $('.username a').text(firstname + " " + lastname);
+}
+
+function setupQuiz() {
+
+    var width = currentQuestionPosition + 1 / allQuestions.length *100 + "%";
+    $(".quiz_progress .progress .determinate").css("width", width)
+    $(".quiz_progress .current_position").text(currentQuestionPosition + 1 + " / " + allQuestions.length);
+    $(".question .title").text("Vraag " + currentQuestionPosition + 1)
+}
+
+function getCurrentQuiz() {
+    doDbAction({action : "getCurrentQuiz"},function (data) {
+        currentQuiz = data;
+        getAllQuestionsByQuizId();
+    })
+}
+
+function getAllQuestionsByQuizId() {
+    doDbAction({action : 'getAllQuestionsByQuizId', quizId : currentQuiz.id }, function (data) {
+        allQuestions = data;
+        getQuestion(currentQuestionPosition);
+    })
+}
+
+function getQuestion(currentposition) {
+    doDbAction({action : "getCurrentQuestion", questionId : allQuestions[currentposition].id}, function (data) {
+        currentQuestion = new Question(data);
+        currentQuestion.setup();
+        setupQuiz();
     });
 }
 function Question(obj) {
@@ -41,29 +79,25 @@ function Question(obj) {
     var that = this;
     this.text = obj.question;
     this.width = 0;
-    this.total = this.currentTime;
+    this.total = this.time;
+
 
     this.getAnswers = function () {
-        $.ajax({
-            type : "POST",
-            url : "../dbaction.php",
-            data : {
-                action : "getAnswersByQuestionId",
-                questionId: 3
-            },
-            success: function (data) {
-                that.answers = JSON.parse(data);
-                console.log(that.answers)
-                that.setupAnswers(that.answers);
-            }
+        doDbAction({
+            action : "getAnswersByQuestionId",
+            questionId: currentQuestion.id
+        }, function (data) {
+            that.answers = data;
+            that.setupAnswers(that.answers);
         })
     };
 
     this.setupAnswers = function (answers) {
+        $('[date-role="answers"]').empty();
         $(answers).each(function (data) {
 
             var html = '<p>' +
-                '<input name="group1" type="radio" id="answer-' +answers[data].id + '"/>' +
+                '<input name="answer" type="radio" id="answer-' +answers[data].id + '"/>' +
                 '<label for="answer-' + answers[data].id + '">' + answers[data].answer +'</label>' +
             '</p>';
 
@@ -79,6 +113,7 @@ function Question(obj) {
         timer = setInterval(this.update, 1000);
         this.setupText();
         this.getAnswers();
+        $('form').on('submit',currentQuestion.sendAnswer)
     };
 
 
@@ -112,13 +147,23 @@ function Question(obj) {
     this.nextQuestion = () => {
         $('.question').fadeOut();
 
-        //TODO question aanpassen
-
+        currentQuestion = allQuestions[++currentQuestionPosition];
+        that.setup();
 
         $('.question').fadeIn();
     }
 
+    this.sendAnswer = (e) => {e.preventDefault();
+       var answer = $('input[name="answer"]:checked').attr('id').split('answer-')[1];
 
+        $.ajax({
+            type: "POST",
+            url: "../dbaction.php",
+            data: {action: 'sendAnswer',  userId: currentUser.id, answerId: answer, time: currentQuestion.currentTime},
+        }).then(function () {
+            that.nextQuestion();
+        });
+    }
 }
 
 /*document.addEventListener("DOMContentLoaded", function () {

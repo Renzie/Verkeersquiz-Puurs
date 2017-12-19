@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Database.class.php';
+session_start();
 
 class UserTools extends Database
 {
@@ -20,20 +21,23 @@ class UserTools extends Database
     public function getUserById($id){
 
         $connection= $this->connect();
-
-        if (!$stmt = $connection->prepare("SELECT * FROM user WHERE id = ?")) {
-            echo "FAIL prepare";
+        $data = array();
+        if ($stmt = $connection->prepare("SELECT * FROM user WHERE id = ?")) {
+            $stmt->bind_param("i", $id);
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            $stmt->bind_result($id,$firstname,$familyname, $departmentId);
+            $stmt->fetch();
+            $data = [
+                "id"=>$id,
+                "name"=>$firstname,
+                "familyName"=>$familyname,
+                "departmentId"=>$departmentId
+            ];
+            $stmt->close();
         }
-
-        if (!$stmt->bind_param("i", $id)) {
-            echo "FAIL bind";
-        }
-
-        if (!$stmt->execute()) {
-            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-        }
-        $stmt->close();
-        $connection->close();
+        return $data;
     }
 
     public function countDifficulties($quizId, $difficultyId){
@@ -87,6 +91,7 @@ class UserTools extends Database
 
 	public function registerUser($firstname, $familyname, $departmentid)
     {
+
         $connection= $this->connect();
 
         if (!$stmt = $connection->prepare("INSERT INTO user (name, familyName, departmentId) VALUES (?, ?,?)")) {
@@ -103,15 +108,15 @@ class UserTools extends Database
             echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             return false;
         }
-        $lastId = $stmt->insert_id;
+
+
+        $_SESSION['user'] = $stmt->insert_id;
+
         $stmt->close();
         $connection->close();
 
-        $_SESSION['user'] = $this->getUserById($lastId);
         return true;
     }
-
-
 
 
 
@@ -567,11 +572,11 @@ class UserTools extends Database
   }
 
 
-  protected function makeUserAnswer($userid, $answerid, $time)
+  public function makeUserAnswer($userid, $answerid, $time)
   {
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO answer_user (userId, answerId, time) VALUES (?, ?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO answer_user (userId, awnserId, time) VALUES (?, ?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -708,6 +713,8 @@ class UserTools extends Database
         }
         return $data;
     }
+
+
 
     public function getAllQuestionsByQuizId($quizId)
     {

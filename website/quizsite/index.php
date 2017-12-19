@@ -12,6 +12,28 @@ require_once "../includes/View.class.php";
 $usertools = new UserTools();
 $view = new View();
 
+function checkIfSet($name){
+    if (isset($_POST[$name]) && !empty($_POST[$name])){
+        return true;
+    }return false;
+
+}
+
+if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("department")) {
+    $register = $usertools->registerUser($_POST["firstname"], $_POST["familyname"], $_POST["department"]);
+    //echo $register;
+    if ($register) {
+        $_SESSION['quiz'] = $usertools->getQuizInfoById($_POST['department']);
+        header('Location: game.php');
+    } else {
+        //echo "failed";
+        //$_SESSION['login'] = false;
+        //echo '<script>Materialize.toast("Login gefaald!",1155); </script>';
+        //echo "<script>alert('login gefaald')</script>";
+        //die;
+    }
+}
+
 
 ?>
 
@@ -72,11 +94,10 @@ $view = new View();
 
                         <div class="input-field center">
                             <p class="input-field">
-                                <select name="organisatie" onchange="getDepartments()" id="organization">
+                                <select name="organization" id="organization">
                                     <option value="" disabled selected>Selecteer je organisatie</option>
                                     <?php
                                     $view->listOrganization();
-
                                     ?>
 
                                 </select>
@@ -108,50 +129,31 @@ $view = new View();
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
 </main>
 <script>
 
+    $(function () {
+       $('select[name="organization"]').on('change', ajax)
+    });
 
-    var departments = [
-        <?php foreach ($usertools->getAllDepartments() as $data)
-        {
-        ?>
-        {
-            id: <?php echo $data["id"]; ?>,
-            name: "<?php echo $data["name"]; ?>",
-            organizationid: <?php echo $data["organizationId"]; ?>
-        },<?php
-        }
-
-        if (isset($_POST["firstname"]) && !empty($_POST["firstname"])) {
-            $register = $usertools->registerUser($_POST["firstname"], $_POST["familyname"], $_POST["department"]);
-            //echo $register;
-            if ($register) {
-                //echo "succesfull";
-                //$_SESSION['login'] = true;
-                $_SESSION['quiz'] = $usertools->getQuizInfoById($_POST['department']);
-
-                //$_SESSION['user'] = $usertools->registerUser($register);
+    function ajax() {
+        console.log('test')
+            $.ajax({
+            type: "POST",
+            url: "../dbaction.php",
+            data: {action: "getDepartments"},
+        }).then(function (data) {
+            setDepartments(JSON.parse(data))
+        });
+    }
 
 
-                header('Location: game.php');
 
 
-            } else {
-                //echo "failed";
-                //$_SESSION['login'] = false;
-                //echo '<script>Materialize.toast("Login gefaald!",1155); </script>';
-                //echo "<script>alert('login gefaald')</script>";
-                //die;
-            }
-        }
-        ?>
-    ];
-    function getDepartments() {
+    function setDepartments(departments) {
         var dep = document.getElementById("department");
         var org = document.getElementById("organization");
         var selected = org.options[org.selectedIndex].value;
@@ -159,7 +161,7 @@ $view = new View();
         $(dep).empty();
         html += '<option value="" disabled selected>Selecteer je klas</option>';
         $(departments).each(function (data) {
-            if (departments[data].organizationid == selected) {
+            if (departments[data].organizationId == selected) {
                 html += "<option value=" + departments[data].id + ">" + departments[data].name + "</option>"
             }
         });
@@ -169,8 +171,5 @@ $view = new View();
 </script>
 
 
-<?php
-
-?>
 </body>
 </html>

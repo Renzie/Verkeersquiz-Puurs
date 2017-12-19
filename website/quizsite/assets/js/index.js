@@ -3,9 +3,10 @@
  */
 $(function () {
     $('select').material_select();
-
     generateRandomTheme();
 });
+
+
 
 
 var kleur = [{

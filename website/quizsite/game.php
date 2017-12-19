@@ -52,29 +52,21 @@ $currentQuestion = 0;
     <div class="nav-wrapper">
         <a class="brand-logo center "><?php echo $quiz['name']; ?></a>
 
-        <div class="account  row ">
-            <a class="col offset-s11"><?php echo $_SESSION['user']['name']; ?></a>
+        <div class="account  row  username">
+            <a class="col offset-s10"></a>
         </div>
     </div>
 </nav>
 <main class="container">
     <div class="content">
+        <div class="card quiz_progress">
 
+            <p class="flow-text">Vraag <span class="current_position"></span></p>
 
-        <div class="card">
-
-            <p class="flow-text">Vraag <span><?php echo $currentQuestion + 1 ?>/ <?php echo count($questions) ?></span></p>
-
-            <div class="col s11 progress  lighten-4">
-                <div style="width: <?php echo ($currentQuestion +1 /count($questions))*100  ?>%" class="determinate blue"></div>
+            <div class="col s11 progress lighten-4">
+                <div class="determinate blue"></div>
             </div>
         </div>
-
-        <?php
-
-
-
-        ?>
 
         <div class="container">
             <form action="">
