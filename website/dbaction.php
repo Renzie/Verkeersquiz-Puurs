@@ -74,6 +74,12 @@ if (isset($_POST['action'])) {
         case 'submitTemplate':
             $usertools->makeTemplate($_POST['quizId'], $_POST['name'], $_POST['template']);
             break;
+        case 'updateTemplate':
+            $usertools->updateTemplate($_POST['templateId'],$_POST['quizId'], $_POST['name'], $_POST['template']);
+            break;
+        case 'deleteTemplate':
+            $usertools->deleteTemplate($_POST['templateId']);
+            break;
 }
 }
 ?>

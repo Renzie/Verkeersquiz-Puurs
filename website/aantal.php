@@ -61,6 +61,8 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
 
     </form>
 		<a type="submit" class="waves-effect waves-light btn" id="submitTemplate">Aanmaken</a>
+    <a type="submit" class="waves-effect waves-light btn hide" id="updateTemplate">Update</a>
+    <a type="submit" class="waves-effect waves-light btn hide red" id="deleteTemplate">Delete</a>
     <br><br>
 
 </section>
