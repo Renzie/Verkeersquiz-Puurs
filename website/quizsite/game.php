@@ -73,7 +73,7 @@ $currentQuestion = 0;
                 <div class="row">
                     <div class="card z-depth-5 row question">
                         <div class="card-title">
-                            <h2 class="card-title title center">Vraag <?php echo $currentQuestion + 1 ?></h2>
+                            <h2 class="card-title center question_number"></h2>
                         </div>
 
                         <div class="card-image waves-effect waves-block waves-light">
