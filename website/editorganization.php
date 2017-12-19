@@ -27,7 +27,7 @@ $view = new View();
         <thead>
         <tr>
             <th>Naam Klas</th>
-            <th>Extra info</th>
+            <th>Selecteer een quiz schema</th>
         </tr>
         </thead>
         <tbody class="tabel_school">

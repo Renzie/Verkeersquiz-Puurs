@@ -29,6 +29,24 @@ class View extends UserTools {
 			<tr class="klas" klasId="<?php echo $department["id"]?>" >
 				<td><input class="klasName" type="text" value="<?php echo $department["name"]?>" klasIdName="<?php echo $department["id"]?>" ></td>
 				<td>
+					<div class="input-field">
+						<select name="templates">
+							<option selected value="" disabled >Selecteer de template</option>
+							<?php
+                                foreach ($this->getAllTemplates() as $templates) {
+                                    if($templates['id'] == $department['schemeId']){
+                                        echo "<option selected department='{$department['id']}' value='{$templates['id']}'>{$templates['name']}</option>";
+                                    }else{
+                                        echo "<option department='{$department['id']}' value='{$templates['id']}'>{$templates['name']}</option>";
+                                    }
+
+                                }
+                            ?>
+						</select>
+
+					</div>
+				</td>
+				<td>
 					<a  class="btn red remove_department" buttonAction="deleteDepartment"><i class="material-icons">delete</i></a>
 					<a class="btn purple update_department" buttonAction="updateDepartment" ><i class="material-icons">save</i></a>
 					</td>

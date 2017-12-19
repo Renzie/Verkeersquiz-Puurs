@@ -74,6 +74,13 @@ if (isset($_POST['action'])) {
         case 'submitTemplate':
             $usertools->makeTemplate($_POST['quizId'], $_POST['name'], $_POST['template']);
             break;
+        case 'changeSchema':
+            $usertools->changeSchema($_POST['departmentId'],$_POST['schemeId']);
+            echo '200';
+            break;
+        default:
+            echo '404';
+            break;
 }
 }
 ?>

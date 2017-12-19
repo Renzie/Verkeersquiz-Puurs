@@ -694,6 +694,25 @@ class UserTools extends Database
         return password_verify($password, $resultPassword);
     }
 
+    public function changeSchema($demapartmentId, $schemeId){
+        $connection = $this->connect();
+
+        if (!$stmt = $connection->prepare("UPDATE department SET schemeId = ? WHERE id = ?")) {
+            echo "FAIL prepare";
+        }
+
+        if (!$stmt->bind_param("ii", $schemeId, $demapartmentId)) {
+            echo "FAIL bind";
+        }
+
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $stmt->close();
+        $connection->close();
+
+    }
+
     public function getAllQuizzes()
     {
         $connection= $this->connect();
@@ -740,14 +759,15 @@ class UserTools extends Database
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $name, $organizationId);
+            $stmt->bind_result($id, $name, $organizationId,$schemeId);
             $data = array();
 
             while($stmt -> fetch()){
               $subarray = [
                 "id"=>$id,
                 "name"=>$name,
-                "organizationId"=>$organizationId
+                "organizationId"=>$organizationId,
+                "schemeId"=>$schemeId
               ];
               array_push($data,$subarray);
             }
