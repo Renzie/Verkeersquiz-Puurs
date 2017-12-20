@@ -6,10 +6,10 @@ require_once "includes/View.class.php";
 $usertools = new UserTools();
 
 
-
 ?>
 <div class="is-main-content">
-    <h1 class="header">Menu</h1>
+    <h1 class="header">Menu <?php echo $usertools->registerUser('Renzie','Omaña',1);?></h1>
+
     <article>
         <h3>TESTING RANDOMQUIZGENERATOR</h3>
         <?php

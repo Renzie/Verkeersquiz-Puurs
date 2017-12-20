@@ -17,35 +17,29 @@ class UserTools extends Database
         $sql = "SELECT * FROM user";
         return $this->getData($sql, $connection);
     }
+    public function getUserById($id){
 
-    public function countDifficulties($quizId, $difficultyId){
-
-      /*
-
-      select count(*) from quiz_questions
-      join question on quiz_questions.questionId = question.id
-      where difficulty = 1 AND quiz_questions.quizId = 1
-
-      */
-
-      $connection= $this->connect();
-      $password = password_hash($password, PASSWORD_DEFAULT);
-
-      if (!$stmt = $connection->prepare("SELECT COUNT ")) {
-          echo "FAIL prepare";
-      }
-
-      if (!$stmt->bind_param("ss", $username, $password)) {
-          echo "FAIL bind";
-      }
-
-      if (!$stmt->execute()) {
-          echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-      }
-      $stmt->close();
-      $connection->close();
-
+        $connection= $this->connect();
+        $data = array();
+        if ($stmt = $connection->prepare("SELECT * FROM user WHERE id = ?")) {
+            $stmt->bind_param("i", $id);
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            $stmt->bind_result($id,$firstname,$familyname, $departmentId);
+            $stmt->fetch();
+            $data = [
+                "id"=>$id,
+                "name"=>$firstname,
+                "familyName"=>$familyname,
+                "departmentId"=>$departmentId
+            ];
+            $stmt->close();
+        }
+        return $data;
     }
+
+
 
     public function registerAdmin($username, $password)
     {
@@ -69,24 +63,30 @@ class UserTools extends Database
 
 	public function registerUser($firstname, $familyname, $departmentid)
     {
+
         $connection= $this->connect();
 
         if (!$stmt = $connection->prepare("INSERT INTO user (name, familyName, departmentId) VALUES (?, ?,?)")) {
             echo "FAIL prepare";
+            return false;
         }
 
         if (!$stmt->bind_param("ssi", $firstname, $familyname, $departmentid)) {
             echo "FAIL bind";
+            return false;
         }
 
         if (!$stmt->execute()) {
             echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            return false;
         }
+
+        $var = $stmt->insert_id;
         $stmt->close();
         $connection->close();
+
+        return $var;
     }
-
-
 
 
 
@@ -699,7 +699,7 @@ class UserTools extends Database
   {
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO answer_user (userId, answerId, time) VALUES (?, ?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO answer_user (userId, awnserId, time) VALUES (?, ?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -813,6 +813,14 @@ class UserTools extends Database
         }
     }
 
+    public function getAllDepartments(){
+        $connection= $this->connect();
+        $sql = "SELECT * FROM department";
+        return $this->getData($sql, $connection);
+
+
+    }
+
 	public function getQuizInfoById($id){
 		$connection= $this->connect();
 		$data = array();
@@ -832,6 +840,33 @@ class UserTools extends Database
         }
 		return $data;
 	}
+
+
+	public function getQuestionById($id){
+        $connection= $this->connect();
+        $data = array();
+        if ($stmt = $connection->prepare("SELECT * FROM question WHERE id=?")) {
+            $stmt->bind_param("i", $id);
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            $stmt->bind_result($id,$question,$difficulty,$imageLink,$time,$category);
+            $stmt->fetch();
+            $data = [
+                "id"=>$id,
+                "question"=>$question,
+                "difficulty"=>$difficulty,
+                "imageLink"=>$imageLink,
+                "time"=>$time,
+                "category"=>$category
+            ];
+            $stmt->close();
+        }
+        return $data;
+    }
+
+
+
 
     public function getAllQuestionsByQuizId($quizId)
     {
@@ -862,6 +897,7 @@ class UserTools extends Database
 		}
     }
 
+
     public function getAllAnswersByQuestionId($questionId)
     {
 		$connection= $this->connect();
@@ -890,7 +926,11 @@ class UserTools extends Database
 		}
     }
 
+
     public function getLogs()
+
+
+
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM logs";
@@ -924,6 +964,7 @@ class UserTools extends Database
 			return $data;
 		}
     }
+
 
     public function getRandomQuestionsByTemplate($templateId,$quizid){
 
@@ -988,12 +1029,22 @@ class UserTools extends Database
       return $answersarray;
   }
 
-	public function getStatisticsByDepartment($demapartmentId)
-	{
+	public function getStatisticsByDepartment($demapartmentId){
 
-	}
+    }
+
+
+
+    protected function getRandomQuestionsByQuizId($id){
+        return shuffle($this->getAllQuestionsByQuizId($id));
+    }
+
+
+
 
     public function getStatisticsByOragnization($organizationId)
     {
     }
+
+
 }

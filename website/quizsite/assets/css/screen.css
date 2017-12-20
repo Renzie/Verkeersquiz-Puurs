@@ -1,7 +1,4 @@
-body{
-    z-index:50;
-    font-family: 'Patrick Hand', cursive;
-}
+
 
 .preloader-background {
     display: flex;
@@ -27,6 +24,10 @@ body{
 
 }
 
+.login{
+    margin-top: 15vh;
+}
+
 .progress .determinate{
     transition: 1s linear;
 }
@@ -49,11 +50,12 @@ body{
     margin-bottom: 2vh;
 }
 
-.loginname{
-
+.seconds{
+    margin-top: 1vh;
 }
 
-.account{
-    position: fixed;
-    margin-right: 2vw;
+.title{
+    margin-top: 5vh;
 }
+
+

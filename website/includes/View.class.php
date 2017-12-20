@@ -1,4 +1,5 @@
 <?php
+
 class View extends UserTools {
 
 	public function getAllSchools(){
@@ -248,7 +249,7 @@ class View extends UserTools {
 		}
 	}
 
-public function amountQuestionsQuiz($id){
+    public function amountQuestionsQuiz($id){
 
 	foreach ($this->getAllDifficulties() as $difficulty) {
 		?>
@@ -350,50 +351,126 @@ public function amountQuestionsQuiz($id){
 	}
 
 
-	public function displayLoginPopup(){
-		?>
-		<!-- Button to open the modal login form -->
-		<button onclick="document.getElementById('id01').style.display='block'">Login</button>
 
-		<!-- The Modal -->
-		<div id="id01" class="modal">
+    public function displayQuestion($id, $positionInArray)
+    {
+        $questions = $this->getAllQuestionsById($id);
+
+        ?>
+        <div class="container">
+            <div class="row">
+                <div class="card z-depth-5 row question">
+                    <div class="card-title">
+                        <h2 class="card-title title center">Vraag 1</h2> <!-- TODO -->
+                    </div>
+
+                    <!-- TODO -->
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img style="width:35vw ;height: 20vw" class="activator image"
+                             src="<?php $questions[$positionInArray]["imageLink"] ?> ">
+                    </div>
+                    <div class="col offset-2">
+                        <?php $questions[$positionInArray]["question"] ?>
+                    </div>
+                    <div class="card-content row question">
+
+                        <div class="col s11 progress red lighten-4 timebar">
+                            <div class="determinate red timeleft"></div>
+                        </div>
+                        <div class="time col s1">
+                            <span class="seconds flow-text">0</span>
+                        </div>
+                    </div>
+                    <div class="card-action answers">
+
+                        <?php
+                        foreach ($this->getAllAnswersByQuestionId($id) as $data) {
+                            ?>
+
+                            <p>
+                                <input name="group1" type="radio" id="answer-<?php $data["id"] ?>"/>
+                                <label for="answer-<?php $data["id"] ?>"><?php $data["answer"] ?></label>
+                            </p>
+
+                            <?php
+                        }
+
+                        ?>
+                    </div>
+                    <div class="card-action">
+                        <input type="submit" id="eindevraag" value="Volgende vraag" class="btn red">
+                    </div>
+                </div>
+            </div>
+        </div> <?php
+    }
+
+
+    public function displayLoginPopup()
+    {
+        ?>
+        <!-- Button to open the modal login form -->
+        <button onclick="document.getElementById('id01').style.display='block'">Login</button>
+
+        <!-- The Modal -->
+        <div id="id01" class="modal">
+>>>>>>> frontend
 		<span onclick="document.getElementById('id01').style.display='none'"
-		class="close" title="Close Modal">&times;</span>
+              class="close" title="Close Modal">&times;</span>
 
-		<!-- Modal Content -->
-		<form class="modal-content animate" action="/login.php" method="post">
+            <!-- Modal Content -->
+            <form class="modal-content animate" action="/login.php" method="post">
 
-		<div class="container">
-		  <label><b>Username</b></label>
-		  <input type="text" placeholder="Enter Username" name="username" required>
+                <div class="container">
+                    <label><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="username" required>
 
-		  <label><b>Password</b></label>
-		  <input type="password" placeholder="Enter Password" name="pass" required>
+                    <label><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="pass" required>
 
-		  <button type="submit">Login</button>
-		  <input type="checkbox" checked="checked"> Remember me
-		</div>
+                    <button type="submit">Login</button>
+                    <input type="checkbox" checked="checked"> Remember me
+                </div>
 
-		<div class="container" style="background-color:#f1f1f1">
-		  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-		  <span class="psw">Forgot <a href="#">password?</a></span>
-		</div>
-		</form>
-		</div>
-
-
-
-		<?php
-	}
+                <div class="container" style="background-color:#f1f1f1">
+                    <button type="button" onclick="document.getElementById('id01').style.display='none'"
+                            class="cancelbtn">
+                        Cancel
+                    </button>
+                    <span class="psw">Forgot <a href="#">password?</a></span>
+                </div>
+            </form>
+        </div>
 
 
+        <?php
+    }
 
 
+    public function listQuizzes(){
+        foreach ($this->getAllQuizzes() as $quiz) {
+            ?><option value="<?php echo $quiz["id"] ?>"><?php echo $quiz["name"] ?></option>
+            <?php
+        }
+    }
 
 
+    public function listOrganization()
+    {
+        foreach ($this->getAllOrganization() as $data) {
+            ?>
+            <option value="<?php echo $data["id"] ?>"><?php echo $data["name"] ?></option>
+            <?php
+        }
+    }
+    public function listDepartment($id)
+    {
 
-
-
+        foreach ($this->getAllDepartmentsById($id) as $data) {
+            ?>
+            <option><?php $data["name"] ?> </option>
+            <?php
+        }
+    }
 }
 
-?>
