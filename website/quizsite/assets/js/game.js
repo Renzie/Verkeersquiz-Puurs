@@ -1,3 +1,5 @@
+'use strict';
+
 $(function () {
     $('select').material_select();
     getCurrentQuiz();
@@ -89,9 +91,10 @@ function Question(obj) {
             $('.image').attr('src','')
 
         } else {
+            $('.image').show()
             $('.image').attr('src', '../images/' + this.imageLink)
         }
-    }
+    };
 
     this.getAnswers = function () {
         console.log(currentQuestion.id)
