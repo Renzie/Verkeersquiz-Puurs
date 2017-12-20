@@ -62,7 +62,7 @@ if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("departmen
     <div class="nav-wrapper row">
         <a class=" center brand-logo">Verkeersquiz Puurs</a>
         <div class="right col offset-10">
-            <a class="btn purple">Naar administratie</a>
+            <a href="../login.php" class="btn purple">Naar administratie</a>
         </div>
     </div>
 

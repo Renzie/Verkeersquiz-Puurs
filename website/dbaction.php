@@ -105,6 +105,7 @@ if (isset($_POST['action'])) {
             break;
         case 'deleteTemplate':
             $usertools->deleteTemplate($_POST['templateId']);
+            break;
         case 'changeSchema':
             $usertools->changeSchema($_POST['departmentId'],$_POST['schemeId']);
             echo '200';

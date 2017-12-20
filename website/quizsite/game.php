@@ -61,7 +61,7 @@ echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('qu
 </nav>
 <main class="container">
     <div class="content">
-        <div class="card quiz_progress">
+        <div class="quiz_progress">
 
             <p class="flow-text">Vraag <span class="current_position"></span></p>
 
@@ -79,7 +79,7 @@ echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('qu
                         </div>
 
                         <div class="card-image waves-effect waves-block waves-light">
-                            <img style="width:35vw ;height: 20vw" class="activator image"
+                            <img style="width:auto ;height: 20vw" class="activator image"
                                  >
                         </div>
                         <div class="col offset-2" data-role="question">
@@ -87,10 +87,11 @@ echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('qu
                         </div>
                         <div class="card-content row question">
 
-                            <div class="col s11 progress red lighten-4 timebar">
+                            <div class="col s10 progress red lighten-4 timebar">
                                 <div class="determinate red timeleft"></div>
                             </div>
-                            <div class="time col s1">
+                            <div class="time col s2">
+                                <i class="material-icons small">access_time</i>
                                 <span class="seconds flow-text">0</span>
                             </div>
                         </div>

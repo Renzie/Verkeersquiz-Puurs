@@ -12,6 +12,8 @@ var currentQuestion;
 var currentQuestionPosition = 0;
 var currentUser;
 
+
+
 function doDbAction(action, callback) {
     $.ajax({
         type: "POST",
@@ -22,6 +24,12 @@ function doDbAction(action, callback) {
         }
     }).then(function (data) {
         callback(JSON.parse(data));
+    })
+}
+
+function getCorrectAnswers() {
+    doDbAction({action : "getCorrectAnswers", userId : localStorage.getItem('userId')}, function (data) {
+        console.log(data);
     })
 }
 
