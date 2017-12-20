@@ -1,8 +1,8 @@
 <?php
 class Database {
 	private $db_host = '127.0.0.1';
-	private $db_user = 'root';
-	private $db_pass = '';
+	private $db_user = 'puurs';
+	private $db_pass = 'puurs';
 	private $db_name = 'puurs';
 
 	protected function connect(){
