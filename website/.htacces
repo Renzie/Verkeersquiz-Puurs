@@ -1,1 +1,2 @@
-DirectoryIndex /quizsite/index.html
+#Alternate default index page
+DirectoryIndex /quizsite/index.php
