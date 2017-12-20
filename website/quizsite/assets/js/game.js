@@ -4,7 +4,6 @@ $(function () {
     getUser();
 });
 
-var timer;
 var currentQuiz = {};
 var allQuestions = [];
 var currentQuestion;
@@ -25,7 +24,7 @@ function doDbAction(action, callback) {
 }
 
 function getUser() {
-    doDbAction({action: "getUser"}, function (data) {
+    doDbAction({action: "getUser", userId: localStorage.getItem('userId')}, function (data) {
         currentUser = data;
         setupUser(currentUser.name, currentUser.familyName);
     })
@@ -40,11 +39,12 @@ function setupQuiz() {
     var width = (currentQuestionPosition + 1) / allQuestions.length * 100 + "%";
     $(".quiz_progress .progress .determinate").css("width", width)
     $(".quiz_progress .current_position").text(currentQuestionPosition + 1 + " / " + allQuestions.length);
-    $(".question .title").text("Vraag " + currentQuestionPosition + 1)
+    $(".question .title").text("Vraag " + currentQuestionPosition + 1);
+    $('.quizname').text(currentQuiz.name);
 }
 
 function getCurrentQuiz() {
-    doDbAction({action: "getCurrentQuiz"}, function (data) {
+    doDbAction({action: "getCurrentQuiz", quizId: localStorage.getItem('quizId')}, function (data) {
         currentQuiz = data;
         getAllQuestionsByQuizId();
     })
@@ -64,6 +64,8 @@ function getAllQuestionsByQuizId() {
 function Question(obj) {
     this.id = obj.id;
 
+    this.timer = null;
+
     this.time = obj.time.split(':');
     this.setupTime = function () {
         var hour = this.time[0] * 60 * 60;
@@ -82,10 +84,12 @@ function Question(obj) {
     this.imageLink = obj.imageLink;
 
     this.setImage = function () {
-        if (this.imageLink !== undefined) {
-            $('.image').attr('src', '../images/' + this.imageLink)
+        if (this.imageLink == null || this.imageLink == '') {
+            $('.image').hide()
+            $('.image').attr('src','')
+
         } else {
-            $('.image').attr('src', '')
+            $('.image').attr('src', '../images/' + this.imageLink)
         }
     }
 
@@ -96,15 +100,14 @@ function Question(obj) {
             questionId: currentQuestion.id
         }, function (data) {
             that.answers = data;
-            console.log(data);
             that.setupAnswers(that.answers);
         })
     };
 
     this.setupAnswers = function (answers) {
-        $('[date-role="answers"]').empty();
+        $('[data-role="answers"]').empty('p');
+        console.log(answers)
         $(answers).each(function (data) {
-            console.log(answers[data].id)
             var html = '<p>' +
                 '<input name="answer" type="radio" id="answer-' + answers[data].id + '"/>' +
                 '<label for="answer-' + answers[data].id + '">' + answers[data].answer + '</label>' +
@@ -114,24 +117,31 @@ function Question(obj) {
         })
     };
 
-    $('#eindevraag').on('click', this.stopTimer);
+    $('#eindevraag').off().on('click', function (e) {
+        e.preventDefault();
+        that.stopTimer();
+    });
+
     this.setupText = function () {
         var text = currentQuestionPosition;
-        console.log(currentQuestion)
         text++;
         $("[data-role='question']").text(currentQuestion.text);
         $(".question_number").text('Vraag ' + text);
     };
     this.setup = function () {
-        timer = setInterval(this.update, 1000);
-        this.setupText();
-        this.getAnswers();
-        this.setImage()
-        $('form').on('submit', currentQuestion.sendAnswer)
+        if (this.total !== 0) {
+            that.timer = setInterval(this.update, 1000);
+        }
+            this.setupText();
+            this.getAnswers();
+            this.setImage();
+            $('form').on('submit', currentQuestion.sendAnswer)
+
     };
 
 
     this.update = () => {
+        console.log(this.currentTime);
         if (this.currentTime < 0) {
             that.stopTimer();
         } else if (this.currentTime == Math.round((this.total / 2) * 10 / 10)) {
@@ -151,8 +161,9 @@ function Question(obj) {
         this.width += 100 / this.total;
         $('.timeleft').css('width', this.width + '%');
         Materialize.toast('Je tijd is op!', 4000);
+
+        clearInterval(this.timer);
         $('.answers p input').attr('disabled', true)
-        clearInterval(timer);
         that.sendAnswer();
     }
 
@@ -163,7 +174,6 @@ function Question(obj) {
 
         currentQuestion.setup();
         setupQuiz();
-        console.log(currentQuestion.answers)
 
         $('.question').fadeIn();
     };
@@ -179,7 +189,10 @@ function Question(obj) {
         var answer = $('input[name="answer"]:checked').attr('id')
         if (answer !== undefined) {
             answer = answer.split('answer-')[1];
+        } else {
+            answer =  null;
         }
+        console.log(answer)
         $.ajax({
             type: "POST",
             url: "../dbaction.php",

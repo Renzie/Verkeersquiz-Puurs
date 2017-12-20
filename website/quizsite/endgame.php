@@ -1,19 +1,13 @@
 <?php
 
-session_start();
-require_once "../includes/Database.class.php";
-require_once "../includes/UserTools.class.php";
-require_once "../includes/View.class.php";
-$usertools = new UserTools();
-$view = new View();
 
-$quiz = $_SESSION['quiz'];
-$user = $_SESSION['userId'];
-$questions = $usertools->getAllQuestionsByQuizId($quiz['id']);
+/**
+ * Created by PhpStorm.
+ * User: Renzie
+ * Date: 20/12/2017
+ * Time: 13:33
+ */
 
-$currentQuestion = 0;
-
-echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('quizId',\"$quiz\");</script>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +54,7 @@ echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('qu
     </div>
 </nav>
 <main class="container">
-    <div class="content">
+        <div class="content">
         <div class="card quiz_progress">
 
             <p class="flow-text">Vraag <span class="current_position"></span></p>
@@ -80,7 +74,7 @@ echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('qu
 
                         <div class="card-image waves-effect waves-block waves-light">
                             <img style="width:35vw ;height: 20vw" class="activator image"
-                                 >
+                            >
                         </div>
                         <div class="col offset-2" data-role="question">
 

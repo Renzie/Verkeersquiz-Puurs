@@ -1,7 +1,7 @@
 <?php
 require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
-//session_start();
+
 
 $usertools = new UserTools();
 
@@ -9,7 +9,7 @@ if (isset($_POST['action'])) {
     switch ($_POST['action']) {
 
         case 'getUser' :
-            echo json_encode($usertools->getUserById($_SESSION['user']));
+            echo json_encode($usertools->getUserById($_POST['userId']));
             break;
         case  'sendAnswer' :
             $usertools->makeUserAnswer($_POST['userId'], $_POST['answerId'], $_POST['time']);
@@ -21,7 +21,7 @@ if (isset($_POST['action'])) {
             echo json_encode($usertools->getAllQuestionsByQuizId($_POST['quizId']));
             break;
         case 'getCurrentQuiz' :
-            echo json_encode($_SESSION['quiz']);
+            echo json_encode($usertools->getQuizInfoById($_POST['quizId']));
             break;
 
         case 'getCurrentQuestion' :

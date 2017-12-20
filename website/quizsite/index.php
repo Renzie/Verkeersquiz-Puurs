@@ -21,9 +21,12 @@ function checkIfSet($name){
 
 if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("department")) {
     $register = $usertools->registerUser($_POST["firstname"], $_POST["familyname"], $_POST["department"]);
-    //echo $register;
+
     if ($register) {
-        $_SESSION['quiz'] = $usertools->getQuizInfoById($_POST['department']);
+        $_SESSION['userId'] = $register;
+        $_SESSION['quiz'] = $_POST['quiz'];
+
+
         header('Location: game.php');
     } else {
         //echo "failed";
@@ -168,6 +171,10 @@ if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("departmen
         $(dep).append(html);
         $(dep).material_select('update');
     }
+
+
+
+
 </script>
 
 

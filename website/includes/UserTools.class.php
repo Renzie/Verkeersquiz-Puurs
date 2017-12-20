@@ -1,7 +1,6 @@
 <?php
 
 require_once 'Database.class.php';
-session_start();
 
 class UserTools extends Database
 {
@@ -109,13 +108,11 @@ class UserTools extends Database
             return false;
         }
 
-
-        $_SESSION['user'] = $stmt->insert_id;
-
+        $var = $stmt->insert_id;
         $stmt->close();
         $connection->close();
 
-        return true;
+        return $var;
     }
 
 

@@ -3,11 +3,13 @@ require_once "head.html";
 require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
 require_once "includes/View.class.php";
+$usertools = new UserTools();
 
 
 ?>
 <div class="is-main-content">
-    <h1 class="header">Menu</h1>
+    <h1 class="header">Menu <?php echo $usertools->registerUser('Renzie','Omaña',1);?></h1>
+
     <article>
         <h3>Dashboard</h3>
         <h3><a href="dashboard.php" class="btn">Ga naar dashboard</a></h3>
