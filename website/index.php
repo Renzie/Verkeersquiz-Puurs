@@ -3,15 +3,20 @@ require_once "head.html";
 require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
 require_once "includes/View.class.php";
+$usertools = new UserTools();
+
 
 
 ?>
 <div class="is-main-content">
     <h1 class="header">Menu</h1>
     <article>
-        <h3>Dashboard</h3>
-        <h3><a href="dashboard.php" class="btn">Ga naar dashboard</a></h3>
-        <p class="flow-text">Hier in de Dashboard vind je de statistieken van de resultaten.</p>
+        <h3>TESTING RANDOMQUIZGENERATOR</h3>
+        <?php
+        //$usertools->getRandomQuestionsByTemplate(13,1);
+        $usertools->getAnswersByCategoryAndDifficulty(3,1,1);
+
+        ?>
     </article>
 
     <article>

@@ -64,7 +64,7 @@ var loadTemplate = function(){
   $("#template_name").val(name);
 
   template = JSON.parse(template);
-  console.log(template);
+  console.log("TEMPLATE:"+template);
 
   for(var category in template){
       console.log(category);
@@ -85,6 +85,7 @@ var loadTemplate = function(){
   //$("#submitTemplate").text("update").attr("id", "updateTemplate").attr("templateId",id);
   $("#submitTemplate").addClass("hide");
   $("#updateTemplate").removeClass('hide').attr("templateId",id);
+  $("#deleteTemplate").removeClass('hide').attr("templateId",id);
   $("#back").removeClass('hide').attr("templateId",id);
 
 

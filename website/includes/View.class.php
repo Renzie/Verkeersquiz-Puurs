@@ -331,12 +331,12 @@ public function amountQuestionsQuiz($id){
 
 		//display collumns
 		foreach ($allCategories as $category) {
-			echo "<div id='kolom' class='row s12 category' category='".$category["category"]."'>";
+			echo "<div id='kolom' class='row s12 category' category='".$category["id"]."'>";
 			echo "<h5>".$category["category"]."</h5>";
 			foreach ($allDifficulties as $difficulty) {
 				echo "<div id='kolom' class='col s3 difficulty'>";
 				echo '<label>'.$difficulty["difficulty"].' ('.$stucturedData[$category["category"]][$difficulty["difficulty"]].')</label>';
-				echo '<input subcategory="'.$category["category"].'" difficulty="'.$difficulty["difficulty"].'" value="0" name="'.$category["category"].'_'.$difficulty["difficulty"].'" min="0" max="'.$stucturedData[$category["category"]][$difficulty["difficulty"]].'" name="something" type="number"/>';
+				echo '<input subcategory="'.$category["id"].'" difficulty="'.$difficulty["id"].'" value="0" name="'.$category["category"].'_'.$difficulty["difficulty"].'" min="0" max="'.$stucturedData[$category["category"]][$difficulty["difficulty"]].'" name="something" type="number"/>';
 				echo "</div>";
 			}
 

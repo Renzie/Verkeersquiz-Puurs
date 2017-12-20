@@ -831,8 +831,6 @@ class UserTools extends Database
             $stmt->close();
         }
 		return $data;
-
-
 	}
 
     public function getAllQuestionsByQuizId($quizId)
@@ -926,6 +924,69 @@ class UserTools extends Database
 			return $data;
 		}
     }
+
+    public function getRandomQuestionsByTemplate($templateId,$quizid){
+
+      //$templateId = 3;
+
+      $connection= $this->connect();
+
+      $stmt = $connection->prepare("SELECT template from quiz_template where id = ?");
+      $stmt->bind_param("i",$templateId);
+      if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			}else{
+        echo "succesfull";
+      }
+      echo "<h3>DIKKE TEST</h3>";
+
+      if(!$stmt->bind_result($template)){
+        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+      }
+      $stmt->fetch();
+
+      //echo "template".$template;
+
+      //print_r($template);
+
+      $phptemplate = json_decode($template);
+      print_r($phptemplate);
+
+      foreach($phptemplate as $category => $difficultyArray ){
+        echo "category: ".$category;
+        foreach ( $difficultyArray as $difficulty => $aantal) {
+          if($aantal < 0){
+            //all = getallbyparams($category, $diff)
+            //randoms.push(all(rand($aantal)));
+          }
+          echo "";
+
+        }
+      }
+
+
+
+    }
+
+  public function getAnswersByCategoryAndDifficulty($category,$difficulty,$quizId){
+    $connection= $this->connect();
+    //SELECT * from question JOIN quiz_questions ON question.id = quiz_questions.questionId WHERE category = 3 and difficulty = 1 and quiz_questions.quizId = 3
+    $sql = "SELECT id from question JOIN quiz_questions ON question.id = quiz_questions.questionId WHERE category = ? and difficulty = ? and quiz_questions.quizId = ? ";
+    $stmt = $connection->prepare($sql);
+    $stmt->bind_param("iii",$category,$difficulty,$quizId);
+    if (!$stmt->execute()) {
+      echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
+    $stmt->bind_result($quiestionid);
+    $answersarray=array();
+    while($stmt -> fetch()){
+      array_push($answersarray,$quiestionid);
+    };
+      $stmt->close();
+      echo "<p>answersarray:</p>";
+      print_r($answersarray);
+      return $answersarray;
+  }
 
 	public function getStatisticsByDepartment($demapartmentId)
 	{
