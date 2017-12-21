@@ -64,10 +64,8 @@ function getAllQuestionsByQuizId() {
     doDbAction({action: 'getAllQuestionsByQuizId', quizId: currentQuiz.id}, function (data) {
         allQuestions = data;
         currentQuestion = new Question(allQuestions[currentQuestionPosition]);
-        console.log(currentQuestion)
         currentQuestion.setup();
         setupQuiz();
-        console.log(allQuestions)
     })
 }
 
@@ -105,7 +103,6 @@ function Question(obj) {
     };
 
     this.getAnswers = function () {
-        console.log(currentQuestion.id)
         doDbAction({
             action: "getAnswersByQuestionId",
             questionId: currentQuestion.id
@@ -171,7 +168,7 @@ function Question(obj) {
     this.stopTimer = () => {
         this.width += 100 / this.total;
         $('.timeleft').css('width', this.width + '%');
-        Materialize.toast('Je tijd is op!', 4000);
+        Materialize.toast('Vraag ' +  (currentQuestionPosition + 2), 4000);
 
         clearInterval(this.timer);
         $('.answers p input').attr('disabled', true)
@@ -185,7 +182,7 @@ function Question(obj) {
 
         currentQuestion.setup();
         setupQuiz();
-
+        getCorrectAnswers();
         $('.question').fadeIn();
     };
 

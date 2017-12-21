@@ -82,7 +82,7 @@ echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('qu
                             <img style="width:auto ;height: 20vw" class="activator image"
                                  >
                         </div>
-                        <div class="col offset-2" data-role="question">
+                        <div class="flow-text center-align" data-role="question">
 
                         </div>
                         <div class="card-content row question">
