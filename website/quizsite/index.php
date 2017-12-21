@@ -25,6 +25,7 @@ if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("departmen
     if ($register) {
         $_SESSION['userId'] = $register;
         $_SESSION['quiz'] = $_POST['quiz'];
+        $_SESSION['departmentId'] = $_POST['department'];
 
 
         header('Location: game.php');

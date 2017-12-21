@@ -13,7 +13,7 @@ $usertools = new UserTools();
     <article>
         <h3>TESTING RANDOMQUIZGENERATOR</h3>
         <?php
-        print_r( $usertools->getRandomQuestionsByTemplate(15,1));
+        print_r( $usertools->getRandomQuestionsByTemplate(9,1));
         //$usertools->getAnswersByCategoryAndDifficulty(1,2,1);
 
         ?>

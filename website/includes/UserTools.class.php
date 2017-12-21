@@ -965,6 +965,53 @@ class UserTools extends Database
 		}
     }
 
+    public function getDepartmentByDepartmentId($departmentId){
+        $connection= $this->connect();
+        if ($stmt = $connection->prepare("select * from department where id = ?")) {
+            $stmt->bind_param("i", $departmentId);
+
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            $stmt->bind_result($id, $name, $organizationId, $schemeId);
+            $stmt->fetch();
+            $data = [
+                    "id"=>$id,
+                    "name"=>$name,
+                    "organizationId"=>$organizationId,
+                    "schemeId"=>$schemeId
+            ];
+            $stmt->close();
+            return $data;
+        }
+    }
+
+    public function getCorrectAnswersByUserId($id){
+        $connection= $this->connect();
+        if ($stmt = $connection->prepare("select answer_user.* from answer_user join answer on answer.id = answer_user.awnserId where answer.correct = 1 and answer_user.userId = ?")) {
+            $stmt->bind_param("i", $Id);
+
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            $stmt->bind_result($id, $userId, $answerId, $time);
+            $stmt->fetch();
+
+            $data = array();
+            while($stmt -> fetch()) {
+                $subarray = [
+                    "id" => $id,
+                    "userId" => $userId,
+                    "answerId" => $answerId,
+                    "time" => $time
+                ];
+                array_push($data, $subarray);
+            }
+            $stmt->close();
+            return $data;
+        }
+    }
+
 
     public function getRandomQuestionsByTemplate($templateId,$quizid){
 
@@ -1034,12 +1081,14 @@ class UserTools extends Database
       // echo "<p>answersarray:</p>";
       // print_r($answersarray);
 
-      $random_keys = array();
-      $random_keys=array_rand($answersarray,$aantal);
+
+
 
       $random_answers = array();
 
       if($aantal > 1){
+          $random_keys = array();
+          $random_keys=array_rand($answersarray,$aantal);
       for($i = 0;$i<$aantal;$i++){
         $random_answers[$i] = $answersarray[$random_keys[$i]];
       }
