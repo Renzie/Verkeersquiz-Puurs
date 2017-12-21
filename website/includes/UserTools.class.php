@@ -977,9 +977,9 @@ class UserTools extends Database
       if (!$stmt->execute()) {
 				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 			}else{
-        echo "succesfull";
+        //echo "succesfull";
       }
-      echo "<h3>DIKKE TEST</h3>";
+      //echo "<h3>DIKKE TEST</h3>";
 
       if(!$stmt->bind_result($template)){
         echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
@@ -991,25 +991,29 @@ class UserTools extends Database
       //print_r($template);
 
       $phptemplate = json_decode($template);
-      print_r($phptemplate);
+      //print_r($phptemplate);
+      $all = array();
 
       foreach($phptemplate as $category => $difficultyArray ){
-        echo "category: ".$category;
+        //echo "category: ".$category;
         foreach ( $difficultyArray as $difficulty => $aantal) {
-          if($aantal < 0){
-            //all = getallbyparams($category, $diff)
-            //randoms.push(all(rand($aantal)));
+          if($aantal > 0){
+            //array_push($all,$this->getAnswersByCategoryAndDifficulty($category, $difficulty, $quizid, $aantal));
+            $all = array_merge($all,$this->getAnswersByCategoryAndDifficulty($category, $difficulty, $quizid, $aantal));
           }
-          echo "";
-
+          // echo "<br><br>";
+          // echo "<p>all: ";
+          // print_r($all);
+          // echo "<br><br>";
         }
       }
 
 
-
+      return $all;
     }
 
-  public function getAnswersByCategoryAndDifficulty($category,$difficulty,$quizId){
+  public function getAnswersByCategoryAndDifficulty($category,$difficulty,$quizId,$aantal){
+    //echo "hello";
     $connection= $this->connect();
     //SELECT * from question JOIN quiz_questions ON question.id = quiz_questions.questionId WHERE category = 3 and difficulty = 1 and quiz_questions.quizId = 3
     $sql = "SELECT id from question JOIN quiz_questions ON question.id = quiz_questions.questionId WHERE category = ? and difficulty = ? and quiz_questions.quizId = ? ";
@@ -1024,9 +1028,34 @@ class UserTools extends Database
       array_push($answersarray,$quiestionid);
     };
       $stmt->close();
-      echo "<p>answersarray:</p>";
-      print_r($answersarray);
+
+      // echo "<p>aantal:";
+      // echo $aantal;
+      // echo "<p>answersarray:</p>";
+      // print_r($answersarray);
+
+      $random_keys = array();
+      $random_keys=array_rand($answersarray,$aantal);
+
+      $random_answers = array();
+
+      if($aantal > 1){
+      for($i = 0;$i<$aantal;$i++){
+        $random_answers[$i] = $answersarray[$random_keys[$i]];
+      }
+      return $random_answers;
+    }else{
       return $answersarray;
+    }
+
+
+      // echo "<p>randomkeys:</p>";
+      // print_r($random_keys);
+      //
+      // echo "<p>random_answers:</p>";
+      // print_r($random_answers);
+
+      return $random_keys;
   }
 
 	public function getStatisticsByDepartment($demapartmentId){
