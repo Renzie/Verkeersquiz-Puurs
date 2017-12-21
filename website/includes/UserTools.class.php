@@ -989,7 +989,7 @@ class UserTools extends Database
     public function getCorrectAnswersByUserId($id){
         $connection= $this->connect();
         if ($stmt = $connection->prepare("select answer_user.* from answer_user join answer on answer.id = answer_user.awnserId where answer.correct = 1 and answer_user.userId = ?")) {
-            $stmt->bind_param("i", $Id);
+            $stmt->bind_param("i", $id);
 
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
