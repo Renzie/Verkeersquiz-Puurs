@@ -21,7 +21,8 @@
 <body>
 <div class="slider fullscreen">
     <ul class="slides">
-        <li class="amber">
+        <li class="indigo darken-4">
+            <img src="#"/>
             <div class="caption center-align">
                 <h3><i class="material-icons large">videogame_asset</i></h3>
                 <h4 class="light grey-text text-lighten-3"> Well done <span class="username"></span>! You just finished your quiz!</h4>
@@ -29,8 +30,8 @@
         </li>
         <li class="red">
             <div class="caption left-align">
-                <h3>Your score is ...</h3>
-                <h5 class="light grey-text text-lighten-3">//TODO</h5>
+                <h5>Your score is ...</h5>
+                <h3 class="score"></h3>
             </div>
         </li>
         <li class="blue">

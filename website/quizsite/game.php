@@ -9,11 +9,12 @@ $view = new View();
 
 $quiz = $_SESSION['quiz'];
 $user = $_SESSION['userId'];
+$departmentId = $_SESSION['departmentId'];
 $questions = $usertools->getAllQuestionsByQuizId($quiz['id']);
 
 $currentQuestion = 0;
 
-echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('quizId',\"$quiz\");</script>";
+echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('quizId',\"$quiz\"); localStorage.setItem('departmentId',\"$departmentId\");</script>";
 ?>
 <!DOCTYPE html>
 <html lang="en">

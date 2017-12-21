@@ -30,9 +30,6 @@ $view = new View();
         <tbody class="tabel_quiz">
           <?php $view->getQuizzes(); ?>
         </tbody>
-
-
-
     </table>
     <a class="btn add_new_quiz"><i class="material-icons right">add</i>Nieuwe quiz</a>
 

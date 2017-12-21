@@ -17,16 +17,20 @@ if (isset($_POST['action'])) {
         case 'sendAnswer' :
             $usertools->makeUserAnswer($_POST['userId'], $_POST['answerId'], $_POST['time']);
             break;
+
+        case 'getDepartmentByDepartmentId' :
+            echo json_encode($usertools->getDepartmentByDepartmentId($_POST['departmentId']));
+            break;
         case 'getDepartments' :
             echo json_encode($usertools->getAllDepartments());
             break;
-        case 'getAllQuestionsByQuizId' :
-            echo json_encode($usertools->getAllQuestionsByQuizId($_POST['quizId']));
+        case 'getRandomQuestionsByQuizId' :
+            echo json_encode($usertools->getRandomQuestionsByTemplate($_POST['templateId'], $_POST['quizId']));
             break;
         case 'getCurrentQuiz' :
             echo json_encode($usertools->getQuizInfoById($_POST['quizId']));
             break;
-        case 'getCurrentQuestion' :
+        case 'getQuestionById' :
             echo json_encode($usertools->getQuestionById($_POST['questionId']));
             break;
         case 'getAnswersByQuestionId' :

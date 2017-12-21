@@ -2,8 +2,12 @@
 
 $(function () {
     $('select').material_select();
-    getCurrentQuiz();
+
+
     getUser();
+
+
+
 });
 
 var currentQuiz = {};
@@ -11,8 +15,7 @@ var allQuestions = [];
 var currentQuestion;
 var currentQuestionPosition = 0;
 var currentUser;
-
-
+var currentDepartment;
 
 function doDbAction(action, callback) {
     $.ajax({
@@ -37,6 +40,8 @@ function getUser() {
     doDbAction({action: "getUser", userId: localStorage.getItem('userId')}, function (data) {
         currentUser = data;
         setupUser(currentUser.name, currentUser.familyName);
+        getCurrentQuiz();
+
     })
 }
 
@@ -56,18 +61,32 @@ function setupQuiz() {
 function getCurrentQuiz() {
     doDbAction({action: "getCurrentQuiz", quizId: localStorage.getItem('quizId')}, function (data) {
         currentQuiz = data;
-        getAllQuestionsByQuizId();
+        getDepartmentByDepartmentId();
     })
 }
 
-function getAllQuestionsByQuizId() {
-    doDbAction({action: 'getAllQuestionsByQuizId', quizId: currentQuiz.id}, function (data) {
-        allQuestions = data;
-        currentQuestion = new Question(allQuestions[currentQuestionPosition]);
-        currentQuestion.setup();
-        setupQuiz();
+function getDepartmentByDepartmentId() {
+    doDbAction({action: 'getDepartmentByDepartmentId', departmentId : localStorage.getItem('departmentId') }, function (data) {
+        currentDepartment = data;
+        console.log(currentQuiz);
+        getQuestionsByQuizId();
     })
 }
+
+function getQuestionsByQuizId() {
+    doDbAction({action: 'getRandomQuestionsByQuizId', quizId: currentQuiz.id, templateId : currentDepartment.schemeId}, function (data) {
+        $(data).each(function (index) {
+            doDbAction({action : 'getQuestionById', questionId: data[index]}, function (res) {
+                allQuestions.push(res);
+                currentQuestion = new Question(allQuestions[currentQuestionPosition]);
+                currentQuestion.setup();
+                setupQuiz();
+            })
+        })
+    })
+}
+
+
 
 function Question(obj) {
     this.id = obj.id;
@@ -113,16 +132,18 @@ function Question(obj) {
     };
 
     this.setupAnswers = function (answers) {
-        $('[data-role="answers"]').empty('p');
-        console.log(answers)
+        $('[data-role="answers"]').empty();
         $(answers).each(function (data) {
+            console.log(answers[data].answer)
             var html = '<p>' +
-                '<input name="answer" type="radio" id="answer-' + answers[data].id + '"/>' +
-                '<label for="answer-' + answers[data].id + '">' + answers[data].answer + '</label>' +
+                '<input name="answer" type="radio" id="answer-' + answers[data].id + '">' +
+                '<label for="answer-' + answers[data].id + '">' + answers[data].answer +'</label>' +
                 '</p>';
 
             $('[data-role="answers"]').append(html);
+            console.log("in loop")
         })
+
     };
 
     $('#eindevraag').off().on('click', function (e) {
@@ -178,12 +199,16 @@ function Question(obj) {
     this.nextQuestion = () => {
         $('.question').fadeOut();
 
-        currentQuestion = new Question(allQuestions[++currentQuestionPosition]);
+        if ((currentQuestionPosition +1) == allQuestions.length ){
+            window.location = 'endgame.php'
+        } else {
+            currentQuestion = new Question(allQuestions[++currentQuestionPosition]);
+            currentQuestion.setup();
+            setupQuiz();
+            getCorrectAnswers();
+            $('.question').fadeIn();
+        }
 
-        currentQuestion.setup();
-        setupQuiz();
-        getCorrectAnswers();
-        $('.question').fadeIn();
     };
 
     this.sendAnswer = (e) => {
