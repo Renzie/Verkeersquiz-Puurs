@@ -6,11 +6,11 @@ require_once "head.html";
 
 
 
-/*if(!$_SESSION['login']){
+if(!$_SESSION['login']){
    header("location:logout.php");
    //die;
 }
-*/
+
 if(!isset($_GET["id"])){
 	header("location:createquiz.php");
 }
