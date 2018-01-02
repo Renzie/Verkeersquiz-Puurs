@@ -8,8 +8,12 @@ $usertools = new UserTools();
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
 
-        case "getCorrectAnswers" :
-            echo json_encode($usertools->getCorrectAnswersByUserId($_POST['userId']));
+        case 'getCategoryById' :
+            echo json_encode($usertools->getCategoryById($_POST['categoryId']));
+            break;
+
+        case "getAnswers" :
+            echo json_encode($usertools->getAnswersByUserId($_POST['userId']));
             break;
         case 'getUser' :
             echo json_encode($usertools->getUserById($_POST['userId']));

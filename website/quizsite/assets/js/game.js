@@ -5,9 +5,6 @@ $(function () {
 
 
     getUser();
-
-
-
 });
 
 var currentQuiz = {};
@@ -30,11 +27,6 @@ function doDbAction(action, callback) {
     })
 }
 
-function getCorrectAnswers() {
-    doDbAction({action : "getCorrectAnswers", userId : localStorage.getItem('userId')}, function (data) {
-        console.log(data);
-    })
-}
 
 function getUser() {
     doDbAction({action: "getUser", userId: localStorage.getItem('userId')}, function (data) {
@@ -50,7 +42,6 @@ function setupUser(firstname, lastname) {
 }
 
 function setupQuiz() {
-
     var width = (currentQuestionPosition + 1) / allQuestions.length * 100 + "%";
     $(".quiz_progress .progress .determinate").css("width", width)
     $(".quiz_progress .current_position").text(currentQuestionPosition + 1 + " / " + allQuestions.length);
@@ -81,6 +72,7 @@ function getQuestionsByQuizId() {
                 currentQuestion = new Question(allQuestions[currentQuestionPosition]);
                 currentQuestion.setup();
                 setupQuiz();
+                console.log(allQuestions)
             })
         })
     })
@@ -134,14 +126,12 @@ function Question(obj) {
     this.setupAnswers = function (answers) {
         $('[data-role="answers"]').empty();
         $(answers).each(function (data) {
-            console.log(answers[data].answer)
             var html = '<p>' +
                 '<input name="answer" type="radio" id="answer-' + answers[data].id + '">' +
                 '<label for="answer-' + answers[data].id + '">' + answers[data].answer +'</label>' +
                 '</p>';
 
             $('[data-role="answers"]').append(html);
-            console.log("in loop")
         })
 
     };
@@ -205,7 +195,6 @@ function Question(obj) {
             currentQuestion = new Question(allQuestions[++currentQuestionPosition]);
             currentQuestion.setup();
             setupQuiz();
-            getCorrectAnswers();
             $('.question').fadeIn();
         }
 
@@ -213,6 +202,7 @@ function Question(obj) {
 
     this.sendAnswer = (e) => {
         if (e) e.preventDefault();
+
         var time;
         if (time == undefined) {
             time = 0
@@ -225,12 +215,12 @@ function Question(obj) {
         } else {
             answer =  null;
         }
-        console.log(answer)
         $.ajax({
             type: "POST",
             url: "../dbaction.php",
             data: {action: 'sendAnswer', userId: currentUser.id, answerId: answer, time: time},
         }).then(function () {
+            console.log("ent")
             that.nextQuestion();
         });
     }
