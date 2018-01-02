@@ -6,6 +6,10 @@ require_once "includes/View.class.php";
 $usertools = new UserTools();
 
 
+if(!$_SESSION['login']){
+   header("location:logout.php");
+   //die;
+}
 ?>
 <div class="is-main-content">
     <h1 class="header">Menu <?php echo $usertools->registerUser('Renzie','Omaña',1);?></h1>

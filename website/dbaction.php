@@ -18,7 +18,7 @@ if (isset($_POST['action'])) {
         case 'getUser' :
             echo json_encode($usertools->getUserById($_POST['userId']));
             break;
-        case  'sendAnswer' :
+        case 'sendAnswer' :
             $usertools->makeUserAnswer($_POST['userId'], $_POST['answerId'], $_POST['time']);
             break;
 
@@ -62,10 +62,7 @@ if (isset($_POST['action'])) {
             $usertools->makeQuestion($_POST['question'], $_POST['difficulty'], $_POST['imgLink'], $_POST['time'], $_POST['category'], $_POST['quizId']);
             break;
         case 'updateQuestion':
-
             $usertools->updateQuestion($_POST['questionId'],$_POST['question'],$_POST['difficulty'],$_POST['category'],$_POST['imgLink'], $_POST['time']);
-
-
             break;
         case 'deleteQuestion':
             $usertools->deleteQuestionWithId($_POST['questionId']);
@@ -88,7 +85,6 @@ if (isset($_POST['action'])) {
         case 'updateDifficulty':
             $usertools->updateDifficulty($_POST['diffid'],$_POST['difficulty']);
             break;
-
         case 'deleteCategory':
             $usertools->deleteCategory($_POST['catId']);
             break;
