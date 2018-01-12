@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "head.html";
 require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
@@ -12,16 +13,9 @@ if(!$_SESSION['login']){
 }
 ?>
 <div class="is-main-content">
-    <h1 class="header">Menu <?php echo $usertools->registerUser('Renzie','Omaña',1);?></h1>
+    <h1 class="header">Menu</h1>
 
-    <article>
-        <h3>TESTING RANDOMQUIZGENERATOR</h3>
-        <?php
-        print_r( $usertools->getRandomQuestionsByTemplate(9,1));
-        //$usertools->getAnswersByCategoryAndDifficulty(1,2,1);
 
-        ?>
-    </article>
 
     <article>
         <h3>Quiz</h3>

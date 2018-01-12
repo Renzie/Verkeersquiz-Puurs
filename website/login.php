@@ -84,10 +84,16 @@ if($_SESSION['login'] == true){
       if($check){
         //echo "succesfull";
         $_SESSION['login'] = true;
+<<<<<<< HEAD
         echo '<script>Materialize.toast("Login gelukt!",1155);</script>';
         echo "<script>alert('login gelukt')</script>";
         echo '<script>window.location = "/aantal.php";</script>';
 
+=======
+
+        header("location:menu.php");
+        
+>>>>>>> ab1fd710bd34ded836db847d9183bdce31c99a4c
 
       }else{
         //echo "failed";
