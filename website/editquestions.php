@@ -24,7 +24,7 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
 ?>
 <div id="wijzigvragen" class="col s12">
     <h1>Quiz: <?php echo $data["name"]?></h1>
-    <h4>voeg vragen toe:</h4>
+    <h4>Vragen</h4>
 
     <ul class="questions collapsible" data-collapsible="expandable">
 			<?php $view->getAllQuestionsById($_GET["id"]) ?>
