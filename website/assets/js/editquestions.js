@@ -40,8 +40,7 @@ var updateQuestion = function(){
     'question': question,
     'difficulty': difficulty,
     'category':category,
-    'imgLink': imgLink,
-    'time': '00:00:00'
+    'imgLink': imgLink
   };
   $.post(ajaxurl, data, function (response) {
       // Response div goes here.
@@ -93,7 +92,6 @@ var makeQuestion = function(){
     'question': 'nieuwe vraag',
     'difficulty': 1,
     'imgLink': '',
-    'time': '00:00:00',
     'quizId':quizId
   };
   $.post(ajaxurl, data, function (response) {

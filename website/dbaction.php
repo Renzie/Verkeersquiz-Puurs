@@ -59,10 +59,10 @@ if (isset($_POST['action'])) {
             $usertools->makeQuiz($_POST['quizName'], $_POST['quizInfo']);
             break;
         case 'createQuestion':
-            $usertools->makeQuestion($_POST['question'], $_POST['difficulty'], $_POST['imgLink'], $_POST['time'], $_POST['category'], $_POST['quizId']);
+            $usertools->makeQuestion($_POST['question'], $_POST['difficulty'], $_POST['imgLink'], $_POST['category'], $_POST['quizId']);
             break;
         case 'updateQuestion':
-            $usertools->updateQuestion($_POST['questionId'],$_POST['question'],$_POST['difficulty'],$_POST['category'],$_POST['imgLink'], $_POST['time']);
+            $usertools->updateQuestion($_POST['questionId'],$_POST['question'],$_POST['difficulty'],$_POST['category'],$_POST['imgLink']);
             break;
         case 'deleteQuestion':
             $usertools->deleteQuestionWithId($_POST['questionId']);
