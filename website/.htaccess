@@ -1,5 +1,5 @@
 #Alternate default index page
-DirectoryIndex /quizsite/index.php
+#DirectoryIndex /quizsite/index.php
 #Rewrite everything to https
 RewriteEngine On
 RewriteCond %{HTTPS} !=on

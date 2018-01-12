@@ -4,6 +4,11 @@ require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
 $usertools = new UserTools();
 
+if($_SESSION['login']){
+   header("location:menu.php");
+   //die;
+}
+
 ?>
 
 
@@ -83,7 +88,7 @@ $usertools = new UserTools();
         $_SESSION['login'] = true;
 
         header("location:menu.php");
-        
+
 
       }else{
         //echo "failed";
