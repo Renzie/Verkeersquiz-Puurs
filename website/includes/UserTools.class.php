@@ -172,13 +172,15 @@ class UserTools extends Database
 
   public function updateAnswer($id,$answer,$correct){
 
+    //echo "<script>console.log('id: ".$id." correct:".$correct."')</script>";
+
     $connection= $this->connect();
 
 	  if (!$stmt = $connection->prepare("UPDATE Answer SET answer = ? , correct = ? WHERE id = ?")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("sii", $this->zuiverData($answer),$this->zuiverData($correct), $this->zuiverData($id))) {
+	  if (!$stmt->bind_param("sii", $answer,$correct, $id)) {
 		  echo "FAIL bind";
 	  }
 
@@ -265,15 +267,15 @@ class UserTools extends Database
 	}
 
 
-  public function makeDifficulty($difficulty)
+  public function makeDifficulty($difficulty,$time)
   {
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO difficulty (difficulty) VALUES (?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO difficulty (difficulty,time) VALUES (?,?)")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("s",$difficulty)) {
+	  if (!$stmt->bind_param("si",$difficulty,$time)) {
 		  echo "FAIL bind";
 	  }
 
@@ -344,15 +346,15 @@ class UserTools extends Database
 
   }
 
-  public function makeQuestion($question, $difficulty, $imgLink, $time, $category, $quizId){
+  public function makeQuestion($question, $difficulty, $imgLink, $category, $quizId){
 
     $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO question (question, difficulty, imageLink, time, category) VALUES (?, ?, ?, ?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO question (question, difficulty, imageLink, time, category) VALUES (?, ?,  ?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("sisss", $this->zuiverData($question), $difficulty, $imgLink, $time, $category)) {
+	  if (!$stmt->bind_param("siss", $this->zuiverData($question), $difficulty, $imgLink, $category)) {
 		  echo "FAIL bind";
 	  }
 
@@ -521,15 +523,15 @@ class UserTools extends Database
   }
 
 
-  public function updateQuestion($id, $question, $difficulty,$category, $imgLink, $time){
+  public function updateQuestion($id, $question, $difficulty,$category, $imgLink){
 
     $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("UPDATE question SET question = ? , difficulty = ? , category = ? , imageLink = ? , time = ? WHERE id = ?")) {
+	  if (!$stmt = $connection->prepare("UPDATE question SET question = ? , difficulty = ? , category = ? , imageLink = ?  WHERE id = ?")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("siissi", $question, $difficulty, $category, $imgLink, $time ,$id)) {
+	  if (!$stmt->bind_param("siisi", $question, $difficulty, $category, $imgLink ,$id)) {
 		  echo "FAIL bind";
 	  }
 
@@ -580,15 +582,15 @@ class UserTools extends Database
 	  $connection->close();
 
   }
-  public function updatedifficulty($id,$difficulty){
+  public function updatedifficulty($id,$difficulty,$time){
 
     $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("UPDATE difficulty SET difficulty = ? WHERE id = ?")) {
+	  if (!$stmt = $connection->prepare("UPDATE difficulty SET difficulty = ? , time=? WHERE id = ?")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("si", $difficulty, $id)) {
+	  if (!$stmt->bind_param("sii", $difficulty,$time, $id)) {
 		  echo "FAIL bind";
 	  }
 

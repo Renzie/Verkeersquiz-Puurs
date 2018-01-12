@@ -4,9 +4,12 @@ require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
 $usertools = new UserTools();
 
+if($_SESSION['login']){
+   header("location:menu.php");
+   //die;
+}
+
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -83,13 +86,12 @@ $usertools = new UserTools();
         $_SESSION['login'] = true;
 
         header("location:menu.php");
-        
 
       }else{
         //echo "failed";
         $_SESSION['login'] = false;
         echo '<script>Materialize.toast("Login gefaald!",1155);</script>';
-        //echo "<script>alert('login gefaald')</script>";
+        echo "<script>alert('login gefaald')</script>";
         //die;
       }
 

@@ -28,7 +28,7 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
     <h2>Template maken voor: <?php echo $data["name"]?> </h2>
 		<div class="row s12">
 			<div class="col s4">
-        <p>Maak een nieuwe template:</p>
+        <p>Maak een nieuwe template</p>
 				<br>
 				<div class="input-field col s12">
           <input placeholder="Placeholder" id="template_name" type="text" class="validate" required>
@@ -39,24 +39,24 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
       <div class="col s4">
         <br>
         <div id="back" class="hide">
-        <p>terug naar :</p>
+
         <br>
         <a type="submit" class="waves-effect waves-light btn blue " href="javascript:location.reload()">Nieuwe template</a>
       </div>
       </div>
       <div class="col s4">
-        <p>of wijzig een template:</p>
+        <p>Wijzig template</p>
         <br>
         <div class="input-field col s12">
       <select class="templateSelect">
-        <option value="" disabled selected>Choose your option</option>
+        <option value="" disabled selected>Kies een template</option>
         <?php
           foreach ($userTools->getAllTemplates() as $template) {
             ?> <option class="templateOption" value="<?php echo $template["id"];?>" quiztemplate='<?php echo $template["template"];?>'><?php echo $template["name"]; ?> </option>
         <?php  }
          ?>
       </select>
-      <label>Materialize Select</label>
+      <label>Bestaande templates</label>
     </div>
     </div>
 

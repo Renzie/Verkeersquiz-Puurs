@@ -13,7 +13,6 @@ function bindEvents(){
     $('.question').on('click','.removeQuestion',removeQuestion);
     $(".dropdown-button").dropdown();
     $(".button-collapse").sideNav();
-    addHTMLToNav();
     $('form').on('change',updateQuestion);
 }
 
@@ -41,8 +40,7 @@ var updateQuestion = function(){
     'question': question,
     'difficulty': difficulty,
     'category':category,
-    'imgLink': imgLink,
-    'time': '00:00:00'
+    'imgLink': imgLink
   };
   $.post(ajaxurl, data, function (response) {
       // Response div goes here.
@@ -94,7 +92,6 @@ var makeQuestion = function(){
     'question': 'nieuwe vraag',
     'difficulty': 1,
     'imgLink': '',
-    'time': '00:00:00',
     'quizId':quizId
   };
   $.post(ajaxurl, data, function (response) {
@@ -224,18 +221,4 @@ var markCorrect = function(){
        $(this).attr("correct", 0)
      }
    });
-}
-
-var addHTMLToNav= function(){
-
-      var url_string = window.location.href;
-      var url = new URL(url_string);
-      var quizId = url.searchParams.get("id");
-      var html = `<li><div class="divider"></div></li>
-                  <li><a href="aantal.php?id=${quizId}"><i class="material-icons">format_list_numbered</i>Quiz Template</a></li>
-                  <li><a href="moeilijkheidsgraad.php?id=${quizId}"><i class="material-icons">format_align_left</i>Moeilijkheidsgraad</a></li>
-                  <li><a href="categories.php?id=${quizId}"><i class="material-icons">sort</i>Categorieën</a></li>
-                  <li><a href="dashboard.php?id=${quizId}"><i class="material-icons">equalizer</i>Statistics</a></li>`;
-
-      $("#slide-out").append(html);
 }

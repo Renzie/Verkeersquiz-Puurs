@@ -31,6 +31,7 @@ $view = new View();
           <?php $view->getQuizzes(); ?>
         </tbody>
     </table>
+    <br />
     <a class="btn add_new_quiz"><i class="material-icons right">add</i>Nieuwe quiz</a>
 
 </section>
