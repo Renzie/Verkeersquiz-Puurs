@@ -12,6 +12,13 @@ $user = $_SESSION['userId'];
 $departmentId = $_SESSION['departmentId'];
 $questions = $usertools->getAllQuestionsByQuizId($quiz['id']);
 
+
+if(!$_SESSION['userId']){
+   header("location:index.php");
+   //die;
+}
+
+
 $currentQuestion = 0;
 
 echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('quizId',\"$quiz\"); localStorage.setItem('departmentId',\"$departmentId\");</script>";

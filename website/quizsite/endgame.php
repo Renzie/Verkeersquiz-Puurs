@@ -24,7 +24,7 @@
         <li class="indigo darken-4">
             <img src="#"/>
             <div class="caption center-align">
-                <h3><i class="material-icons large">videogame_asset</i></h3>
+                <h3><i class="material-icons large">check</i></h3>
                 <h4 class="light grey-text text-lighten-3"> Well done <span class="username"></span>! You just finished your quiz!</h4>
             </div>
         </li>
@@ -35,9 +35,12 @@
             </div>
         </li>
         <li class="blue">
-            <div class="caption right-align">
+            <div class="caption right-align review">
                 <h3>Review</h3>
-                <h5 class="light grey-text text-lighten-3">//TODO</h5>
+                <h5 class="light grey-text text-lighten-3"></h5>
+                <ul class=""></ul>
+
+
             </div>
         </li>
 

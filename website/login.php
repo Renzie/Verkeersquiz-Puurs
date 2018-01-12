@@ -81,6 +81,10 @@ $usertools = new UserTools();
       if($check){
         //echo "succesfull";
         $_SESSION['login'] = true;
+<<<<<<< HEAD
+=======
+        echo '<script>Materialize.toast("Login gelukt!",1155);</script>';
+>>>>>>> f60bc362917b5b684ef3afa656a93731cf7fb1c2
         header("location:menu.php");
 
       }else{

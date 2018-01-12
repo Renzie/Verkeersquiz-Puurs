@@ -986,24 +986,25 @@ class UserTools extends Database
         }
     }
 
-    public function getCorrectAnswersByUserId($id){
+    public function getAnswersByUserId($id){
         $connection= $this->connect();
-        if ($stmt = $connection->prepare("select answer_user.* from answer_user join answer on answer.id = answer_user.awnserId where answer.correct = 1 and answer_user.userId = ?")) {
+        if ($stmt = $connection->prepare("select answer.* from answer_user join answer on answer.id = answer_user.awnserId where answer_user.userId = ? and answer.id = 80")) {
             $stmt->bind_param("i", $id);
 
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $userId, $answerId, $time);
+            $stmt->bind_result($id, $answer, $questionId, $correct, $category);
             $stmt->fetch();
 
             $data = array();
             while($stmt -> fetch()) {
                 $subarray = [
                     "id" => $id,
-                    "userId" => $userId,
-                    "answerId" => $answerId,
-                    "time" => $time
+                    "answer" => $answer,
+                    "questionId" => $questionId,
+                    "correct" => $correct,
+                    "category" => $category
                 ];
                 array_push($data, $subarray);
             }
@@ -1011,6 +1012,8 @@ class UserTools extends Database
             return $data;
         }
     }
+
+
 
 
     public function getRandomQuestionsByTemplate($templateId,$quizid){
@@ -1105,6 +1108,25 @@ class UserTools extends Database
       // print_r($random_answers);
 
       return $random_keys;
+  }
+
+  public function getCategoryById($id){
+      $connection= $this->connect();
+      $data = array();
+      if ($stmt = $connection->prepare("SELECT * FROM category WHERE id = ?")) {
+          $stmt->bind_param("i", $id);
+          if (!$stmt->execute()) {
+              echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+          }
+          $stmt->bind_result($id,$category);
+          $stmt->fetch();
+          $data = [
+              "id"=>$id,
+              "category"=>$category,
+          ];
+          $stmt->close();
+      }
+      return $data;
   }
 
 	public function getStatisticsByDepartment($demapartmentId){
