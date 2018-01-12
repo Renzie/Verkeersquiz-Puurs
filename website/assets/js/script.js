@@ -3,8 +3,8 @@ $(document).ready(function () {
     $(".button-collapse").sideNav();
     $('select').material_select();
     $('.collapsible').collapsible({accordion:true,
-                                    onClose: function(e) {  $(e).find("i").text("keyboard_arrow_right");},
-                                    onOpen: function(e) {  $(e).find("i").text("keyboard_arrow_down");}
+                                    onClose: function(e) { $(e).find(".collapsible-header > i").text("keyboard_arrow_right"); console.log(e)},
+                                    onOpen: function(e) {  $(e).find(".collapsible-header > i").text("keyboard_arrow_down");}
                                 });
 
     addHTMLToNav();
