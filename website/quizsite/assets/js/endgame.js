@@ -2,20 +2,15 @@
 
 $(function () {
     $('.slider').slider({interval: 10000});
-
     setUsername();
-    getDepartmentByDepartmentId();
-
-
+    getDepartmentByDepartmentId()
 });
 
 var answers;
 var currentDepartment;
 var questions = [];
-var correctAnswers =[];
-
+var correctAnswers = [];
 var categories = [];
-
 
 function doDbAction(action, callback) {
     return $.ajax({
@@ -30,59 +25,54 @@ function doDbAction(action, callback) {
     })
 }
 
-
 function getQuestions() {
-    return doDbAction({
-        action: 'getRandomQuestionsByQuizId',
-        quizId: localStorage.getItem('quizId'),
-        templateId: currentDepartment.schemeId
+     doDbAction({action: 'getRandomQuestionsByQuizId', quizId: localStorage.getItem('quizId'), templateId: currentDepartment.schemeId
     }, function (data) {
         return $(data).each(function (index) {
-            return doDbAction({action: 'getQuestionById', questionId: data[index]}, function (res) {
-                questions[index] = res;
+             return doDbAction({action: 'getQuestionById', questionId: data[index]}, function (res) {
+                questions[index] = res
                 setupText();
-                addToCategoriesUsed(res)
-                console.log(correctAnswers)
+                addToCategoriesUsed()
             })
         })
     })
 }
 
-function getScoreByCategories() {
-    var scoreByCategory = new Array(categories.length)
-    scoreByCategory.fill({amount : 0, amountCorrect: 0});
-    console.log("answers = ", answers)
-    console.log("questions = ", questions)
-    categories.forEach(function (cat, index) {
-        questions.forEach(function (question, i) {
-            if (cat.id == question.category) {
-                scoreByCategory[cat.id -1].amount++;
-                console.log("answers:" ,answers[i].questionId)
-                console.log("questoin:" ,question.id)
-                if (questionIsCorrect(question, answers[i])){
-                    console.log("eej")
-                }
 
+function getScoreByCategories() {
+    //add all questions sorted by category + correct questions by category
+    categories.forEach(function (category,index) {
+        category.amount = 0;
+        category.amountCorrect = 0;
+        questions.forEach(function (question,i) {
+            if (question.category == category.id){
+                category.amount++;
+                if (questionIsCorrect(question,answers[i])){
+                    category.amountCorrect++;
+                }
             }
         })
     })
 }
 
 function questionIsCorrect(question, answer) {
-
     return question.id == answer.questionId && answer.correct == 1;
 }
 
-function addToCategoriesUsed(question) { // add categories that are used in the quiz
-    return doDbAction({action: 'getCategoryById', categoryId: question.category}, function (data, index) {
-        categories[data.id - 1] = data;
-    }).then(function () {
-        setCategories();
-        getScoreByCategories()
+function addToCategoriesUsed() {
+    // add categories that are used in the quiz
+    return questions.forEach(function (question, index) {
+        return doDbAction({action: 'getCategoryById', categoryId: question.category}, function (data, index) {
+            categories[data.id - 1] = data;
+        }).then(function () {
+            setCategories();
+            getScoreByCategories()
+        })
     })
 }
 
 function setCategories() {
+    //setup UI
     $('.category').remove();
     categories.forEach(function (data, index) {
         var html = '<div class="category"><h4 class="light grey-text text-lighten-3">' + data.category + '</h4> </div>'
@@ -102,24 +92,20 @@ function getDepartmentByDepartmentId() {
         departmentId: localStorage.getItem('departmentId')
     }, function (data) {
         currentDepartment = data;
-        getAnswers();
-    }).then(function () {
-        return getQuestions();
+        return getAnswers().then(function () {
+            return getQuestions()
+        })
     })
 }
 
-
-
-
-
-function getAnswers() { // TODO returns all answers except the first one
-    doDbAction({action: "getAnswers", userId: localStorage.getItem('userId')}, function (data) {
-        console.log("data:", data)
+function getAnswers() {
+    return doDbAction({action: "getAnswers", userId: localStorage.getItem('userId')}, function (data) {
         answers = data;
+        console.log(answers)
     }).then(function () {
         answers.forEach(function (data, index) {
-            if (data.correct == 1){
-                correctAnswers.push(data.questionId);
+            if (data.correct == 1) {
+                correctAnswers.push(data);
             }
         })
     })

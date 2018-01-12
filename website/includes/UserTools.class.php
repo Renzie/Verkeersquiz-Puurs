@@ -988,14 +988,13 @@ class UserTools extends Database
 
     public function getAnswersByUserId($id){
         $connection= $this->connect();
-        if ($stmt = $connection->prepare("select answer.* from answer_user join answer on answer.id = answer_user.awnserId where answer_user.userId = ? and answer.id = 80")) {
+        if ($stmt = $connection->prepare("select answer.* from answer_user join answer on answer.id = answer_user.awnserId where answer_user.userId = ?")) {
             $stmt->bind_param("i", $id);
 
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
             $stmt->bind_result($id, $answer, $questionId, $correct, $category);
-            $stmt->fetch();
 
             $data = array();
             while($stmt -> fetch()) {

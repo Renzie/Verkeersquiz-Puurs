@@ -2,8 +2,6 @@
 
 $(function () {
     $('select').material_select();
-
-
     getUser();
 });
 
@@ -59,12 +57,12 @@ function getCurrentQuiz() {
 function getDepartmentByDepartmentId() {
     doDbAction({action: 'getDepartmentByDepartmentId', departmentId : localStorage.getItem('departmentId') }, function (data) {
         currentDepartment = data;
-        console.log(currentQuiz);
         getQuestionsByQuizId();
     })
 }
 
 function getQuestionsByQuizId() {
+
     doDbAction({action: 'getRandomQuestionsByQuizId', quizId: currentQuiz.id, templateId : currentDepartment.schemeId}, function (data) {
         $(data).each(function (index) {
             doDbAction({action : 'getQuestionById', questionId: data[index]}, function (res) {
@@ -72,6 +70,7 @@ function getQuestionsByQuizId() {
                 currentQuestion = new Question(allQuestions[currentQuestionPosition]);
                 currentQuestion.setup();
                 setupQuiz();
+                console.log("success")
                 console.log(allQuestions)
             })
         })

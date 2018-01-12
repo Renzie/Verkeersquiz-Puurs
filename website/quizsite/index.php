@@ -16,7 +16,6 @@ function checkIfSet($name){
     if (isset($_POST[$name]) && !empty($_POST[$name])){
         return true;
     }return false;
-
 }
 
 if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("department")) {
@@ -153,10 +152,6 @@ if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("departmen
             setDepartments(JSON.parse(data))
         });
     }
-
-
-
-
     function setDepartments(departments) {
         var dep = document.getElementById("department");
         var org = document.getElementById("organization");
