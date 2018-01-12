@@ -89,6 +89,7 @@ class View extends UserTools {
 			?>
 			<tr class="difficulty" diffId="<?php echo $difficulty["id"]?>">
 				<td><input  class="difficultyName" type="text" value="<?php echo $difficulty["difficulty"]?>"></td>
+				<td><input  class="difficultyTime" type="number" min="0" max ="9999" value="<?php echo $difficulty["time"]?>"></td>
 				<td><a  class="btn red deleteDifficulty" buttonAction="deleteDifficulty"><i class="material-icons">delete</i></a>
 					<a class="btn purple updateDifficulty" buttonAction="updateDifficulty" ><i class="material-icons">save</i></a>
 					</td>
@@ -473,4 +474,3 @@ class View extends UserTools {
         }
     }
 }
-

@@ -265,15 +265,15 @@ class UserTools extends Database
 	}
 
 
-  public function makeDifficulty($difficulty)
+  public function makeDifficulty($difficulty,$time)
   {
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO difficulty (difficulty) VALUES (?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO difficulty (difficulty,time) VALUES (?,?)")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("s",$difficulty)) {
+	  if (!$stmt->bind_param("si",$difficulty,$time)) {
 		  echo "FAIL bind";
 	  }
 
@@ -580,15 +580,15 @@ class UserTools extends Database
 	  $connection->close();
 
   }
-  public function updatedifficulty($id,$difficulty){
+  public function updatedifficulty($id,$difficulty,$time){
 
     $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("UPDATE difficulty SET difficulty = ? WHERE id = ?")) {
+	  if (!$stmt = $connection->prepare("UPDATE difficulty SET difficulty = ? , time=? WHERE id = ?")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("si", $difficulty, $id)) {
+	  if (!$stmt->bind_param("sii", $difficulty,$time, $id)) {
 		  echo "FAIL bind";
 	  }
 
