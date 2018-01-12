@@ -3,7 +3,7 @@ session_start();
 
 if(!$_SESSION['login']){
    header("location:logout.php");
-   //die;
+   die();
 }
 
 if(!isset($_GET["id"])){

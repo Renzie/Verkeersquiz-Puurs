@@ -81,7 +81,7 @@ $usertools = new UserTools();
       if($check){
         //echo "succesfull";
         $_SESSION['login'] = true;
-        header("location:index.php");
+        header("location:menu.php");
 
       }else{
         //echo "failed";
