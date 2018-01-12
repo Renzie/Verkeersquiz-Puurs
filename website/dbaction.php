@@ -80,10 +80,10 @@ if (isset($_POST['action'])) {
             $usertools->deleteDifficultyWithId($_POST['diffId']);
             break;
         case 'makeDifficulty':
-            $usertools->makeDifficulty($_POST['difficulty']);
+            $usertools->makeDifficulty($_POST['difficulty'],$_POST['time']);
             break;
         case 'updateDifficulty':
-            $usertools->updateDifficulty($_POST['diffid'],$_POST['difficulty']);
+            $usertools->updateDifficulty($_POST['diffid'],$_POST['difficulty'],$_POST['time']);
             break;
         case 'deleteCategory':
             $usertools->deleteCategory($_POST['catId']);

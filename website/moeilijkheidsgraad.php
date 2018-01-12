@@ -23,8 +23,13 @@ $view = new View();
         <thead>
         <tr>
             <th>Moeilijkheidsgraad</th>
+            <th>Tijd per vraag (in seconden)</th>
         </tr>
+
+
+
         </thead>
+
         <tbody class="tabel_school">
           <?php
 

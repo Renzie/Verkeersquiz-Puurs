@@ -12,6 +12,7 @@ if($_SESSION['login']){
 ?>
 
 
+?>
 
 <!DOCTYPE html>
 <html>
@@ -88,13 +89,17 @@ if($_SESSION['login']){
         $_SESSION['login'] = true;
 
         header("location:menu.php");
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> b45651c597d081f48d17faec35d1accb6612e0cd
 
       }else{
         //echo "failed";
         $_SESSION['login'] = false;
         echo '<script>Materialize.toast("Login gefaald!",1155);</script>';
-        //echo "<script>alert('login gefaald')</script>";
+        echo "<script>alert('login gefaald')</script>";
         //die;
       }
 

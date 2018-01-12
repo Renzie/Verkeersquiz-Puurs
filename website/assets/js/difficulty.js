@@ -28,7 +28,8 @@ function addNewDifficulty() {
     var ajaxurl = 'dbaction.php',
     data =  {
       'action': "makeDifficulty",
-      'difficulty': "nieuwe moeilijkheidsgraad"
+      'difficulty': "nieuwe moeilijkheidsgraad",
+      'time': 30
     };
     $.post(ajaxurl, data, function (response) {
         location.reload();
@@ -40,12 +41,14 @@ function addNewDifficulty() {
 function updateDifficulty(){
   var diffid = $(this).closest('.difficulty').attr("diffId");
   var difficulty = $(this).closest('.difficulty').find(".difficultyName").val();
+  var difficultyTime = $(this).closest('.difficulty').find(".difficultyTime").val();
   console.log("id: , "+diffid+"difficulty: "+difficulty);
   var ajaxurl = 'dbaction.php',
   data =  {
     'action': "updateDifficulty",
     'diffid':diffid,
-    'difficulty': difficulty
+    'difficulty': difficulty,
+    'time':difficultyTime
   };
   $.post(ajaxurl, data, function (response) {
       location.reload();
