@@ -89,11 +89,6 @@ if($_SESSION['login']){
         $_SESSION['login'] = true;
 
         header("location:menu.php");
-<<<<<<< HEAD
-
-=======
-
->>>>>>> b45651c597d081f48d17faec35d1accb6612e0cd
 
       }else{
         //echo "failed";
