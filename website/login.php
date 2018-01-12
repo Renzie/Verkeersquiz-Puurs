@@ -12,7 +12,6 @@ if($_SESSION['login']){
 ?>
 
 
-?>
 
 <!DOCTYPE html>
 <html>
