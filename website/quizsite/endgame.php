@@ -25,18 +25,18 @@
             <img src="#"/>
             <div class="caption center-align">
                 <h3><i class="material-icons large">check</i></h3>
-                <h4 class="light grey-text text-lighten-3"> Well done <span class="username"></span>! You just finished your quiz!</h4>
+                <h4 class="light grey-text text-lighten-3"> Goed gedaan <span class="username"></span>! Je hebt je quiz succesvol ingevuld!</h4>
             </div>
         </li>
-        <li class="red">
+        <li class="red darken-4">
             <div class="caption left-align">
-                <h5>Your score is ...</h5>
+                <h5>Je score is ...</h5>
                 <h3 class="score"></h3>
             </div>
         </li>
-        <li class="blue">
+        <li class="blue darken-4">
             <div class="caption right-align review">
-                <h3>Review</h3>
+                <h3>Score verdeling:</h3>
                 <h5 class="light grey-text text-lighten-3"></h5>
                 <ul class=""></ul>
 
@@ -46,8 +46,8 @@
 
         <li class="purple">
             <div class="caption center-align">
-                <h3>Thank you for playing the quiz!</h3>
-                <h5 class="light grey-text text-lighten-3"><a class="btn" href="index.php">Play another quiz!</a> </h5>
+                <h3>Bedankt voor het spelen van onze quiz!</h3>
+                <h5 class="light grey-text text-lighten-3"><a class="btn" href="index.php">Speel nog een quiz!</a> </h5>
             </div>
         </li>
     </ul>

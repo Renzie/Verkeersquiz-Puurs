@@ -52,6 +52,7 @@ function getScoreByCategories() {
                 }
             }
         })
+
     })
 }
 
@@ -75,7 +76,8 @@ function setCategories() {
     //setup UI
     $('.category').remove();
     categories.forEach(function (data, index) {
-        var html = '<div class="category"><h4 class="light grey-text text-lighten-3">' + data.category + '</h4> </div>'
+        var percentage = (data.amountCorrect / data.amount) * 100;
+        var html = '<div class="category"><h4 class="light grey-text text-lighten-3">   '  + data.category + ' : ' + percentage +  '% </h4> </div>'
         $('.review').append(html);
     })
 }
@@ -101,7 +103,6 @@ function getDepartmentByDepartmentId() {
 function getAnswers() {
     return doDbAction({action: "getAnswers", userId: localStorage.getItem('userId')}, function (data) {
         answers = data;
-        console.log(answers)
     }).then(function () {
         answers.forEach(function (data, index) {
             if (data.correct == 1) {
