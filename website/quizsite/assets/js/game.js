@@ -12,6 +12,7 @@ var currentQuestionPosition = 0;
 var currentUser;
 var currentDepartment;
 
+
 function doDbAction(action, callback) {
     $.ajax({
         type: "POST",
@@ -24,7 +25,6 @@ function doDbAction(action, callback) {
         callback(JSON.parse(data));
     })
 }
-
 
 function getUser() {
     doDbAction({action: "getUser", userId: localStorage.getItem('userId')}, function (data) {
@@ -41,7 +41,7 @@ function setupUser(firstname, lastname) {
 
 function setupQuiz() {
     var width = (currentQuestionPosition + 1) / allQuestions.length * 100 + "%";
-    $(".quiz_progress .progress .determinate").css("width", width)
+    $(".quiz_progress .progress .determinate").css("width", width);
     $(".quiz_progress .current_position").text(currentQuestionPosition + 1 + " / " + allQuestions.length);
     $(".question .title").text("Vraag " + currentQuestionPosition + 1);
     $('.quizname').text(currentQuiz.name);
@@ -55,62 +55,76 @@ function getCurrentQuiz() {
 }
 
 function getDepartmentByDepartmentId() {
-    doDbAction({action: 'getDepartmentByDepartmentId', departmentId : localStorage.getItem('departmentId') }, function (data) {
+    doDbAction({
+        action: 'getDepartmentByDepartmentId',
+        departmentId: localStorage.getItem('departmentId')
+    }, function (data) {
         currentDepartment = data;
         getQuestionsByQuizId();
     })
 }
 
 function getQuestionsByQuizId() {
+    return doDbAction({
+        action: 'getRandomQuestionsByQuizId',
+        quizId: currentQuiz.id,
+        templateId: currentDepartment.schemeId
+    }, function (data) {
+        let questions = data.map((question) => {
+            return new Promise((resolve) => {
+                doDbAction({action: 'getQuestionById', questionId: question}, function (res) {
+                    allQuestions.push(new Question(res));
 
-    doDbAction({action: 'getRandomQuestionsByQuizId', quizId: currentQuiz.id, templateId : currentDepartment.schemeId}, function (data) {
-        $(data).each(function (index) {
-            doDbAction({action : 'getQuestionById', questionId: data[index]}, function (res) {
-                allQuestions.push(res);
-                currentQuestion = new Question(allQuestions[currentQuestionPosition]);
-                currentQuestion.setup();
-                setupQuiz();
-                console.log("success")
-                console.log(allQuestions)
+                    resolve();
+                })
             })
+        });
+        Promise.all(questions).then(function () {
+            currentQuestion = allQuestions[0];
+            currentQuestion.setup();
+            setupQuiz();
         })
     })
-}
 
+}
 
 
 function Question(obj) {
     this.id = obj.id;
+    this.difficultyId = obj.difficulty;
 
-    this.timer = null;
 
-    this.time = obj.time.split(':');
-    this.setupTime = function () {
-        var hour = this.time[0] * 60 * 60;
-        var minute = this.time[1] * 60;
-        var second = this.time[2];
-        return parseInt(hour + minute + second);
-    };
+    this.time = 0;
+
     this.answers = [];
-    this.currentTime = this.setupTime();
+    this.timer = null;
 
     var that = this;
     this.text = obj.question;
     this.width = 0;
-    this.total = this.currentTime;
+    //this.total = this.currentTime;
 
     this.imageLink = obj.imageLink;
 
     this.setImage = function () {
         if (this.imageLink == null || this.imageLink == '') {
             $('.image').hide()
-            $('.image').attr('src','')
+            $('.image').attr('src', '')
 
         } else {
             $('.image').show()
             $('.image').attr('src', '../images/' + this.imageLink)
         }
     };
+    this.getTime = function () {
+        return doDbAction({
+            action: "getDifficultyById",
+            difficultyId: this.difficultyId
+        }, function (data) {
+            that.currentTime = that.time = that.total = data.time;
+
+        })
+    }
 
     this.getAnswers = function () {
         doDbAction({
@@ -127,7 +141,7 @@ function Question(obj) {
         $(answers).each(function (data) {
             var html = '<p>' +
                 '<input name="answer" type="radio" id="answer-' + answers[data].id + '">' +
-                '<label for="answer-' + answers[data].id + '">' + answers[data].answer +'</label>' +
+                '<label for="answer-' + answers[data].id + '">' + answers[data].answer + '</label>' +
                 '</p>';
 
             $('[data-role="answers"]').append(html);
@@ -135,10 +149,7 @@ function Question(obj) {
 
     };
 
-    $('#eindevraag').off().on('click', function (e) {
-        e.preventDefault();
-        that.stopTimer();
-    });
+
 
     this.setupText = function () {
         var text = currentQuestionPosition;
@@ -146,20 +157,21 @@ function Question(obj) {
         $("[data-role='question']").text(currentQuestion.text);
         $(".question_number").text('Vraag ' + text);
     };
+
     this.setup = function () {
         if (this.total !== 0) {
-            that.timer = setInterval(this.update, 1000);
+            this.timer = setInterval(this.update, 1000);
         }
-            this.setupText();
-            this.getAnswers();
-            this.setImage();
-            $('form').on('submit', currentQuestion.sendAnswer)
+        this.setupText();
+        this.getTime();
+        this.getAnswers();
+        this.setImage();
+        $('form').off().on('submit', currentQuestion.sendAnswer)
 
     };
 
-
     this.update = () => {
-        console.log(this.currentTime);
+
         if (this.currentTime < 0) {
             that.stopTimer();
         } else if (this.currentTime == Math.round((this.total / 2) * 10 / 10)) {
@@ -176,22 +188,30 @@ function Question(obj) {
     };
 
     this.stopTimer = () => {
+        console.log(timer);
+
         this.width += 100 / this.total;
         $('.timeleft').css('width', this.width + '%');
-        Materialize.toast('Vraag ' +  (currentQuestionPosition + 2), 4000);
+        Materialize.toast('Vraag ' + (currentQuestionPosition + 2), 4000);
+        console.log("1st", this.timer)
 
-        clearInterval(this.timer);
+
+        console.log("2st", this.timer)
+
+
+
         $('.answers p input').attr('disabled', true)
         that.sendAnswer();
     }
 
     this.nextQuestion = () => {
+
         $('.question').fadeOut();
 
-        if ((currentQuestionPosition +1) == allQuestions.length ){
-            window.location = 'endgame.php'
+        if ((currentQuestionPosition + 1) == allQuestions.length) {
+            //window.location = 'endgame.php'
         } else {
-            currentQuestion = new Question(allQuestions[++currentQuestionPosition]);
+            currentQuestion = allQuestions[++currentQuestionPosition];
             currentQuestion.setup();
             setupQuiz();
             $('.question').fadeIn();
@@ -201,7 +221,6 @@ function Question(obj) {
 
     this.sendAnswer = (e) => {
         if (e) e.preventDefault();
-
         var time;
         if (time == undefined) {
             time = 0
@@ -212,25 +231,20 @@ function Question(obj) {
         if (answer !== undefined) {
             answer = answer.split('answer-')[1];
         } else {
-            answer =  null;
+            answer = null;
         }
+
+        clearInterval(this.timer);
+
+        console.log(currentQuestion.currentTime)
         $.ajax({
             type: "POST",
             url: "../dbaction.php",
-            data: {action: 'sendAnswer', userId: currentUser.id, answerId: answer, time: time},
+            data: {action: 'sendAnswer', userId: currentUser.id, answerId: answer, time: currentQuestion.currentTime},
         }).then(function () {
-            console.log("ent")
             that.nextQuestion();
         });
     }
 }
 
-/*document.addEventListener("DOMContentLoaded", function () {
- $('.preloader-background').delay(1000).fadeOut('slow');
 
- $('.preloader-wrapper')
- .delay(1000)
- .fadeOut();
- });
-
- */

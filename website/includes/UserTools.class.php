@@ -863,6 +863,26 @@ class UserTools extends Database
 		return $data;
 	}
 
+    public function getDifficultyById($id){
+        $connection= $this->connect();
+        $data = array();
+        if ($stmt = $connection->prepare("SELECT * FROM difficulty WHERE id=?")) {
+            $stmt->bind_param("i", $id);
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            $stmt->bind_result($id,$difficulty,$time);
+            $stmt->fetch();
+            $data = [
+                "id"=>$id,
+                "difficulty"=>$difficulty,
+                "time"=>$time,
+
+            ];
+            $stmt->close();
+        }
+        return $data;
+    }
 
 	public function getQuestionById($id){
         $connection= $this->connect();
