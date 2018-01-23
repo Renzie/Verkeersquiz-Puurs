@@ -16,13 +16,17 @@ require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
 require_once "includes/View.class.php";
 $view = new View();
+$userTools = new UserTools();
+
+$organizationData = $userTools->getOrganizationInfoById($_GET["id"]);
 
 
 
 
 ?>
+    <h1>school: <?php echo $organizationData["name"]; ?></h1>
+    <h2>Klassen</h2>
 
-    <h1>Klassen</h1>
     <table class="striped klassen ">
         <thead>
         <tr>

@@ -92,6 +92,7 @@ var makeQuestion = function(){
     'question': 'nieuwe vraag',
     'difficulty': 1,
     'imgLink': '',
+    'category': 1,
     'quizId':quizId
   };
   $.post(ajaxurl, data, function (response) {

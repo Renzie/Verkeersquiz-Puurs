@@ -350,11 +350,11 @@ class UserTools extends Database
 
     $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO question (question, difficulty, imageLink, time, category) VALUES (?, ?,  ?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO question (question, difficulty, imageLink, category) VALUES (?, ?, ?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
-	  if (!$stmt->bind_param("siss", $this->zuiverData($question), $difficulty, $imgLink, $category)) {
+	  if (!$stmt->bind_param("sisi", $this->zuiverData($question), $difficulty, $imgLink, $category)) {
 		  echo "FAIL bind";
 	  }
 
@@ -827,6 +827,26 @@ class UserTools extends Database
 		$connection= $this->connect();
 		$data = array();
         if ($stmt = $connection->prepare("SELECT * FROM quiz WHERE id=?")) {
+            $stmt->bind_param("i", $id);
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            $stmt->bind_result($id,$name,$extraInfo);
+            $stmt->fetch();
+			$data = [
+			  "id"=>$id,
+			  "name"=>$name,
+			  "extraInfo"=>$extraInfo
+			];
+            $stmt->close();
+        }
+		return $data;
+	}
+
+  public function getOrganizationInfoById($id){
+		$connection= $this->connect();
+		$data = array();
+        if ($stmt = $connection->prepare("SELECT * FROM organization WHERE id=?")) {
             $stmt->bind_param("i", $id);
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
