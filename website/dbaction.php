@@ -26,7 +26,7 @@ if (isset($_POST['action'])) {
             echo json_encode($usertools->getDepartmentByDepartmentId($_POST['departmentId']));
             break;
         case 'getDepartments' :
-            echo json_encode($usertools->getAllDepartments());
+            echo json_encode($usertools->getAllDepartmentsById($_POST['organizationId']));
             break;
         case 'getRandomQuestionsByQuizId' :
             echo json_encode($usertools->getRandomQuestionsByTemplate($_POST['templateId'], $_POST['quizId']));

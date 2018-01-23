@@ -143,11 +143,11 @@ if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("departmen
     });
 
     function ajax() {
-        console.log('test')
+        var org = document.getElementById("organization");
             $.ajax({
             type: "POST",
             url: "../dbaction.php",
-            data: {action: "getDepartments"},
+            data: {action: "getDepartments", organizationId : org.options[org.selectedIndex].value},
         }).then(function (data) {
             setDepartments(JSON.parse(data))
         });
@@ -160,9 +160,9 @@ if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("departmen
         $(dep).empty();
         html += '<option value="" disabled selected>Selecteer je klas</option>';
         $(departments).each(function (data) {
-            if (departments[data].organizationId == selected) {
+
                 html += "<option value=" + departments[data].id + ">" + departments[data].name + "</option>"
-            }
+
         });
         $(dep).append(html);
         $(dep).material_select('update');

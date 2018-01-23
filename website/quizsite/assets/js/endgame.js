@@ -30,7 +30,7 @@ function getQuestions() {
     }, function (data) {
         return $(data).each(function (index) {
              return doDbAction({action: 'getQuestionById', questionId: data[index]}, function (res) {
-                questions[index] = res
+                questions[index] = res;
                 setupText();
                 addToCategoriesUsed()
             })

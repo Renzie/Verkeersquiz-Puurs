@@ -11,32 +11,42 @@ class UserTools extends Database
         return $data;
     }
 
+
+
+    public function select($tableName, $where = 1, $params = array()){
+        $PDO= $this->getPDOObject();
+        $sql = "SELECT * FROM $tableName WHERE $where";
+        $stmt = $PDO->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
+
+    public function selectWithJoin($tableName, $where = 1, $params = array(), $join = ''){
+        $PDO= $this->getPDOObject();
+        $sql = "SELECT * FROM $tableName JOIN $join WHERE $where";
+        $stmt = $PDO->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
+
+    public function selectSpecific($tableName, $where = 1, $params = array(), $variable){
+        $PDO= $this->getPDOObject();
+        $sql = "SELECT $variable FROM $tableName WHERE $where";
+        $stmt = $PDO->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
+
     public function getAllUsers()
     {
-        $connection= $this->connect();
-        $sql = "SELECT * FROM user";
-        return $this->getData($sql, $connection);
+        return $this->select("user");
     }
-    public function getUserById($id){
 
-        $connection= $this->connect();
-        $data = array();
-        if ($stmt = $connection->prepare("SELECT * FROM user WHERE id = ?")) {
-            $stmt->bind_param("i", $id);
-            if (!$stmt->execute()) {
-                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-            }
-            $stmt->bind_result($id,$firstname,$familyname, $departmentId);
-            $stmt->fetch();
-            $data = [
-                "id"=>$id,
-                "name"=>$firstname,
-                "familyName"=>$familyname,
-                "departmentId"=>$departmentId
-            ];
-            $stmt->close();
-        }
-        return $data;
+
+    public function getUserById($id){
+        $where = "userId = :userId";
+        $params = array(":userId" =>$id);
+        return $this->select("user",$where,$params);
     }
 
 
@@ -720,16 +730,10 @@ class UserTools extends Database
 
     public function login($username, $password)
     {
-        $connection= $this->connect();
-        if ($stmt = $connection->prepare("SELECT password FROM login WHERE username=?")) {
-            $stmt->bind_param("s", $username);
-            if (!$stmt->execute()) {
-                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-            }
-            $stmt->bind_result($resultPassword);
-            $stmt->fetch();
-            $stmt->close();
-        }
+        $where = "username = :username";
+        $params = array(":username" => $username);
+        $resultPassword = $this->selectSpecific("login",$where,$params, "password");
+        echo $resultPassword;
         return password_verify($password, $resultPassword);
     }
 
@@ -754,190 +758,78 @@ class UserTools extends Database
 
     public function getAllQuizzes()
     {
-        $connection= $this->connect();
-        $sql = "SELECT * FROM quiz";
-        return $this->getData($sql, $connection);
+        return $this->select("quiz");
+
     }
 
     public function getAllTemplates()
     {
-        $connection= $this->connect();
-        $sql = "SELECT * FROM quiz_template";
-        return $this->getData($sql, $connection);
+        return $this->select("quiz_template");
     }
 
     public function getAllDifficulties()
     {
-        $connection= $this->connect();
-        $sql = "SELECT * FROM difficulty";
-        return $this->getData($sql, $connection);
+        return $this->select("difficulty");
     }
 
     public function getAllCategories()
     {
-        $connection= $this->connect();
-        $sql = "SELECT * FROM category";
-        return $this->getData($sql, $connection);
+        return $this->select("category");
     }
 
     public function getAllOrganization()
     {
-        $connection= $this->connect();
-        $sql = "SELECT * FROM organization";
-        return $this->getData($sql, $connection);
+        return $this->select("organization");
     }
+
 
     public function getAllDepartmentsById($organizationId)
     {
-
-        $connection= $this->connect();
-
-        if ($stmt = $connection->prepare("SELECT * FROM department WHERE organizationId =?")) {
-            $stmt->bind_param("i", $organizationId);
-
-            if (!$stmt->execute()) {
-                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-            }
-            $stmt->bind_result($id, $name, $organizationId,$schemeId);
-            $data = array();
-
-            while($stmt -> fetch()){
-              $subarray = [
-                "id"=>$id,
-                "name"=>$name,
-                "organizationId"=>$organizationId,
-                "schemeId"=>$schemeId
-              ];
-              array_push($data,$subarray);
-            }
-            $stmt->close();
-            return $data;
-        }
+        $where = "organizationId = :organizationId";
+        $params = array(':organizationId' => $organizationId);
+        return $this->select("department", $where,$params);
     }
 
+
     public function getAllDepartments(){
-        $connection= $this->connect();
-        $sql = "SELECT * FROM department";
-        return $this->getData($sql, $connection);
-
-
+        return $this->select("department");
     }
 
 	public function getQuizInfoById($id){
-		$connection= $this->connect();
-		$data = array();
-        if ($stmt = $connection->prepare("SELECT * FROM quiz WHERE id=?")) {
-            $stmt->bind_param("i", $id);
-            if (!$stmt->execute()) {
-                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-            }
-            $stmt->bind_result($id,$name,$extraInfo);
-            $stmt->fetch();
-			$data = [
-			  "id"=>$id,
-			  "name"=>$name,
-			  "extraInfo"=>$extraInfo
-			];
-            $stmt->close();
-        }
-		return $data;
+        $where = "id = :id";
+        $params = array(':id' => $id);
+        return $this->select("quiz", $where,$params);
 	}
 
 
 	public function getQuestionById($id){
-        $connection= $this->connect();
-        $data = array();
-        if ($stmt = $connection->prepare("SELECT * FROM question WHERE id=?")) {
-            $stmt->bind_param("i", $id);
-            if (!$stmt->execute()) {
-                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-            }
-            $stmt->bind_result($id,$question,$difficulty,$imageLink,$time,$category);
-            $stmt->fetch();
-            $data = [
-                "id"=>$id,
-                "question"=>$question,
-                "difficulty"=>$difficulty,
-                "imageLink"=>$imageLink,
-                "time"=>$time,
-                "category"=>$category
-            ];
-            $stmt->close();
-        }
-        return $data;
+        $where = "id = :id";
+        $params = array(':id' => $id);
+        return $this->select("question", $where,$params);
     }
-
-
 
 
     public function getAllQuestionsByQuizId($quizId)
     {
-		$connection= $this->connect();
-
-		if ($stmt = $connection->prepare("SELECT * FROM question JOIN quiz_questions ON question.id = quiz_questions.questionId WHERE quizId = ?")) {
-			$stmt->bind_param("i", $quizId);
-
-			if (!$stmt->execute()) {
-				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-			}
-			$stmt->bind_result($id, $question, $difficulty, $imageLink, $time,$category,$quizidextra,$questionidextra);
-			$data = array();
-
-			while($stmt -> fetch()){
-			  $subarray = [
-				"id"=>$id,
-				"question"=>$question,
-				"difficulty"=>$difficulty,
-				"imageLink"=>$imageLink,
-				"time"=>$time,
-                "category"=>$category
-			  ];
-			  array_push($data,$subarray);
-			}
-			$stmt->close();
-			return $data;
-		}
+        $where = "quizId = :quizId";
+        $params = array(':quizId' => $quizId);
+        $joinedTable = "quiz_questions";
+        $join = " ON question.id = $joinedTable.questionId";
+        return $this->selectWithJoin("question", $where,$params, $join);
     }
 
 
     public function getAllAnswersByQuestionId($questionId)
     {
-		$connection= $this->connect();
-
-		if ($stmt = $connection->prepare("SELECT * FROM answer WHERE questionId =?")) {
-			$stmt->bind_param("i", $questionId);
-
-			if (!$stmt->execute()) {
-				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-			}
-			$stmt->bind_result($id, $answer, $quistionId,$correct,$category);
-			$data = array();
-
-			while($stmt -> fetch()){
-			  $subarray = [
-				"id"=>$id,
-				"answer"=>$answer,
-				"quistionId"=>$questionId,
-				"correct"=>$correct,
-                "category"=>$category
-			  ];
-			  array_push($data,$subarray);
-			}
-			$stmt->close();
-			return $data;
-		}
+        $where = "questionId = :questionId";
+        $params = array(':questionId' => $questionId);
+        return $this->select("question", $where,$params);
     }
 
 
     public function getLogs()
-
-
-
     {
-        $connection= $this->connect();
-        $sql = "SELECT * FROM logs";
-
-        return $this->getData($sql, $connection);
+        return $this->select("logs");
     }
 
     public function getAnswersByUser($userId)
@@ -968,24 +860,9 @@ class UserTools extends Database
     }
 
     public function getDepartmentByDepartmentId($departmentId){
-        $connection= $this->connect();
-        if ($stmt = $connection->prepare("select * from department where id = ?")) {
-            $stmt->bind_param("i", $departmentId);
-
-            if (!$stmt->execute()) {
-                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-            }
-            $stmt->bind_result($id, $name, $organizationId, $schemeId);
-            $stmt->fetch();
-            $data = [
-                    "id"=>$id,
-                    "name"=>$name,
-                    "organizationId"=>$organizationId,
-                    "schemeId"=>$schemeId
-            ];
-            $stmt->close();
-            return $data;
-        }
+        $where = "departmentId = :departmentId";
+        $params = array(':departmentId' => $departmentId);
+        return $this->select("department", $where,$params);
     }
 
     public function getAnswersByUserId($id){
@@ -1112,22 +989,9 @@ class UserTools extends Database
   }
 
   public function getCategoryById($id){
-      $connection= $this->connect();
-      $data = array();
-      if ($stmt = $connection->prepare("SELECT * FROM category WHERE id = ?")) {
-          $stmt->bind_param("i", $id);
-          if (!$stmt->execute()) {
-              echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-          }
-          $stmt->bind_result($id,$category);
-          $stmt->fetch();
-          $data = [
-              "id"=>$id,
-              "category"=>$category,
-          ];
-          $stmt->close();
-      }
-      return $data;
+      $where = "id = :id";
+      $params = array(':id' => $id);
+      return $this->select("category", $where,$params);
   }
 
 	public function getStatisticsByDepartment($demapartmentId){

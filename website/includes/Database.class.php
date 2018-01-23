@@ -1,12 +1,28 @@
 <?php
 class Database {
-	private $db_host = '127.0.0.1';
-	private $db_user = 'puurs';
-	private $db_pass = 'puurs';
-	private $db_name = 'puurs';
 
-	protected function connect(){
+
+	/*protected function connect(){
 		return new mysqli($this->db_host,$this->db_user,$this->db_pass,$this->db_name);
+	}*/
+
+	protected function getPDOObject(){
+        $db_host = '127.0.0.1';
+        $db_user = 'puurs';
+        $db_pass = 'puurs';
+        $db_name = 'puurs';
+        $dsn = "mysql:host=$db_host;dbname=$db_name";
+		try {
+			$conn = new PDO($dsn,$db_user,$db_pass);
+			// set the PDO error mode to exception
+			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			//echo "Connected successfully";
+            return $conn;
+		}
+		catch(PDOException $e)
+		{
+			echo "Connection failed: " . $e->getMessage();
+		}
 	}
 
 	protected function getData($sql,$connection){
