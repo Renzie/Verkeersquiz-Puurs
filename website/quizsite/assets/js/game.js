@@ -209,7 +209,7 @@ function Question(obj) {
         $('.question').fadeOut();
 
         if ((currentQuestionPosition + 1) == allQuestions.length) {
-            //window.location = 'endgame.php'
+            window.location = 'endgame.php'
         } else {
             currentQuestion = allQuestions[++currentQuestionPosition];
             currentQuestion.setup();
