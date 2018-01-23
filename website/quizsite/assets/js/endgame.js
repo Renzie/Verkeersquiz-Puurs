@@ -66,8 +66,8 @@ function addToCategoriesUsed() {
         return doDbAction({action: 'getCategoryById', categoryId: question.category}, function (data, index) {
             categories[data.id - 1] = data;
         }).then(function () {
+            getScoreByCategories();
             setCategories();
-            getScoreByCategories()
         })
     })
 }

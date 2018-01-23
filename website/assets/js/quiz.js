@@ -183,7 +183,7 @@ var addNewQuestion = function (e) {
         '<div class="input-field col s5">'+
         '<select>'+
         '<option value="" disabled selected>Selecteer de moeilijkheidsgraad</option>'+
-        ''
+        '' +
         '</select>'+
         '<label>Moelijkheidsgraad</label>'+
 
