@@ -2,13 +2,12 @@
 
 session_start();
 
-if(!$_SESSION['login']){
-   header("location:logout.php");
-   //die;
+if (!$_SESSION['login']) {
+    header("location:logout.php");
+    //die;
 }
 
 require_once "head.html";
-
 
 
 ?>
@@ -16,7 +15,25 @@ require_once "head.html";
 
 <h1>Dashboard</h1>
 
-<canvas id="myChart" width="400" height="400"></canvas>
+<div class="row">
+    <div class="col s3">
+        <label for="organisation" >Organisaties</label>
+        <select name="organisation" id="organisation">
+            <option value="" disabled selected>Filter op school</option>
+        </select>
+    </div>
+
+    <div class="col s3">
+        <label for="department" >Departementen</label>
+        <select name="department" id="department">
+            <option value="" disabled selected>Filter op klas</option>
+        </select>
+    </div>
+</div>
+
+<canvas id="students" width="400px" height="400px"></canvas>
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
@@ -51,7 +68,7 @@ require_once "head.html";
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero: true
                     }
                 }]
             }
@@ -61,6 +78,7 @@ require_once "head.html";
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
+<script type="text/javascript" src="assets/js/statistics.js"></script>
 
 <?php
 

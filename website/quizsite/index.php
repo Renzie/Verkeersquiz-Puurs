@@ -65,8 +65,6 @@ if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("departmen
             <a href="../login.php" class="btn purple">Naar administratie</a>
         </div>
     </div>
-
-
 </nav>
 
 
