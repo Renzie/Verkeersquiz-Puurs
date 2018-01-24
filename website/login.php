@@ -91,7 +91,18 @@ if($_SESSION['login']){
         //echo "failed";
         $_SESSION['login'] = false;
         echo '<script>Materialize.toast("Login gefaald!",1155);</script>';
-        echo "<script>alert('login gefaald')</script>";
+
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+
+        $tmplog = "Failed login from ".$ip." with username:".$_POST["username"];
+
+        $usertools->writeLog($tmplog);
         //die;
       }
 

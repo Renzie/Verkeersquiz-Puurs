@@ -229,7 +229,7 @@ class View extends UserTools {
 		       <div class="col s4 file-field ">
 		       <div>
 		       	<label>Afbeelding</label>
-		        <img name="image" class="materialboxed questionimg" src="<?php echo ($data["imageLink"]!="" ?"images/".$data["imageLink"] : "#")  ?>">
+		        <img name="image" class="materialboxed questionimg" src="<?php echo ($data["imageLink"]!="" ?"images/".$data["imageLink"] : "images/No-image-found.jpg")  ?>">
 		        </div>
 
 

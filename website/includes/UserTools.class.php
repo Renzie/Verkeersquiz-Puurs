@@ -967,14 +967,30 @@ class UserTools extends Database
 
 
     public function getLogs()
-
-
-
     {
         $connection= $this->connect();
         $sql = "SELECT * FROM logs";
 
         return $this->getData($sql, $connection);
+    }
+
+    public function writeLog($log){
+        $connection= $this->connect();
+
+        if (!$stmt = $connection->prepare("INSERT INTO logs (message) VALUES (?)")) {
+            echo "FAIL prepare";
+        }
+
+        if (!$stmt->bind_param("s", $log)) {
+            echo "FAIL bind";
+        }
+
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $stmt->close();
+        $connection->close();
+
     }
 
     public function getAnswersByUser($userId)
