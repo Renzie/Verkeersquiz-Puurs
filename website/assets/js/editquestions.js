@@ -155,8 +155,7 @@ var addNewAnswer = function (e) {
       'action': 'makeAnswer',
       'questionId': questionId,
       'answer': answer,
-      'correct': correct,
-      'category': 3 //TODO verander dit naar de category
+      'correct': correct
     };
 
     $.post(ajaxurl, data, function (response) {

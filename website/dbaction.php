@@ -44,14 +44,14 @@ if (isset($_POST['action'])) {
         case 'getAnswersByQuestionId' :
             echo json_encode($usertools->getAllAnswersByQuestionId($_POST['questionId']));
             break;
-        case 'updateOrganization':
-            $usertools->updateOrganization($_POST['schoolId'], $_POST['schoolName'], $_POST['schoolInfo']);
+        case 'updateOrganisation':
+            $usertools->updateOrganisation($_POST['schoolId'], $_POST['schoolName'], $_POST['schoolInfo']);
             break;
-        case 'createOrganization':
-            $usertools->makeOrganization($_POST['schoolName'], $_POST['schoolInfo']);
+        case 'createOrganisation':
+            $usertools->makeOrganisation($_POST['schoolName'], $_POST['schoolInfo']);
             break;
-        case 'deleteOrganization':
-            $usertools->deleteOrganization($_POST['schoolId']);
+        case 'deleteOrganisation':
+            $usertools->deleteOrganisation($_POST['schoolId']);
             break;
         case 'deleteQuiz':
             $usertools->deleteQuizandQuestions($_POST['quizId']);
@@ -105,7 +105,7 @@ if (isset($_POST['action'])) {
             $usertools->updateDepartment($_POST['departmentId'],$_POST['departmentName']);
             break;
         case 'makeDepartment':
-            $usertools->makeDepartment($_POST['departmentName'], $_POST['organizationId']);
+            $usertools->makeDepartment($_POST['departmentName'], $_POST['organisationId']);
             break;
         case 'submitTemplate':
             $usertools->makeTemplate($_POST['quizId'], $_POST['name'], $_POST['template']);

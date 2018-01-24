@@ -97,10 +97,10 @@ if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("departmen
 
                         <div class="input-field center">
                             <p class="input-field">
-                                <select name="organization" id="organization">
+                                <select name="organisation" id="organisation">
                                     <option value="" disabled selected>Selecteer je organisatie</option>
                                     <?php
-                                    $view->listOrganization();
+                                    $view->listOrganisation();
                                     ?>
 
                                 </select>
@@ -139,7 +139,7 @@ if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("departmen
 <script>
 
     $(function () {
-       $('select[name="organization"]').on('change', ajax)
+       $('select[name="organisation"]').on('change', ajax)
     });
 
     function ajax() {
@@ -154,13 +154,13 @@ if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("departmen
     }
     function setDepartments(departments) {
         var dep = document.getElementById("department");
-        var org = document.getElementById("organization");
+        var org = document.getElementById("organisation");
         var selected = org.options[org.selectedIndex].value;
         var html = "";
         $(dep).empty();
         html += '<option value="" disabled selected>Selecteer je klas</option>';
         $(departments).each(function (data) {
-            if (departments[data].organizationId == selected) {
+            if (departments[data].organisationId == selected) {
                 html += "<option value=" + departments[data].id + ">" + departments[data].name + "</option>"
             }
         });

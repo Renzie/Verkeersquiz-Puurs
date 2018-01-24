@@ -3,7 +3,7 @@
 class View extends UserTools {
 
 	public function getAllSchools(){
-		foreach($this->getAllOrganization() as $school)
+		foreach($this->getAllOrganisation() as $school)
 		{
 			//echo $school["Name"];
 			?>
@@ -11,9 +11,9 @@ class View extends UserTools {
 				<td><input class="schoolName" type="text" value="<?php echo $school["name"]?>" schoolIdName="<?php echo $school["id"]?>" ></td>
 				<td><input class="schoolInfo" type="text" value="<?php echo $school["extraInfo"]?>" schoolIdInfo="<?php echo $school["id"]?>"  ></td>
 				<td>
-					<a  href="editorganization.php?id=<?php echo $school["id"]?>" class="btn edit_school" buttonAction="editOrganization"><i class="material-icons">edit</i></a>
-					<a  class="btn red remove_school" buttonAction="deleteOrganization"><i class="material-icons">delete</i></a>
-					<a class="btn purple save_school" buttonAction="updateOrganization" ><i class="material-icons">save</i></a>
+					<a  href="editorganisation.php?id=<?php echo $school["id"]?>" class="btn edit_school" buttonAction="editOrganisation"><i class="material-icons">edit</i></a>
+					<a  class="btn red remove_school" buttonAction="deleteOrganisation"><i class="material-icons">delete</i></a>
+					<a class="btn purple save_school" buttonAction="updateOrganisation" ><i class="material-icons">save</i></a>
 					</td>
 					</tr>
 			<?php
@@ -21,9 +21,9 @@ class View extends UserTools {
 		}
 	}
 
-	public function getAllDepartmentsByOrganizationId($organizationId){
+	public function getAllDepartmentsByOrganisationId($organisationId){
 
-		foreach($this->getAllDepartmentsById($organizationId) as $department)
+		foreach($this->getAllDepartmentsById($organisationId) as $department)
 		{
 			//echo $school["Name"];
 			?>
@@ -456,9 +456,9 @@ class View extends UserTools {
     }
 
 
-    public function listOrganization()
+    public function listOrganisation()
     {
-        foreach ($this->getAllOrganization() as $data) {
+        foreach ($this->getAllOrganisation() as $data) {
             ?>
             <option value="<?php echo $data["id"] ?>"><?php echo $data["name"] ?></option>
             <?php

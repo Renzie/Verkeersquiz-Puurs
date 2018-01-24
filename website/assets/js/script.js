@@ -26,7 +26,7 @@ var addHTMLToNav= function(){
             <li><a href="categories.php?id=${quizId}"><i class="material-icons">sort</i>Categorieën</a></li>
             <li><a href="dashboard.php?id=${quizId}"><i class="material-icons">equalizer</i>Statistics</a></li>`;
 
-    if(quizId != null && url.pathname != '/editorganization.php' && !loaded) {
+    if(quizId != null && url.pathname != '/editorganisation.php' && !loaded) {
         $("#slide-out").append(html);
         loaded = true;
     }

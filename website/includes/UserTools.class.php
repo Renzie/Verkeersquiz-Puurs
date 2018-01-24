@@ -90,12 +90,12 @@ class UserTools extends Database
 
 
 
-  public function makeOrganization($name, $extrainfo)
+  public function makeOrganisation($name, $extrainfo)
   {
 
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("INSERT INTO organization (name, extraInfo) VALUES (?, ?)")) {
+	  if (!$stmt = $connection->prepare("INSERT INTO organisation (name, extraInfo) VALUES (?, ?)")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -130,11 +130,11 @@ class UserTools extends Database
 	  $connection->close();
   }
 
-  public function updateOrganization($id,$name,$extrainfo){
+  public function updateOrganisation($id,$name,$extrainfo){
 
     $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("UPDATE organization SET name = ? , extraInfo = ? WHERE id = ?")) {
+	  if (!$stmt = $connection->prepare("UPDATE organisation SET name = ? , extraInfo = ? WHERE id = ?")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -211,11 +211,11 @@ class UserTools extends Database
 	  $connection->close();
   }
 
-  public function deleteOrganization($id){
+  public function deleteOrganisation($id){
 
 	  $connection= $this->connect();
 
-  	  if (!$stmt = $connection->prepare("DELETE FROM department WHERE organizationId = ?")) {
+  	  if (!$stmt = $connection->prepare("DELETE FROM department WHERE organisationId = ?")) {
   		  echo "FAIL prepare";
   	  }
 
@@ -232,7 +232,7 @@ class UserTools extends Database
 	  $connection->close();
 	  $connection= $this->connect();
 
-	  if (!$stmt = $connection->prepare("DELETE FROM organization WHERE id = ?")) {
+	  if (!$stmt = $connection->prepare("DELETE FROM organisation WHERE id = ?")) {
 		  echo "FAIL prepare";
 	  }
 
@@ -248,14 +248,14 @@ class UserTools extends Database
 
   }
 
-  public function makeDepartment($name, $organizationid){
+  public function makeDepartment($name, $organisationid){
 		$connection= $this->connect();
 
-		if (!$stmt = $connection->prepare("INSERT INTO department (name, organizationId) VALUES (?, ?)")) {
+		if (!$stmt = $connection->prepare("INSERT INTO department (name, organisationId) VALUES (?, ?)")) {
 			echo "FAIL prepare";
 		}
 
-		if (!$stmt->bind_param("si", $name, $organizationid)) {
+		if (!$stmt->bind_param("si", $name, $organisationid)) {
 			echo "FAIL bind";
 		}
 
@@ -733,6 +733,7 @@ class UserTools extends Database
         return password_verify($password, $resultPassword);
     }
 
+    //TODO Change this to the other schema
     public function changeSchema($demapartmentId, $schemeId){
         $connection = $this->connect();
 
@@ -780,33 +781,32 @@ class UserTools extends Database
         return $this->getData($sql, $connection);
     }
 
-    public function getAllOrganization()
+    public function getAllOrganisation()
     {
         $connection= $this->connect();
-        $sql = "SELECT * FROM organization";
+        $sql = "SELECT * FROM organisation";
         return $this->getData($sql, $connection);
     }
 
-    public function getAllDepartmentsById($organizationId)
+    public function getAllDepartmentsById($organisationId)
     {
 
         $connection= $this->connect();
 
-        if ($stmt = $connection->prepare("SELECT * FROM department WHERE organizationId =?")) {
-            $stmt->bind_param("i", $organizationId);
+        if ($stmt = $connection->prepare("SELECT * FROM department WHERE organisationId =?")) {
+            $stmt->bind_param("i", $organisationId);
 
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $name, $organizationId,$schemeId);
+            $stmt->bind_result($id, $name, $organisationId);
             $data = array();
 
             while($stmt -> fetch()){
               $subarray = [
                 "id"=>$id,
                 "name"=>$name,
-                "organizationId"=>$organizationId,
-                "schemeId"=>$schemeId
+                "organisationId"=>$organisationId
               ];
               array_push($data,$subarray);
             }
@@ -843,10 +843,10 @@ class UserTools extends Database
 		return $data;
 	}
 
-  public function getOrganizationInfoById($id){
+  public function getOrganisationInfoById($id){
 		$connection= $this->connect();
 		$data = array();
-        if ($stmt = $connection->prepare("SELECT * FROM organization WHERE id=?")) {
+        if ($stmt = $connection->prepare("SELECT * FROM organisation WHERE id=?")) {
             $stmt->bind_param("i", $id);
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
@@ -913,13 +913,13 @@ class UserTools extends Database
     {
 		$connection= $this->connect();
 
-		if ($stmt = $connection->prepare("SELECT * FROM question JOIN quiz_questions ON question.id = quiz_questions.questionId WHERE quizId = ?")) {
+		if ($stmt = $connection->prepare("SELECT question.* FROM question JOIN quiz_questions ON question.id = quiz_questions.questionId WHERE quizId = ?")) {
 			$stmt->bind_param("i", $quizId);
 
 			if (!$stmt->execute()) {
 				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 			}
-			$stmt->bind_result($id, $question, $difficulty, $imageLink,$category,$quizidextra,$questionidextra);
+			$stmt->bind_result($id, $question, $difficulty, $imageLink,$category);
 			$data = array();
 
 			while($stmt -> fetch()){
@@ -928,7 +928,7 @@ class UserTools extends Database
 				"question"=>$question,
 				"difficulty"=>$difficulty,
 				"imageLink"=>$imageLink,
-        "category"=>$category
+                "category"=>$category
 			  ];
 			  array_push($data,$subarray);
 			}
@@ -948,7 +948,7 @@ class UserTools extends Database
 			if (!$stmt->execute()) {
 				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 			}
-			$stmt->bind_result($id, $answer, $quistionId,$correct,$category);
+			$stmt->bind_result($id, $answer, $quistionId,$correct);
 			$data = array();
 
 			while($stmt -> fetch()){
@@ -956,8 +956,7 @@ class UserTools extends Database
 				"id"=>$id,
 				"answer"=>$answer,
 				"quistionId"=>$questionId,
-				"correct"=>$correct,
-                "category"=>$category
+				"correct"=>$correct
 			  ];
 			  array_push($data,$subarray);
 			}
@@ -1013,13 +1012,12 @@ class UserTools extends Database
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $name, $organizationId, $schemeId);
+            $stmt->bind_result($id, $name, $organisationId);
             $stmt->fetch();
             $data = [
                     "id"=>$id,
                     "name"=>$name,
-                    "organizationId"=>$organizationId,
-                    "schemeId"=>$schemeId
+                    "organisationId"=>$organisationId
             ];
             $stmt->close();
             return $data;
@@ -1181,7 +1179,7 @@ class UserTools extends Database
 
 
 
-    public function getStatisticsByOragnization($organizationId)
+    public function getStatisticsByOragnisation($organisationId)
     {
     }
 

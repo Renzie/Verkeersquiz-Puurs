@@ -79,13 +79,13 @@ var makeDepartment = function(){
   var url_string = window.location.href;
   var url = new URL(url_string);
 
-  var organizationId = url.searchParams.get("id")
+  var organisationId = url.searchParams.get("id")
 
   var ajaxurl = 'dbaction.php',
     data =  {
     'action': 'makeDepartment',
     'departmentName':"nieuwe klas",
-    'organizationId': organizationId
+    'organisationId': organisationId
   };
 
   $.post(ajaxurl, data, function (response) {

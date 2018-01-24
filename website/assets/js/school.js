@@ -13,8 +13,8 @@ function addNewSchool(e) {
     var newRow = '<tr class="school">' +
     '<td><input class="schoolName" type="text"></td>' +
     '<td><input class="schoolInfo" type="text"></td>' +
-        '<td><a class="btn red remove_school" buttonAction="deleteOrganization"><i class="material-icons">delete</i></a>' +
-        '<a class="btn purple save_school" buttonAction="createOrganization"><i class="material-icons">save</i></a>' +
+        '<td><a class="btn red remove_school" buttonAction="deleteOrganisation"><i class="material-icons">delete</i></a>' +
+        '<a class="btn purple save_school" buttonAction="createOrganisation"><i class="material-icons">save</i></a>' +
         '</td>' +
     '</tr>'
 
@@ -60,8 +60,8 @@ function saveSchool() {
   var buttonAction = $(this).attr("buttonAction");
   console.log("buttonAction: ",buttonAction);
 
-  if(buttonAction == "createOrganization"){
-    $(this).attr("buttonAction", "updateOrganization");
+  if(buttonAction == "createOrganisation"){
+    $(this).attr("buttonAction", "updateOrganisation");
   }
 
         var ajaxurl = 'dbaction.php',

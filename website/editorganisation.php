@@ -8,7 +8,7 @@ if(!$_SESSION['login']){
 }
 
 if(!isset($_GET["id"])){
-	header("location:organizatie.php");
+	header("location:organisatie.php");
 }
 
 require_once "head.html";
@@ -18,14 +18,13 @@ require_once "includes/View.class.php";
 $view = new View();
 $userTools = new UserTools();
 
-$organizationData = $userTools->getOrganizationInfoById($_GET["id"]);
+$organisationData = $userTools->getOrganisationInfoById($_GET["id"]);
 
 
 
 
 ?>
-    <h1>school: <?php echo $organizationData["name"]; ?></h1>
-    <h2>Klassen</h2>
+    <h1>School: <?php echo $organisationData["name"]; ?></h1>
 
     <table class="striped klassen ">
         <thead>
@@ -36,7 +35,7 @@ $organizationData = $userTools->getOrganizationInfoById($_GET["id"]);
         </thead>
         <tbody class="tabel_school">
           <?php
-         $view->getAllDepartmentsByOrganizationId($_GET["id"]);
+         $view->getAllDepartmentsByOrganisationId($_GET["id"]);
            ?>
         </tbody>
 
@@ -51,7 +50,7 @@ $organizationData = $userTools->getOrganizationInfoById($_GET["id"]);
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="assets/js/school.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
-<script type="text/javascript" src="assets/js/editorganization.js"></script>
+<script type="text/javascript" src="assets/js/editorganisation.js"></script>
 
 
 <?php

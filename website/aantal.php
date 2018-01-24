@@ -7,7 +7,7 @@ if(!$_SESSION['login']){
 }
 
 if(!isset($_GET["id"])){
-	header("location:organizatie.php");
+	header("location:organisatie.php");
 }
 
 require_once "head.html";
@@ -31,7 +31,7 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
         <p>Maak een nieuwe template</p>
 				<br>
 				<div class="input-field col s12">
-          <input placeholder="Placeholder" id="template_name" type="text" class="validate" required>
+          <input placeholder="Naam template" id="template_name" type="text" class="validate" required>
           <label for="first_name">Template naam</label>
         </div>
 
