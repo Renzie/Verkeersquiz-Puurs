@@ -13,25 +13,19 @@ var updateScheme = function(){
     console.log("scheme",schemeId);
     console.log("klasId",klasId);
 
-
     var ajaxurl = 'dbaction.php',
       data =  {
       'action': 'changeSchema',
       'departmentId': klasId,
       'schemeId': schemeId
     };
-
     $.post(ajaxurl, data, function (response) {
         if(response == '200'){
             Materialize.toast("Shema aangepast!",1155);
         }else{
             Materialize.toast("Shema aangepast gefaald!",1155);
         }
-
-
-
     });
-
 }
 
 var removeDepartment = function(){

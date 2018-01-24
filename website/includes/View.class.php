@@ -30,24 +30,9 @@ class View extends UserTools {
 			<tr class="klas" klasId="<?php echo $department["id"]?>" >
 				<td><input class="klasName" type="text" value="<?php echo $department["name"]?>" klasIdName="<?php echo $department["id"]?>" ></td>
 				<td>
-					<div class="input-field">
-						<select name="templates">
-							<option selected value="" disabled >Selecteer de template</option>
-							<?php
-                                foreach ($this->getAllTemplates() as $templates) {
-                                    if($templates['id'] == $department['schemeId']){
-                                        echo "<option selected department='{$department['id']}' value='{$templates['id']}'>{$templates['name']}</option>";
-                                    }else{
-                                        echo "<option department='{$department['id']}' value='{$templates['id']}'>{$templates['name']}</option>";
-                                    }
-
-                                }
-                            ?>
-						</select>
-
-					</div>
 				</td>
 				<td>
+					<a  class="btn edit_department" href="editdepartment.php?oid=<?php echo $organisationId ?>&did=<?php echo $department["id"]?>"><i class="material-icons">edit</i></a>
 					<a  class="btn red remove_department" buttonAction="deleteDepartment"><i class="material-icons">delete</i></a>
 					<a class="btn purple update_department" buttonAction="updateDepartment" ><i class="material-icons">save</i></a>
 					</td>
@@ -77,6 +62,68 @@ class View extends UserTools {
 					</tr>
 			<?php
 
+		}
+	}
+
+	public function getQuizzesForTemplate($did){
+		foreach($this->getAllQuizzes() as $quiz){
+			//check if quiz exists in  template_department
+
+
+			$check = $this->checkTemplateDepartment($did, $quiz["id"]);
+
+			echo "<h2>".$check[0]."</h2>";
+
+			if($check[0] != 0){
+				//echo "<h1>TRUE</h1>";
+			}else{
+				//echo "<h1>FALSE</h1>";
+				//echo "<p>did: ".$did." quizid:". $quiz["id"]."</p>";
+			}
+
+			?>
+			<li class="quiz" departmentId="<?php echo $quiz["id"]?>">
+				<div class="collapsible-header">
+					<i class="material-icons">chevron_right</i> <?php echo $quiz["name"]?>
+				</div>
+				<div class="collapsible-body">
+				<table>
+					<tr>
+						<td><h5>Template: </h5></td>
+						<td>
+							<select name="templates">
+								<option selected value="" disabled >Selecteer de template</option>
+								<?php
+									foreach ($this->getAllTemplates() as $templates) {
+											if($templates['id'] == $check[1]){
+													echo "<option selected value='{$templates['id']}'>{$templates['name']}</option>";
+											}else{
+													echo "<option value='{$templates['id']}'>{$templates['name']}</option>";
+											}
+									}
+								?>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<h5>Specifieke vragen toevoegen:</h5>
+				<ul class="questions collapsible" data-collapsible="expandable">
+				<?php
+				if($check[0] != 0){
+					//echo "<h1>TRUE</h1>";
+
+					foreach($this->getAllExtraQuestions() as $question){
+						
+					}
+				}
+				?>
+				</ul>
+
+
+				<a class="btn green save_template_department" buttonAction="updateQuiz" ><i class="material-icons">save</i></a>
+				</div>
+			</li>
+			<?php
 		}
 	}
 

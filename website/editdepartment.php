@@ -7,7 +7,7 @@ if(!$_SESSION['login']){
    //die;
 }
 
-if(!isset($_GET["id"])){
+if(!isset($_GET["oid"])){
 	header("location:organisatie.php");
 }
 
@@ -18,30 +18,26 @@ require_once "includes/View.class.php";
 $view = new View();
 $userTools = new UserTools();
 
-$organisationData = $userTools->getOrganisationInfoById($_GET["id"]);
+$organisationData = $userTools->getOrganisationInfoById($_GET["oid"]);
+$departmentData = $userTools->getDepartmentByDepartmentId($_GET["did"]);
 
 
 
 
 ?>
-    <h1>School: <?php echo $organisationData["name"]; ?></h1>
+    <h2>School: <?php echo $organisationData["name"]; ?></h2>
+    <h2>Klas: <?php echo $departmentData["name"]; ?></h2>
 
-    <table class="striped klassen ">
-        <thead>
-        <tr>
-            <th>Naam Klas</th>
-        </tr>
-        </thead>
-        <tbody class="tabel_school">
+    <ul class="quizzes collapsible" data-collapsible="expandable">
           <?php
-         $view->getAllDepartmentsByOrganisationId($_GET["id"]);
+         $view->getQuizzesForTemplate($departmentData["id"]);
            ?>
-        </tbody>
+    </ul>
 
 
 
     </table>
-    <a class="btn add_new_department"><i class="material-icons right">add</i>Nieuwe Klas</a>
+
 
 </section>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -49,7 +45,7 @@ $organisationData = $userTools->getOrganisationInfoById($_GET["id"]);
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="assets/js/school.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
-<script type="text/javascript" src="assets/js/editorganisation.js"></script>
+<script type="text/javascript" src="assets/js/editdepartment.js"></script>
 
 
 <?php

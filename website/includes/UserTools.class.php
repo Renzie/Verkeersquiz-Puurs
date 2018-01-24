@@ -1183,5 +1183,39 @@ class UserTools extends Database
     {
     }
 
+  public function checkTemplateDepartment($did, $quizid){
+
+    $return = false;
+    $connection= $this->connect();
+
+    if (!$stmt = $connection->prepare("SELECT * FROM template_department WHERE departmentId=? AND quizId=?")) {
+        echo "FAIL prepare";
+    }
+
+    if (!$stmt->bind_param("ii", $did, $quizid)) {
+        echo "FAIL bind";
+    }
+
+    if (!$stmt->execute()) {
+        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
+    $stmt->bind_result($id, $schemaId, $departmentId, $quizid);
+    $stmt->fetch();
+    if($stmt->num_rows > 0){
+      $return = true;
+    }
+
+    $stmt->close();
+    $connection->close();
+
+    $data = [
+      $id,
+      $schemaId
+    ];
+
+    return $data;
+
+  }
+
 
 }
