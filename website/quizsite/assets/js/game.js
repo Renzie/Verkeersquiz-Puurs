@@ -61,7 +61,13 @@ function getDepartmentByDepartmentId() {
     }, function (data) {
         currentDepartment = data;
         getTemplateByDepartmentId();
-        getQuestionsByQuizId();
+        //getQuestionsByQuizId();
+    })
+}
+
+function getAllQuestionsFromQuiz() {
+    return doDbAction({action : 'getAllQuestionsByQuizId', quizId : currentQuiz.id}, function (data) {
+        setUpQuestions(data)
     })
 }
 
@@ -70,30 +76,39 @@ function getTemplateByDepartmentId() {
         action : 'getTemplateByDepartmentId',
         departmentId: currentDepartment.id
     }, function (data) {
-        console.log(data)
+        if (data.length == 0){
+            getAllQuestionsFromQuiz()
+        } else {
+            getQuestionsByQuizId(data.templateId);
+        }
     })
 }
 
-function getQuestionsByQuizId() {
+function getQuestionsByQuizId(templateId) {
     return doDbAction({
         action: 'getRandomQuestionsByQuizId',
         quizId: currentQuiz.id,
-        templateId: currentDepartment.schemeId
+        templateId: templateId
     }, function (data) {
-        let questions = data.map((question) => {
-            return new Promise((resolve) => {
-                doDbAction({action: 'getQuestionById', questionId: question}, function (res) {
-                    allQuestions.push(new Question(res));
-                    resolve();
-                })
-            })
-        });
-        Promise.all(questions).then(function () {
-            currentQuestion = allQuestions[0];
-            currentQuestion.setup();
-            setupQuiz();
-        })
+        setUpQuestions(data);
     })
+}
+
+function setUpQuestions(data) {
+    let questions = data.map((question) => {
+        return new Promise((resolve) => {
+            doDbAction({action: 'getQuestionById', questionId: question.id}, function (res) {
+                allQuestions.push(new Question(res));
+                resolve();
+            })
+        })
+    });
+    Promise.all(questions).then(function () {
+        currentQuestion = allQuestions[0];
+        currentQuestion.setup();
+        setupQuiz();
+    })
+
 }
 
 
