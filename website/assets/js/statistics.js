@@ -49,7 +49,7 @@ function viewAllOrganizations() {
         addOrganisationsToList(data);
         organisations = data;
         console.log("fetching Organisations: OK");
-    })
+    });
 }
 
 function addOrganisationsToList(organisations) {
@@ -95,7 +95,7 @@ function saveSelectedDepartment() {
     var dep = document.getElementById("department");
     var selectedDep = dep.options[dep.selectedIndex].value;
     doDbAction({action: 'getDepartmentByDepartmentId', departmentId: selectedDep}, function (data) {
-        selectedDepartment = data
+        selectedDepartment = data;
         getStudents(selectedDepartment.id);
     })
 }
