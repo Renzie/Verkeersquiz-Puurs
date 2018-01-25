@@ -187,5 +187,3 @@ var studentChartData = {
     }
 };
 //var Chart = new Chart(ctx, studentChartData);
-
-
