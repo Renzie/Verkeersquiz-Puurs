@@ -130,6 +130,7 @@ function Question(obj) {
     this.imageLink = obj.imageLink;
 
     this.setImage = function () {
+        console.log(this.imageLink)
         if (this.imageLink == null || this.imageLink == '') {
             $('.image').hide()
             $('.image').attr('src', '')
@@ -211,18 +212,9 @@ function Question(obj) {
     };
 
     this.stopTimer = () => {
-        console.log(timer);
-
         this.width += 100 / this.total;
         $('.timeleft').css('width', this.width + '%');
         Materialize.toast('Vraag ' + (currentQuestionPosition + 2), 4000);
-        console.log("1st", this.timer)
-
-
-        console.log("2st", this.timer)
-
-
-
         $('.answers p input').attr('disabled', true)
         that.sendAnswer();
     }

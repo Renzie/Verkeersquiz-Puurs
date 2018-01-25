@@ -16,8 +16,6 @@ var organisations;
 var departmentsFromOrganisation;
 var allStudentsFromOrganisation = [];
 var allAnswersFromStudents = [];
-var allAnswersById = [];
-
 
 function doDbAction(action, callback) {
     return $.ajax({
@@ -32,10 +30,6 @@ function doDbAction(action, callback) {
     })
 }
 
-
-function getAnswersByUser() {
-    //todo need to fix template first
-}
 
 function getQuestionsByQuizId(quizId) {
     doDbAction({action: 'getCurrentQuiz', quizId: quizId}, function (data) {
@@ -165,6 +159,10 @@ function filterByStudent(id) { //geef alle antwoorden van de geselecteerde stude
 
     var student = allStudentsFromOrganisation.find(searchStudent())
     console.log(student)
+}
+
+function filterByOrganisations() {
+    
 }
 
 
