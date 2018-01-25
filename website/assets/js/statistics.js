@@ -12,6 +12,12 @@ $(function () {
 var currentQuiz;
 var selectedDepartment;
 var students = [];
+var organisations;
+var departmentsFromOrganisation;
+var allStudentsFromOrganisation = [];
+var allAnswersFromStudents = [];
+var allAnswersById = [];
+
 
 
 function doDbAction(action, callback) {
@@ -28,6 +34,7 @@ function doDbAction(action, callback) {
 }
 
 
+
 function getAnswersByUser() {
     //todo need to fix template first
 }
@@ -41,7 +48,8 @@ function getQuestionsByQuizId(quizId) {
 
 function viewAllOrganizations() {
     doDbAction({action: 'getAllOrganisations'}, function (data) {
-        addOrganisationsToList(data)
+        addOrganisationsToList(data);
+        organisations = data;
         console.log("fetching Organisations: OK");
     })
 }
@@ -58,10 +66,30 @@ function getDepartmentById() {
     $('select').material_select('update');
     var selectedOrg = org.options[org.selectedIndex].value;
     doDbAction({action: 'getDepartmentsByOrganisationId', organisationId: selectedOrg}, function (data) {
-
+        departmentsFromOrganisation = data;
+        console.log(departmentsFromOrganisation)
         addToSelect("#department", data);
     }).then(function () {
+        getAllStudentsFromAllDepartments(departmentsFromOrganisation);
         $('select[name="department"]').off().on('change', saveSelectedDepartment);
+    })
+}
+
+function getAllStudentsFromAllDepartments(departments) {
+    let students  = departments.map((department) => {
+        return new Promise((resolve) => {
+            doDbAction({action: 'getUsersByDepartmentId', departmentId: department.id}, function (res) {
+                allStudentsFromOrganisation.push(res);
+
+                resolve();
+            })
+        })
+    })
+
+    Promise.all(students).then(function () {
+        console.log("Fetchd all students from organisation", allStudentsFromOrganisation)
+        console.log("Now fetching answers...");
+        getAnswersFromUsers()
     })
 }
 
@@ -97,18 +125,50 @@ function getStudents(departmentId) {
 }
 
 function getNamesOfStudents() {
-    var studentNames
+    var studentNames;
     $(students).each(function (index) {
         studentNames[index] = students[index].name + " " + students[index].familyName;
     });
     return studentNames;
 }
 
-var ctx = document.getElementById("students").getContext('2d');
-var studentChart = new Chart(ctx, {
-    type: bar,
+
+function getAnswersFromUsers() {
+    let answers  = allStudentsFromOrganisation.map((student) => {
+        return new Promise((resolve) => {
+            doDbAction({action: 'getAnswers', userId: student.id}, function (res) {
+                allAnswersFromStudents.push(res);
+                resolve();
+            })
+        })
+    })
+
+    Promise.all(answers).then(function () {
+        console.log("Fetchd all answersIDs from students",allAnswersFromStudents)
+        console.log("Now fetching answers for visibility on chart? maybe idk")
+    })
+}
+
+
+
+//var ctx = document.getElementById("students").getContext('2d');
+var studentChartData = {
+    type: 'bar',
     data: {
-        labels: getNamesOfStudents()
+        labels: getNamesOfStudents(),
+        datasets: 'todo',
+        borderWidth: 1
     },
-    borderWidth: 1
-});
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+};
+//var Chart = new Chart(ctx, studentChartData);
+
+
