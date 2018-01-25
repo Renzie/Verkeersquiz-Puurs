@@ -120,4 +120,3 @@ echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('qu
 </main>
 </body>
 </html>
-
