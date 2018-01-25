@@ -19,7 +19,6 @@ var allAnswersFromStudents = [];
 var allAnswersById = [];
 
 
-
 function doDbAction(action, callback) {
     return $.ajax({
         type: "POST",
@@ -32,7 +31,6 @@ function doDbAction(action, callback) {
         return callback(JSON.parse(data));
     })
 }
-
 
 
 function getAnswersByUser() {
@@ -56,13 +54,13 @@ function viewAllOrganizations() {
 
 function addOrganisationsToList(organisations) {
     addToSelect("#organisation", organisations)
-    $('select[name="organisation"]').on('change', getDepartmentById)
+    $('#organisation').off().on('change', getDepartmentById)
 }
 
 function getDepartmentById() {
     var department = $("#department");
     var org = document.getElementById("organisation");
-    department.empty();
+    //department.empty();
     $('select').material_select('update');
     var selectedOrg = org.options[org.selectedIndex].value;
     doDbAction({action: 'getDepartmentsByOrganisationId', organisationId: selectedOrg}, function (data) {
@@ -71,16 +69,16 @@ function getDepartmentById() {
         addToSelect("#department", data);
     }).then(function () {
         getAllStudentsFromAllDepartments(departmentsFromOrganisation);
-        $('select[name="department"]').off().on('change', saveSelectedDepartment);
+        $('#department').off().on('change', saveSelectedDepartment);
     })
 }
 
 function getAllStudentsFromAllDepartments(departments) {
-    let students  = departments.map((department) => {
+    let students = departments.map((department) => {
         return new Promise((resolve) => {
             doDbAction({action: 'getUsersByDepartmentId', departmentId: department.id}, function (res) {
                 allStudentsFromOrganisation.push(res);
-
+                getAnswersFromUsers(res);
                 resolve();
             })
         })
@@ -89,7 +87,7 @@ function getAllStudentsFromAllDepartments(departments) {
     Promise.all(students).then(function () {
         console.log("Fetchd all students from organisation", allStudentsFromOrganisation)
         console.log("Now fetching answers...");
-        getAnswersFromUsers()
+
     })
 }
 
@@ -103,6 +101,8 @@ function saveSelectedDepartment() {
 }
 
 function addToSelect(selectId, data) {
+    $(selectId).empty();
+    $(selectId).append('<option value="0">Alles samen</option>');
     $(data).each(function (index) {
         $(selectId).append('<option value="' + data[index].id + '">' + data[index].name + '</option>');
         $('select').material_select('update');
@@ -133,8 +133,8 @@ function getNamesOfStudents() {
 }
 
 
-function getAnswersFromUsers() {
-    let answers  = allStudentsFromOrganisation.map((student) => {
+function getAnswersFromUsers(students) {
+    let answers = students.map((student) => {
         return new Promise((resolve) => {
             doDbAction({action: 'getAnswers', userId: student.id}, function (res) {
                 allAnswersFromStudents.push(res);
@@ -144,11 +144,28 @@ function getAnswersFromUsers() {
     })
 
     Promise.all(answers).then(function () {
-        console.log("Fetchd all answersIDs from students",allAnswersFromStudents)
-        console.log("Now fetching answers for visibility on chart? maybe idk")
+        console.log("Fetchd all answerss from students", allAnswersFromStudents)
+        addToSelect("#user",students)
+        $("#user").off().on('change', filterByStudent)
     })
 }
 
+function filterByStudent(id) { //geef alle antwoorden van de geselecteerde student
+    function searchStudent() {
+        $(allStudentsFromOrganisation).each(function (dep) {
+            console.log(dep);
+            $(dep).each(function (student) {
+                console.log(student);
+                if (student.id == id) return student;
+            })
+        })
+        console.log("not found")
+        return false;
+    }
+
+    var student = allStudentsFromOrganisation.find(searchStudent())
+    console.log(student)
+}
 
 
 //var ctx = document.getElementById("students").getContext('2d');

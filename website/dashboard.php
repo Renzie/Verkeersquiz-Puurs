@@ -18,21 +18,21 @@ require_once "head.html";
 <div class="row">
     <div class="col s3">
         <label for="organisation" >Organisaties</label>
-        <select name="organisation" id="organisation">
+        <select name="filter" id="organisation">
             <option value="" disabled selected>Filter op school</option>
         </select>
     </div>
 
     <div class="col s3">
         <label for="department" >Departementen</label>
-        <select name="department" id="department">
+        <select name="filter" id="department">
             <option value="" disabled selected>Filter op klas</option>
         </select>
     </div>
 
     <div class="col s3">
         <label for="user">Studenten</label>
-        <select name="user" id="user">
+        <select name="filter" id="user">
             <option value="" disabled selected>Filter op student</option>
         </select>
     </div>
