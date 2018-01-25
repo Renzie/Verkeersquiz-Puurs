@@ -43,6 +43,17 @@ $departmentData = $userTools->getDepartmentByDepartmentId($_GET["did"]);
 <script type="text/javascript" src="assets/js/school.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
 <script type="text/javascript" src="assets/js/editdepartment.js"></script>
+<script>
+var url_string = window.location.href;
+var url = new URL(url_string);
+var loaded = false;
+var html = '<li><div class="divider"></div></li><li><a href="/editorganisation.php?id=<?php echo $organisationData["id"]; ?>"><i class="material-icons">label</i> <?php echo $organisationData["name"]; ?></a></li>';
+
+if(!loaded) {
+    $("#slide-out").append(html);
+    loaded = true;
+}
+</script>
 
 
 <?php
