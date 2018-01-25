@@ -78,11 +78,11 @@ function getTemplateByDepartmentId() {
         quizId: localStorage.quizId
     }, function (data) {
         if (data.id == null){
-            getAllQuestionsFromQuiz()
+            getAllQuestionsFromQuiz();
         } else {
             getQuestionsByQuizId(data.templateId);
         }
-    })
+    });
 }
 
 function getQuestionsByQuizId(templateId) {

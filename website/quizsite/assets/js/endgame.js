@@ -30,7 +30,7 @@ function getTemplateByDepartmentId() {
         action: 'getTemplateByDepartmentId',
         departmentId: currentDepartment.id
     }, function (data) {
-        if (data.length == 0) {
+        if (data.id == null) {
             getAllQuestionsFromQuiz()
         } else {
             getQuestionsWithTemplate(data.templateId);
@@ -56,7 +56,6 @@ function getQuestionsWithTemplate(templateId) {
     doDbAction({
         action: 'getRandomQuestionsByQuizId', quizId: localStorage.getItem('quizId'), templateId: templateId
     }, function (data) {
-
         setupQuestions(data)
     })
 }
@@ -152,6 +151,7 @@ function getAnswers() {
         answers.forEach(function (data, index) {
             if (data.correct == 1) {
                 correctAnswers.push(data);
+                console.log(correctAnswers)
             }
         })
     })

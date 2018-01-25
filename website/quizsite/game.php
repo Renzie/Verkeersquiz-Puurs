@@ -18,7 +18,6 @@ if(!$_SESSION['userId']){
 }
 
 
-$currentQuestion = 0;
 
 echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('quizId',\"$quiz\"); localStorage.setItem('departmentId',\"$departmentId\");</script>";
 ?>
