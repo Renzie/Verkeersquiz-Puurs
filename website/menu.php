@@ -27,6 +27,12 @@ if(!$_SESSION['login']){
     </article>
 
     <article>
+        <h3>Handleiding</h3>
+        <p class="flow-text">Indien niet alles duidelijk wordt alles nog eens uitgelegt in de <a href="download.php?val=Handleiding.docx" target="_blank">handleiding dat u hier kan downloaden.</a></p>
+
+    </article>
+
+    <article>
         <h3>School</h3>
         <h3><a href="organisatie.php" class="btn">Organisaties</a></h3>
         <p class="flow-text">Bekijk hier de organisaties en wijzig ze indien nodig.</p>
