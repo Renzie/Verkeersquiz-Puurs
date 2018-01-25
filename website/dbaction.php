@@ -8,6 +8,10 @@ $usertools = new UserTools();
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
 
+        case 'getAllOrganisations' :
+            echo json_encode($usertools->getAllOrganisation());
+            break;
+
         case 'getDifficultyById' :
             echo json_encode($usertools->getDifficultyById($_POST['difficultyId']));
             break;
@@ -25,12 +29,18 @@ if (isset($_POST['action'])) {
         case 'sendAnswer' :
             $usertools->makeUserAnswer($_POST['userId'], $_POST['answerId'], $_POST['time']);
             break;
+        case 'getUsersByDepartmentId' :
+            echo json_encode($usertools->getUsersByDepartmentId($_POST['departmentId']));
+            break;
 
         case 'getDepartmentByDepartmentId' :
             echo json_encode($usertools->getDepartmentByDepartmentId($_POST['departmentId']));
             break;
         case 'getDepartments' :
             echo json_encode($usertools->getAllDepartments());
+            break;
+        case 'getDepartmentsByOrganisationId' :
+            echo json_encode($usertools->getAllDepartmentsById($_POST['organisationId']));
             break;
         case 'getRandomQuestionsByQuizId' :
             echo json_encode($usertools->getRandomQuestionsByTemplate($_POST['templateId'], $_POST['quizId']));
