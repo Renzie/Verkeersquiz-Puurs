@@ -1123,13 +1123,13 @@ class UserTools extends Database
     public function getAnswersByUserId($id)
     {
         $connection = $this->connect();
-        if ($stmt = $connection->prepare("select answer.* from answer_user join answer on answer.id = answer_user.awnserId where answer_user.userId = ?")) {
+        if ($stmt = $connection->prepare("select answer.*,question.category from answer_user join answer on answer.id = answer_user.awnserId join question on answer.questionId = question.id  where answer_user.userId = ?")) {
             $stmt->bind_param("i", $id);
 
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $answer, $questionId, $correct, $category);
+            $stmt->bind_result($id, $answer, $questionId, $correct,$category);
 
             $data = array();
             while ($stmt->fetch()) {
@@ -1138,7 +1138,8 @@ class UserTools extends Database
                     "answer" => $answer,
                     "questionId" => $questionId,
                     "correct" => $correct,
-                    "category" => $category
+                    "category" =>$category
+
                 ];
                 array_push($data, $subarray);
             }

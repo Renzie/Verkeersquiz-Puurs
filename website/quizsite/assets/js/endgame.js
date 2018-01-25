@@ -25,29 +25,71 @@ function doDbAction(action, callback) {
     })
 }
 
-function getQuestions() {
-     doDbAction({action: 'getRandomQuestionsByQuizId', quizId: localStorage.getItem('quizId'), templateId: currentDepartment.schemeId
+function getTemplateByDepartmentId() {
+    doDbAction({
+        action: 'getTemplateByDepartmentId',
+        departmentId: currentDepartment.id
     }, function (data) {
-        return $(data).each(function (index) {
-             return doDbAction({action: 'getQuestionById', questionId: data[index]}, function (res) {
-                questions[index] = res
+        if (data.length == 0) {
+            getAllQuestionsFromQuiz()
+        } else {
+            getQuestionsWithTemplate(data.templateId);
+        }
+    })
+}
+
+function getAllQuestionsFromQuiz() {
+    return doDbAction({action: 'getAllQuestionsByQuizId', quizId: localStorage.quizId}, function (data) {
+
+        setupQuestions(data);
+        /*return $(data).each(function (index) {
+         return doDbAction({action: 'getQuestionById', questionId: data[index]}, function (res) {
+         questions[index] = res
+         setupText();
+         addToCategoriesUsed()
+         })
+         })*/
+    })
+}
+
+function getQuestionsWithTemplate(templateId) {
+    doDbAction({
+        action: 'getRandomQuestionsByQuizId', quizId: localStorage.getItem('quizId'), templateId: templateId
+    }, function (data) {
+
+        setupQuestions(data)
+    })
+}
+function setupQuestions(data) {
+    let listQuestions = data.map((question) => {
+        return new Promise((resolve) => {
+            doDbAction({action: 'getQuestionById', questionId: question.id}, function (res) {
+                questions.push(res);
+                console.log("res", res)
                 setupText();
-                addToCategoriesUsed()
+
+                console.log(questions)
+                resolve();
+
             })
         })
+    });
+    Promise.all(listQuestions).then(function () {
+        addToCategoriesUsed();
+        console.log(categories)
     })
 }
 
 
 function getScoreByCategories() {
     //add all questions sorted by category + correct questions by category
-    categories.forEach(function (category,index) {
+    categories.forEach(function (category, index) {
         category.amount = 0;
         category.amountCorrect = 0;
-        questions.forEach(function (question,i) {
-            if (question.category == category.id){
+        questions.forEach(function (question, i) {
+            if (question.category == category.id) {
                 category.amount++;
-                if (questionIsCorrect(question,answers[i])){
+                if (questionIsCorrect(question, answers[i])) {
                     category.amountCorrect++;
                 }
             }
@@ -63,6 +105,8 @@ function questionIsCorrect(question, answer) {
 function addToCategoriesUsed() {
     // add categories that are used in the quiz
     return questions.forEach(function (question, index) {
+
+        console.log(question)
         return doDbAction({action: 'getCategoryById', categoryId: question.category}, function (data, index) {
             categories[data.id - 1] = data;
         }).then(function () {
@@ -76,8 +120,8 @@ function setCategories() {
     //setup UI
     $('.category').remove();
     categories.forEach(function (data, index) {
-        var percentage = (data.amountCorrect / data.amount) * 100;
-        var html = '<div class="category"><h4 class="light grey-text text-lighten-3">   '  + data.category + ' : ' + percentage +  '% </h4> </div>'
+        var percentage = Math.round((data.amountCorrect / data.amount) * 100);
+        var html = '<div class="category"><h4 class="light grey-text text-lighten-3">   ' + data.category + ' : ' + percentage + '% </h4> </div>'
         $('.review').append(html);
     })
 }
@@ -95,13 +139,14 @@ function getDepartmentByDepartmentId() {
     }, function (data) {
         currentDepartment = data;
         return getAnswers().then(function () {
-            return getQuestions()
+            return getTemplateByDepartmentId()
         })
     })
 }
 
 function getAnswers() {
     return doDbAction({action: "getAnswers", userId: localStorage.getItem('userId')}, function (data) {
+        console.log(data)
         answers = data;
     }).then(function () {
         answers.forEach(function (data, index) {
