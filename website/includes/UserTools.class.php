@@ -1431,5 +1431,35 @@ class UserTools extends Database
 
   }
 
+  public function dupeOrganisation($organisationId){
+      $connection = $this->connect();
+
+      if (!$stmtOrg = $connection->prepare('insert into organisation(name,extraInfo) select Concat(name, " kopie"), extraInfo from organisation where id= ?')) {
+          echo "FAIL prepare";
+      }
+      if (!$stmtDep = $connection->prepare('insert into department(name,organisationId) select department.name, LAST_INSERT_ID() from department join organisation on department.organisationId = organisation.id where organisation.id = ? ')) {
+          echo "FAIL prepare";
+      }
+
+      if (!$stmtOrg->bind_param("i", $organisationId)) {
+          echo "FAIL bind";
+      }
+
+      if (!$stmtDep->bind_param("i", $organisationId)) {
+          echo "FAIL bind";
+      }
+
+      if (!$stmtOrg->execute()) {
+          echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+      }
+
+      if (!$stmtDep->execute()) {
+          echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+      }
+      $stmtOrg->close();
+      $stmtDep->close();
+      $connection->close();
+  }
+
 
 }
