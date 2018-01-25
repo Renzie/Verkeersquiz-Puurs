@@ -227,7 +227,7 @@ class View extends UserTools
 					<?php
 					if ($check[0] != 0) {
 					?>
-					<a class="btn green save_template_department" buttonAction="updateQuiz" ><i class="material-icons">save</i></a>
+					<a class="btn green update_template_department" buttonAction="updateQuiz" ><i class="material-icons">save</i></a>
 				<?php }else{ ?>
 					<a class="btn green create_template_department" buttonAction="updateQuiz" ><i class="material-icons">save</i></a>
 				<?php }?>

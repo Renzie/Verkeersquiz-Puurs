@@ -134,6 +134,14 @@ if (isset($_POST['action'])) {
             $usertools->addExtraQuestion($_POST['templatedepartmentid']);
             echo '200';
             break;
+        case 'createTemplateDepartment':
+            $usertools->createTemplateDepartment($_POST['schemaId'], $_POST['departmentId'],  $_POST['quizId']);
+            echo '200';
+            break;
+        case 'updateTemplateDepartment':
+            $usertools->updateTemplateDepartment($_POST['schemaId'], $_POST['departmentId'],  $_POST['quizId']);
+            echo '200';
+            break;
         default:
             echo '404';
             break;
