@@ -152,7 +152,7 @@ function filterByStudent(id) { //geef alle antwoorden van de geselecteerde stude
                 console.log(student);
                 if (student.id == id) return student;
             })
-        })
+        });
         console.log("not found")
         return false;
     }

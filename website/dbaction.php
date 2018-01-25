@@ -12,7 +12,7 @@ if (isset($_POST['action'])) {
             echo json_encode($usertools->getAllQuestionsByQuizId($_POST['quizId']));
             break;
         case 'getTemplateByDepartmentId' :
-            echo json_encode($usertools->getTemplateByDepartmentId($_POST['departmentId']));
+            echo json_encode($usertools->getTemplateByDepartmentId($_POST['departmentId'], $_POST['quizId']));
             break;
 
         case 'getAllOrganisations' :

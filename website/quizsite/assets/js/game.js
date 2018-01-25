@@ -74,9 +74,11 @@ function getAllQuestionsFromQuiz() {
 function getTemplateByDepartmentId() {
     doDbAction({
         action : 'getTemplateByDepartmentId',
-        departmentId: currentDepartment.id
+        departmentId: currentDepartment.id,
+        quizId: localStorage.quizId
     }, function (data) {
         if (data.length == 0){
+            if ()
             getAllQuestionsFromQuiz()
         } else {
             getQuestionsByQuizId(data.templateId);
@@ -148,7 +150,7 @@ function Question(obj) {
             that.currentTime = that.time = that.total = data.time;
 
         })
-    }
+    };
 
     this.getAnswers = function () {
         doDbAction({

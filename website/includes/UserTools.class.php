@@ -1196,10 +1196,10 @@ class UserTools extends Database
         return $all;
     }
 
-    public function getTemplateByDepartmentId($id){
+    public function getTemplateByDepartmentId($did,$qid){
         $connection = $this->connect();
-        if ($stmt = $connection->prepare("select * from template_department where departmentId = ?")) {
-            $stmt->bind_param("i", $id);
+        if ($stmt = $connection->prepare("select * from template_department where departmentId = ? and quizId = ?")) {
+            $stmt->bind_param("ii", $did, $qid);
 
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
