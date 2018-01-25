@@ -9,9 +9,7 @@ $(document).ready(function () {
   $('.extraquestion').on('change', '.imageupload', uploadImg);
   $(".extraquestion").on('click', '.removeimage', removeImage);
   $(".create_template_department").on('click', createTemplateDepartment);
-
-
-
+  $(".update_template_department").on('click', updateTemplateDepartment);
 
 });
 
@@ -228,7 +226,7 @@ var removeImage = function(){
 
 
 var createTemplateDepartment = function(){
-  var schemaId = $(this).parent().parent().parent().find('.schemas').val;
+  var schemaId = $(this).parent().parent().parent().find("[name='templates']").val();
   console.log("schemaId: " );
   console.log(schemaId);
   var url_string = window.location.href;
@@ -237,4 +235,40 @@ var createTemplateDepartment = function(){
   console.log("departmentid: "+departmentId);
   var quizId= $(this).closest('.quiz').attr("quizid");
   console.log("quizId: "+quizId);
+
+  var ajaxurl = 'dbaction.php',
+  data =  {
+    'action': 'createTemplateDepartment',
+    'schemaId':schemaId,
+    'departmentId': departmentId,
+    'quizId': quizId
+  };
+  $.post(ajaxurl, data, function (response) {
+     location.reload();
+  });
+
+}
+
+var updateTemplateDepartment = function(){
+  var schemaId = $(this).parent().parent().parent().find("[name='templates']").val();
+  console.log("schemaId: " );
+  console.log(schemaId);
+  var url_string = window.location.href;
+  var url = new URL(url_string);
+  var departmentId=url.searchParams.get("did");
+  console.log("departmentid: "+departmentId);
+  var quizId= $(this).closest('.quiz').attr("quizid");
+  console.log("quizId: "+quizId);
+
+  var ajaxurl = 'dbaction.php',
+  data =  {
+    'action': 'updateTemplateDepartment',
+    'schemaId':schemaId,
+    'departmentId': departmentId,
+    'quizId': quizId
+  };
+  $.post(ajaxurl, data, function (response) {
+     location.reload();
+  });
+
 }

@@ -1390,5 +1390,45 @@ class UserTools extends Database
 
   }
 
+  public function createTemplateDepartment($schemaId, $departmentId, $quizId){
+
+    $connection = $this->connect();
+
+    if (!$stmt = $connection->prepare("INSERT INTO template_department (schemaId, departmentId, quizId) VALUES (?, ?, ?)")) {
+        echo "FAIL prepare";
+    }
+
+    if (!$stmt->bind_param("iii", $schemaId, $departmentId, $quizId)) {
+        echo "FAIL bind";
+    }
+
+    if (!$stmt->execute()) {
+        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
+    $stmt->close();
+    $connection->close();
+
+  }
+
+  public function updateTemplateDepartment($schemaId, $departmentId, $quizId){
+
+    $connection = $this->connect();
+
+    if (!$stmt = $connection->prepare("UPDATE template_department SET schemaId = ? WHERE departmentId = ? AND quizId = ?")) {
+        echo "FAIL prepare";
+    }
+
+    if (!$stmt->bind_param("iii", $schemaId, $departmentId, $quizId)) {
+        echo "FAIL bind";
+    }
+
+    if (!$stmt->execute()) {
+        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
+    $stmt->close();
+    $connection->close();
+
+  }
+
 
 }
