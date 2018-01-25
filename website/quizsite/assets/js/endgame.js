@@ -103,16 +103,23 @@ function questionIsCorrect(question, answer) {
 
 function addToCategoriesUsed() {
     // add categories that are used in the quiz
-    return questions.forEach(function (question, index) {
 
-        console.log(question)
-        return doDbAction({action: 'getCategoryById', categoryId: question.category}, function (data, index) {
-            categories[data.id - 1] = data;
-        }).then(function () {
+    let listQuestions = questions.map((question) => {
+        return new Promise((resolve) => {
+            return questions.forEach(function (question, index) {
+                return doDbAction({action: 'getCategoryById', categoryId: question.category}, function (data, index) {
+                    categories[data.id - 1] = data;
+                    resolve();
+                })
+            })
+        })
+    })
+    Promise.all(listQuestions).then(function () {
+            console.log("categories",categories)
             getScoreByCategories();
             setCategories();
         })
-    })
+
 }
 
 function setCategories() {
@@ -120,7 +127,7 @@ function setCategories() {
     $('.category').remove();
     categories.forEach(function (data, index) {
         var percentage = Math.round((data.amountCorrect / data.amount) * 100);
-        var html = '<div class="category"><h4 class="light grey-text text-lighten-3">   ' + data.category + ' : ' + percentage + '% </h4> </div>'
+        var html = '<div class="category"><h4 class="light grey-text text-lighten-3">' + data.category + ' : ' + percentage + '% </h4> </div>'
         $('.review').append(html);
     })
 }

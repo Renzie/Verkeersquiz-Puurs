@@ -126,7 +126,7 @@ function Question(obj) {
     var that = this;
     this.text = obj.question;
     this.width = 0;
-    //this.total = this.currentTime;
+    this.total = 0;
 
     this.imageLink = obj.imageLink;
 
@@ -147,6 +147,8 @@ function Question(obj) {
             difficultyId: this.difficultyId
         }, function (data) {
             that.currentTime = that.time = that.total = data.time;
+            console.log("current",that.currentTime)
+            console.log("total", that.total)
 
         })
     };
@@ -188,7 +190,8 @@ function Question(obj) {
             this.timer = setInterval(this.update, 1000);
         }
         this.setupText();
-        this.getTime();
+        this.getTime()
+
         this.getAnswers();
         this.setImage();
         $('form').off().on('submit', currentQuestion.sendAnswer)

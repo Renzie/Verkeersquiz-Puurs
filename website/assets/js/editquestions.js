@@ -95,12 +95,14 @@ var makeQuestion = function(){
     'category': 1,
     'quizId':quizId
   };
-  $.post(ajaxurl, data, function (response) {
+  console.log(quizId)
 
+  $.post(ajaxurl, data, function (response) {
+        console.log(response);
       Materialize.toast("Nieuwe vraag aangemaakt!",1000);
 
       //Dirty way, just reload the entire page!
-      location.reload();
+      //location.reload();
 
 
   });
@@ -221,4 +223,4 @@ var markCorrect = function(){
        $(this).attr("correct", 0)
      }
    });
-}
+};

@@ -1076,13 +1076,13 @@ class UserTools extends Database
     {
         $connection = $this->connect();
 
-        if ($stmt = $connection->prepare("SELECT answer.id, answer.answer, answer.questionId, answer.correct  FROM answer JOIN answer_user ON answer.id = answer_user.awnserId WHERE userId = ?")) {
+        if ($stmt = $connection->prepare("SELECT answer.id, answer.answer, answer.questionId, answer.correct, answer_user.userId  FROM answer JOIN answer_user ON answer.id = answer_user.awnserId WHERE userId = ?")) {
             $stmt->bind_param("i", $userId);
 
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $answer, $questionId, $correct);
+            $stmt->bind_result($id, $answer, $questionId, $correct, $userId);
             $data = array();
 
             while ($stmt->fetch()) {
@@ -1090,7 +1090,8 @@ class UserTools extends Database
                     "id" => $id,
                     "answer" => $answer,
                     "questionId" => $questionId,
-                    "correct" => $correct
+                    "correct" => $correct,
+                    "userId" => $userId
                 ];
                 array_push($data, $subarray);
             }

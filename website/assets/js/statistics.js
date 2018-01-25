@@ -17,6 +17,14 @@ var departmentsFromOrganisation;
 var allStudentsFromOrganisation = [];
 var allAnswersFromStudents = [];
 
+var stats = {
+    schools : [],   // id, name, extraInfo
+    departments : [], // id, name, organisationId
+    students : [], // id,name,familyname,departmentid  TODO fix tenzij je het zo wilt houden  [in array]
+    answers : [], // id,answer  ,questionId,correct,userId TODO fix tenzij je het zo wilt houden  [in array]
+
+};
+
 function doDbAction(action, callback) {
     return $.ajax({
         type: "POST",
@@ -42,6 +50,7 @@ function viewAllOrganizations() {
     doDbAction({action: 'getAllOrganisations'}, function (data) {
         addOrganisationsToList(data);
         organisations = data;
+        stats.schools = data;
         console.log("fetching Organisations: OK");
     });
 }
@@ -59,28 +68,38 @@ function getDepartmentById() {
     var selectedOrg = org.options[org.selectedIndex].value;
     doDbAction({action: 'getDepartmentsByOrganisationId', organisationId: selectedOrg}, function (data) {
         departmentsFromOrganisation = data;
+
         console.log(departmentsFromOrganisation)
         addToSelect("#department", data);
     }).then(function () {
+        stats.departments = departmentsFromOrganisation;
         getAllStudentsFromAllDepartments(departmentsFromOrganisation);
         $('#department').off().on('change', saveSelectedDepartment);
     })
 }
 
 function getAllStudentsFromAllDepartments(departments) {
+    var array = [];
     let students = departments.map((department) => {
         return new Promise((resolve) => {
             doDbAction({action: 'getUsersByDepartmentId', departmentId: department.id}, function (res) {
                 allStudentsFromOrganisation.push(res);
+                array.push(res)
                 getAnswersFromUsers(res);
+                stats.students.push(res);
                 resolve();
             })
         })
     })
 
     Promise.all(students).then(function () {
+        console.log("statsstudents",stats.students)
+
+        console.log("array", [].concat(array));
+
         console.log("Fetchd all students from organisation", allStudentsFromOrganisation)
-        console.log("Now fetching answers...");
+        //console.log("Now fetching answers...");
+
 
     })
 }
@@ -130,17 +149,20 @@ function getNamesOfStudents() {
 function getAnswersFromUsers(students) {
     let answers = students.map((student) => {
         return new Promise((resolve) => {
-            doDbAction({action: 'getAnswers', userId: student.id}, function (res) {
+            doDbAction({action: 'getAnswersByUser', userId: student.id}, function (res) {
                 allAnswersFromStudents.push(res);
                 resolve();
+                stats.answers.push(res);
             })
         })
     })
 
     Promise.all(answers).then(function () {
-        console.log("Fetchd all answerss from students", allAnswersFromStudents)
+        //console.log("Fetchd all answerss from students", allAnswersFromStudents)
         addToSelect("#user",students)
         $("#user").off().on('change', filterByStudent)
+
+        console.log("stats", stats)
     })
 }
 

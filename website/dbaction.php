@@ -30,6 +30,9 @@ if (isset($_POST['action'])) {
         case "getAnswers" :
             echo json_encode($usertools->getAnswersByUserId($_POST['userId']));
             break;
+        case "getAnswersByUser" :
+            echo json_encode($usertools->getAnswersByUser($_POST['userId']));
+            break;
         case 'getUser' :
             echo json_encode($usertools->getUserById($_POST['userId']));
             break;
