@@ -130,6 +130,10 @@ if (isset($_POST['action'])) {
         case 'deleteTemplate':
             $usertools->deleteTemplate($_POST['templateId']);
             break;
+        case 'dupeOrganisation':
+            $usertools->dupeOrganisation($_POST['schoolId']);
+            echo '200';
+            break;
         case 'changeSchema':
             $usertools->changeSchema($_POST['departmentId'],$_POST['schemeId']);
             echo '200';

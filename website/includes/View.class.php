@@ -11,9 +11,11 @@ class View extends UserTools
 				<td><input class="schoolName" type="text" value="<?php echo $school["name"]?>" schoolIdName="<?php echo $school["id"]?>" ></td>
 				<td><input class="schoolInfo" type="text" value="<?php echo $school["extraInfo"]?>" schoolIdInfo="<?php echo $school["id"]?>"  ></td>
 				<td>
-					<a  href="editorganisation.php?id=<?php echo $school["id"]?>" class="btn edit_school" buttonAction="editOrganisation"><i class="material-icons">edit</i></a>
-					<a  class="btn red remove_school" buttonAction="deleteOrganisation"><i class="material-icons">delete</i></a>
+					<a href="editorganisation.php?id=<?php echo $school["id"]?>" class="btn edit_school" buttonAction="editOrganisation"><i class="material-icons">edit</i></a>
+                    <a class="btn blue dupe_school" buttonAction="dupeOrganisation"><i class="material-icons">content_copy</i></a>
+					<a class="btn red remove_school" buttonAction="deleteOrganisation"><i class="material-icons">delete</i></a>
 					<a class="btn purple save_school" buttonAction="updateOrganisation" ><i class="material-icons">save</i></a>
+
 					</td>
 					</tr>
 			<?php

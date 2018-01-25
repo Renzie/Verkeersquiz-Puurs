@@ -5,6 +5,7 @@ $(document).ready(function () {
     $(".add_new_school").on('click', addNewSchool);
     $('.tabel_school').on('click', '.remove_school', removeSchool);
     $('.tabel_school').on('click', '.save_school', saveSchool);
+    $('.tabel_school').on('click', '.dupe_school', dupeSchool);
 });
 
 
@@ -40,6 +41,24 @@ function removeSchool() {
 
     var school = $(this).closest('.school');
     school.remove();
+}
+
+function dupeSchool(e){
+
+    e.preventDefault();
+    var schoolId = $(this).closest('.school').attr("schoolId");
+    var buttonAction = $(this).attr("buttonAction");
+    var ajaxurl = 'dbaction.php',
+    data =  {
+      'action': buttonAction,
+      'schoolId': schoolId
+    };
+    $.post(ajaxurl, data, function (response) {
+        Materialize.toast("Nieuwe kopie gemaakt!",1155);
+        location.reload();
+
+    });
+
 }
 
 function saveSchool() {
