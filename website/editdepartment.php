@@ -28,14 +28,11 @@ $departmentData = $userTools->getDepartmentByDepartmentId($_GET["did"]);
     <h2>School: <?php echo $organisationData["name"]; ?></h2>
     <h2>Klas: <?php echo $departmentData["name"]; ?></h2>
 
-    <ul class="quizzes collapsible" data-collapsible="expandable">
+    <ul class="quizzes collapsible" data-collapsible="accordion">
           <?php
          $view->getQuizzesForTemplate($departmentData["id"]);
            ?>
     </ul>
-
-
-
     </table>
 
 

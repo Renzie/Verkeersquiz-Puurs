@@ -120,6 +120,10 @@ if (isset($_POST['action'])) {
             $usertools->changeSchema($_POST['departmentId'],$_POST['schemeId']);
             echo '200';
             break;
+        case 'addExtraQuestion':
+            $usertools->addExtraQuestion($_POST['templatedepartmentid']);
+            echo '200';
+            break;
         default:
             echo '404';
             break;

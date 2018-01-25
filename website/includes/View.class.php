@@ -72,7 +72,7 @@ class View extends UserTools {
 
 			$check = $this->checkTemplateDepartment($did, $quiz["id"]);
 
-			echo "<h2>".$check[0]."</h2>";
+			//echo "<h2>".$check[0]."</h2>";
 
 			if($check[0] != 0){
 				//echo "<h1>TRUE</h1>";
@@ -107,22 +107,49 @@ class View extends UserTools {
 					</tr>
 				</table>
 				<h5>Specifieke vragen toevoegen:</h5>
-				<ul class="questions collapsible" data-collapsible="expandable">
+
+				<div class="row">
+					<div class="col s12 m12">
+				<ul class="extraquestions collapsible" data-collapsible="accordion">
 				<?php
 				if($check[0] != 0){
 					//echo "<h1>TRUE</h1>";
-
-					foreach($this->getAllExtraQuestions() as $question){
-						
+					//TODO
+					foreach($this->getAllExtraQuestions($check[0]) as $question){
+						?>
+						<div class="collapsible-header">
+		        <i class="material-icons">chevron_right</i> <?php echo $question["question"]?> </div>
+		    	  <div class="collapsible-body"><p>hello</p></div>
+						<?php
 					}
 				}
+
 				?>
 				</ul>
+			</div>
+			</div>
 
 
-				<a class="btn green save_template_department" buttonAction="updateQuiz" ><i class="material-icons">save</i></a>
+				<div class="row">
+				<div class="col s6">
+					<?php
+					if($check[0] != 0){
+					?>
+					<a class="btn blue new_extra_question" buttonAction="addExtraQuestion" templatedepartmentid="<?php echo $check[0]; ?>"><i class="material-icons">add</i></a>
+				<?php
+			}else{ echo "<p>Klik eerst op de save-button om specifieke vragen te kunnen toevoegen <br> (vergeet daarbij niet de template te selecteren)</p>";}
+				?>
+				</div>
+				<div class="col s3 offset-s3">
+					<a class="btn green save_template_department" buttonAction="updateQuiz" ><i class="material-icons">save</i></a>
+				</div>
+			</div>
+
+
+
 				</div>
 			</li>
+			
 			<?php
 		}
 	}
