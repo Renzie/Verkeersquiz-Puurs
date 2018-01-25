@@ -28,7 +28,7 @@ var updateQuestion = function(){
 
   var img = $(this).closest('.question').find("[name='image']").attr("src");
   var imgLink="";
-  if(img != "#"){
+  if(img != "images/No-image-found.jpg"){
     imgLink = "imageQuestion_"+questionId+".png";
   }
 
