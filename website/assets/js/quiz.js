@@ -152,7 +152,7 @@ var uploadImg = function () {
 
     }
 };
-var addRemoveImageButton = (image) =>{
+var addRemoveImageButton = (image) => {
     if (image.attr('src') != "#"){
         $(".removeimage").remove();
         $(".questionbuttons").append('<a data-tooltip="Verwijder afbeelding" class="removeimage btn tooltipped btn-small waves-effect waves-light red">' +

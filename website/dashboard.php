@@ -29,6 +29,13 @@ require_once "head.html";
             <option value="" disabled selected>Filter op klas</option>
         </select>
     </div>
+
+    <div class="col s3">
+        <label for="user" >Studenten</label>
+        <select name="user" id="user">
+            <option value="" disabled selected>Filter op student</option>
+        </select>
+    </div>
 </div>
 
 <canvas id="students" width="400px" height="400px"></canvas>
