@@ -989,30 +989,30 @@ class UserTools extends Database
 
     public function getAllExtraQuestions($template_department_id)
     {
-		$connection= $this->connect();
+        $connection = $this->connect();
 
-		if ($stmt = $connection->prepare("SELECT question.* FROM question JOIN template_question ON question.id = template_question.questionId WHERE template_question.templateId = ?")) {
-			$stmt->bind_param("i", $template_department_id);
+        if ($stmt = $connection->prepare("SELECT question.* FROM question JOIN template_question ON question.id = template_question.questionId WHERE template_question.templateId = ?")) {
+            $stmt->bind_param("i", $template_department_id);
 
-			if (!$stmt->execute()) {
-				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-			}
-			$stmt->bind_result($id, $question, $difficulty, $imageLink,$category);
-			$data = array();
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            $stmt->bind_result($id, $question, $difficulty, $imageLink, $category);
+            $data = array();
 
-			while($stmt -> fetch()){
-			  $subarray = [
-				"id"=>$id,
-				"question"=>$question,
-				"difficulty"=>$difficulty,
-				"imageLink"=>$imageLink,
-                "category"=>$category
-			  ];
-			  array_push($data,$subarray);
-			}
-			$stmt->close();
-			return $data;
-		}
+            while ($stmt->fetch()) {
+                $subarray = [
+                    "id" => $id,
+                    "question" => $question,
+                    "difficulty" => $difficulty,
+                    "imageLink" => $imageLink,
+                    "category" => $category
+                ];
+                array_push($data, $subarray);
+            }
+            $stmt->close();
+            return $data;
+        }
     }
 
 
@@ -1129,7 +1129,7 @@ class UserTools extends Database
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $answer, $questionId, $correct,$category);
+            $stmt->bind_result($id, $answer, $questionId, $correct, $category);
 
             $data = array();
             while ($stmt->fetch()) {
@@ -1138,7 +1138,7 @@ class UserTools extends Database
                     "answer" => $answer,
                     "questionId" => $questionId,
                     "correct" => $correct,
-                    "category" =>$category
+                    "category" => $category
 
                 ];
                 array_push($data, $subarray);
@@ -1196,8 +1196,10 @@ class UserTools extends Database
         return $all;
     }
 
-    public function getTemplateByDepartmentId($did,$qid){
+    public function getTemplateByDepartmentId($did, $qid)
+    {
         $connection = $this->connect();
+        $data = array();
         if ($stmt = $connection->prepare("select * from template_department where departmentId = ? and quizId = ?")) {
             $stmt->bind_param("ii", $did, $qid);
 
@@ -1206,17 +1208,16 @@ class UserTools extends Database
             }
             $stmt->bind_result($id, $schemaId, $departmentId, $quizId);
 
-            $data = array();
-            while ($stmt->fetch()) {
-                $subarray = [
-                    "id" => $id,
-                    "schemaId" => $schemaId,
-                    "departmentId" => $departmentId,
-                    "quizId" => $quizId
 
-                ];
-                array_push($data, $subarray);
-            }
+            $data = [
+                "id" => $id,
+                "schemaId" => $schemaId,
+                "departmentId" => $departmentId,
+                "quizId" => $quizId
+
+            ];
+
+
             $stmt->close();
             return $data;
         }
@@ -1305,161 +1306,167 @@ class UserTools extends Database
     {
     }
 
-  public function checkTemplateDepartment($did, $quizid){
+    public function checkTemplateDepartment($did, $quizid)
+    {
 
-    $return = false;
-    $connection= $this->connect();
+        $return = false;
+        $connection = $this->connect();
 
-    if (!$stmt = $connection->prepare("SELECT * FROM template_department WHERE departmentId=? AND quizId=?")) {
-        echo "FAIL prepare";
+        if (!$stmt = $connection->prepare("SELECT * FROM template_department WHERE departmentId=? AND quizId=?")) {
+            echo "FAIL prepare";
+        }
+
+        if (!$stmt->bind_param("ii", $did, $quizid)) {
+            echo "FAIL bind";
+        }
+
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $stmt->bind_result($id, $schemaId, $departmentId, $quizid);
+        $stmt->fetch();
+        if ($stmt->num_rows > 0) {
+            $return = true;
+        }
+
+        $stmt->close();
+        $connection->close();
+
+        $data = [
+            $id,
+            $schemaId
+        ];
+
+        return $data;
+
     }
 
-    if (!$stmt->bind_param("ii", $did, $quizid)) {
-        echo "FAIL bind";
+    public function addExtraQuestion($template_department_id)
+    {
+
+        $connection = $this->connect();
+
+        //params
+        $question = "nieuwe extra vraag";
+        $difficulty = 1;
+        $imgLink = "";
+        $category = 1;
+
+        if (!$stmt = $connection->prepare("INSERT INTO question (question, difficulty, imageLink, category) VALUES (?, ?, ?, ?)")) {
+            echo "FAIL prepare";
+        }
+
+        if (!$stmt->bind_param("sisi", $this->zuiverData($question), $difficulty, $imgLink, $category)) {
+            echo "FAIL bind";
+        }
+
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        //echo "<script>console.log('test')</script>";
+        //$this->linkQuestionToQuiz($quizId, $stmt->insert_id);
+
+        $this->linkQuestionToTemplateQuestion($template_department_id, $stmt->insert_id);
+
+        $stmt->close();
+        $connection->close();
+
+
     }
 
-    if (!$stmt->execute()) {
-        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-    }
-    $stmt->bind_result($id, $schemaId, $departmentId, $quizid);
-    $stmt->fetch();
-    if($stmt->num_rows > 0){
-      $return = true;
-    }
+    public function linkQuestionToTemplateQuestion($template_department_id, $questionId)
+    {
 
-    $stmt->close();
-    $connection->close();
+        $connection = $this->connect();
 
-    $data = [
-      $id,
-      $schemaId
-    ];
+        if (!$stmt = $connection->prepare("INSERT INTO template_question (templateId, questionId) VALUES (?, ?)")) {
+            echo "FAIL prepare";
+        }
 
-    return $data;
+        if (!$stmt->bind_param("ii", $template_department_id, $questionId)) {
+            echo "FAIL bind";
+        }
 
-  }
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $stmt->close();
+        $connection->close();
 
-  public function addExtraQuestion($template_department_id){
-
-    $connection= $this->connect();
-
-    //params
-    $question = "nieuwe extra vraag";
-    $difficulty = 1;
-    $imgLink = "";
-    $category = 1;
-
-	  if (!$stmt = $connection->prepare("INSERT INTO question (question, difficulty, imageLink, category) VALUES (?, ?, ?, ?)")) {
-		  echo "FAIL prepare";
-	  }
-
-	  if (!$stmt->bind_param("sisi", $this->zuiverData($question), $difficulty, $imgLink, $category)) {
-		  echo "FAIL bind";
-	  }
-
-	  if (!$stmt->execute()) {
-		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-	  }
-    //echo "<script>console.log('test')</script>";
-    //$this->linkQuestionToQuiz($quizId, $stmt->insert_id);
-
-    $this->linkQuestionToTemplateQuestion($template_department_id, $stmt->insert_id);
-
-	  $stmt->close();
-	  $connection->close();
-
-
-  }
-
-  public function linkQuestionToTemplateQuestion($template_department_id,$questionId){
-
-    $connection= $this->connect();
-
-    if (!$stmt = $connection->prepare("INSERT INTO template_question (templateId, questionId) VALUES (?, ?)")) {
-      echo "FAIL prepare";
     }
 
-    if (!$stmt->bind_param("ii", $template_department_id, $questionId)) {
-      echo "FAIL bind";
+    public function createTemplateDepartment($schemaId, $departmentId, $quizId)
+    {
+
+        $connection = $this->connect();
+
+        if (!$stmt = $connection->prepare("INSERT INTO template_department (schemaId, departmentId, quizId) VALUES (?, ?, ?)")) {
+            echo "FAIL prepare";
+        }
+
+        if (!$stmt->bind_param("iii", $schemaId, $departmentId, $quizId)) {
+            echo "FAIL bind";
+        }
+
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $stmt->close();
+        $connection->close();
+
     }
 
-    if (!$stmt->execute()) {
-      echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-    }
-    $stmt->close();
-    $connection->close();
+    public function updateTemplateDepartment($schemaId, $departmentId, $quizId)
+    {
 
-  }
+        $connection = $this->connect();
 
-  public function createTemplateDepartment($schemaId, $departmentId, $quizId){
+        if (!$stmt = $connection->prepare("UPDATE template_department SET schemaId = ? WHERE departmentId = ? AND quizId = ?")) {
+            echo "FAIL prepare";
+        }
 
-    $connection = $this->connect();
+        if (!$stmt->bind_param("iii", $schemaId, $departmentId, $quizId)) {
+            echo "FAIL bind";
+        }
 
-    if (!$stmt = $connection->prepare("INSERT INTO template_department (schemaId, departmentId, quizId) VALUES (?, ?, ?)")) {
-        echo "FAIL prepare";
-    }
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $stmt->close();
+        $connection->close();
 
-    if (!$stmt->bind_param("iii", $schemaId, $departmentId, $quizId)) {
-        echo "FAIL bind";
-    }
-
-    if (!$stmt->execute()) {
-        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-    }
-    $stmt->close();
-    $connection->close();
-
-  }
-
-  public function updateTemplateDepartment($schemaId, $departmentId, $quizId){
-
-    $connection = $this->connect();
-
-    if (!$stmt = $connection->prepare("UPDATE template_department SET schemaId = ? WHERE departmentId = ? AND quizId = ?")) {
-        echo "FAIL prepare";
     }
 
-    if (!$stmt->bind_param("iii", $schemaId, $departmentId, $quizId)) {
-        echo "FAIL bind";
+    public function dupeOrganisation($organisationId)
+    {
+        $connection = $this->connect();
+
+        if (!$stmtOrg = $connection->prepare('insert into organisation(name,extraInfo) select Concat(name, " kopie"), extraInfo from organisation where id= ?')) {
+            echo "FAIL prepare";
+        }
+        if (!$stmtDep = $connection->prepare('insert into department(name,organisationId) select department.name, LAST_INSERT_ID() from department join organisation on department.organisationId = organisation.id where organisation.id = ? ')) {
+            echo "FAIL prepare";
+        }
+
+        if (!$stmtOrg->bind_param("i", $organisationId)) {
+            echo "FAIL bind";
+        }
+
+        if (!$stmtDep->bind_param("i", $organisationId)) {
+            echo "FAIL bind";
+        }
+
+        if (!$stmtOrg->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+        if (!$stmtDep->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $stmtOrg->close();
+        $stmtDep->close();
+        $connection->close();
     }
-
-    if (!$stmt->execute()) {
-        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-    }
-    $stmt->close();
-    $connection->close();
-
-  }
-
-  public function dupeOrganisation($organisationId){
-      $connection = $this->connect();
-
-      if (!$stmtOrg = $connection->prepare('insert into organisation(name,extraInfo) select Concat(name, " kopie"), extraInfo from organisation where id= ?')) {
-          echo "FAIL prepare";
-      }
-      if (!$stmtDep = $connection->prepare('insert into department(name,organisationId) select department.name, LAST_INSERT_ID() from department join organisation on department.organisationId = organisation.id where organisation.id = ? ')) {
-          echo "FAIL prepare";
-      }
-
-      if (!$stmtOrg->bind_param("i", $organisationId)) {
-          echo "FAIL bind";
-      }
-
-      if (!$stmtDep->bind_param("i", $organisationId)) {
-          echo "FAIL bind";
-      }
-
-      if (!$stmtOrg->execute()) {
-          echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-      }
-
-      if (!$stmtDep->execute()) {
-          echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-      }
-      $stmtOrg->close();
-      $stmtDep->close();
-      $connection->close();
-  }
 
 
 }
