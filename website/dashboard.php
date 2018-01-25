@@ -31,7 +31,7 @@ require_once "head.html";
     </div>
 
     <div class="col s3">
-        <label for="user" >Studenten</label>
+        <label for="user">Studenten</label>
         <select name="user" id="user">
             <option value="" disabled selected>Filter op student</option>
         </select>

@@ -60,7 +60,17 @@ function getDepartmentByDepartmentId() {
         departmentId: localStorage.getItem('departmentId')
     }, function (data) {
         currentDepartment = data;
+        getTemplateByDepartmentId();
         getQuestionsByQuizId();
+    })
+}
+
+function getTemplateByDepartmentId() {
+    doDbAction({
+        action : 'getTemplateByDepartmentId',
+        departmentId: currentDepartment.id
+    }, function (data) {
+        console.log(data)
     })
 }
 
@@ -74,7 +84,6 @@ function getQuestionsByQuizId() {
             return new Promise((resolve) => {
                 doDbAction({action: 'getQuestionById', questionId: question}, function (res) {
                     allQuestions.push(new Question(res));
-
                     resolve();
                 })
             })
@@ -85,7 +94,6 @@ function getQuestionsByQuizId() {
             setupQuiz();
         })
     })
-
 }
 
 

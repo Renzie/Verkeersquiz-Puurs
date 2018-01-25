@@ -8,6 +8,10 @@ $usertools = new UserTools();
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
 
+        case 'getTemplateByDepartmentId' :
+            echo json_encode($usertools->getTemplateByDepartmentId($_POST['departmentId']));
+            break;
+
         case 'getAllOrganisations' :
             echo json_encode($usertools->getAllOrganisation());
             break;

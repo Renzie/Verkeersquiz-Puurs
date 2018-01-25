@@ -1195,6 +1195,32 @@ class UserTools extends Database
         return $all;
     }
 
+    public function getTemplateByDepartmentId($id){
+        $connection = $this->connect();
+        if ($stmt = $connection->prepare("select * from template_department where departmentId = ?")) {
+            $stmt->bind_param("i", $id);
+
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            $stmt->bind_result($id, $schemaId, $departmentId, $quizId);
+
+            $data = array();
+            while ($stmt->fetch()) {
+                $subarray = [
+                    "id" => $id,
+                    "schemaId" => $schemaId,
+                    "departmentId" => $departmentId,
+                    "quizId" => $quizId
+
+                ];
+                array_push($data, $subarray);
+            }
+            $stmt->close();
+            return $data;
+        }
+    }
+
     public function getAnswersByCategoryAndDifficulty($category, $difficulty, $quizId, $aantal)
     {
         //echo "hello";
