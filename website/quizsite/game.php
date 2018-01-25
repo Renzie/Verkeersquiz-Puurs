@@ -10,7 +10,7 @@ $view = new View();
 $quiz = $_SESSION['quiz'];
 $user = $_SESSION['userId'];
 $departmentId = $_SESSION['departmentId'];
-$questions = $usertools->getAllQuestionsByQuizId($quiz['id']);
+//$questions = $usertools->getAllQuestionsByQuizId($quiz['id']);
 
 
 if(!$_SESSION['userId']){
@@ -121,4 +121,3 @@ echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('qu
 </main>
 </body>
 </html>
-
