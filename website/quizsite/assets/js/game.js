@@ -77,7 +77,7 @@ function getTemplateByDepartmentId() {
         departmentId: currentDepartment.id,
         quizId: localStorage.quizId
     }, function (data) {
-        if (data.length == 0){
+        if (data.id == null){
             getAllQuestionsFromQuiz()
         } else {
             getQuestionsByQuizId(data.templateId);
