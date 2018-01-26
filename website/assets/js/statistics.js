@@ -6,6 +6,7 @@ $(function () {
     $('select').material_select();
     getQuiz();
     viewAllOrganizations()
+    getAll()
 });
 
 
@@ -21,9 +22,15 @@ var stats = {
     schools : [],   // id, name, extraInfo
     departments : [], // id, name, organisationId
     students : [], // id,name,familyname,departmentid  TODO fix tenzij je het zo wilt houden  [in array]
-    answers : [], // id,answer  ,questionId,correct,userId TODO fix tenzij je het zo wilt houden  [in array]
+    answers : [], // id,answer ,questionId,correct,userId TODO fix tenzij je het zo wilt houden  [in array]
 
 };
+
+function getAll() {
+    return doDbAction({action :'getAll'}, function (data) {
+        console.log(data);
+    })
+}
 
 function doDbAction(action, callback) {
     return $.ajax({

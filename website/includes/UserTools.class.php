@@ -843,6 +843,8 @@ class UserTools extends Database
 
     }
 
+
+
     public function getQuizInfoById($id)
     {
         $connection = $this->connect();
@@ -1148,6 +1150,22 @@ class UserTools extends Database
             return $data;
         }
     }
+
+    public function getAll(){
+        $data = array();
+        array_push($data, $this->getAllDepartments());
+        array_push($data, $this->getAllOrganisation());
+        array_push($data, $this->getAllUsers());
+        array_push($data, $this->getAllAnswers());
+        return $data;
+    }
+
+    public function getAllAnswers(){
+        $connection = $this->connect();
+        $sql = "select answer_user.*, answer.correct from answer_user join answer on answer.id = answer_user.awnserId";
+        return $this->getData($sql, $connection);
+    }
+
 
 
     public function getRandomQuestionsByTemplate($templateId, $quizid)
