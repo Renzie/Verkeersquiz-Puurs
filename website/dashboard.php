@@ -14,7 +14,7 @@ require_once "head.html";
 
 
 <h1>Dashboard</h1>
-
+<!--
 <div class="row">
     <div class="col s3">
         <label for="organisation" >Organisaties</label>
@@ -36,7 +36,7 @@ require_once "head.html";
             <option value="" disabled selected>Filter op student</option>
         </select>
     </div>
-</div>
+</div>-->
 
 <!--<canvas id="students" width="400px" height="400px"></canvas>-->
 
@@ -51,25 +51,25 @@ require_once "head.html";
   </thead>
   <tbody id="resultstable">
     <tr>
-      <td>Maxime Mylle</td><td>testquiz</td><td>8/10</td>
+      <td>Maxime Mylle</td><td>Howest Quiz</td><td>8/10</td>
     </tr>
     <tr>
-      <td>Arthur Saprunov</td><td>testquiz</td><td>9/10</td>
+      <td>Arthur Saprunov</td><td>Howest Quiz</td><td>9/10</td>
     </tr>
     <tr>
-      <td>Renzie omana</td><td>testquiz</td><td>7/10</td>
+      <td>Renzie omana</td><td>Howest Quiz</td><td>7/10</td>
     </tr>
     <tr>
-      <td>user1 bbbb</td><td>testquiz</td><td>3/10</td>
+      <td>user1 bbbb</td><td>Howest Quiz</td><td>3/10</td>
     </tr>
     <tr>
-      <td>ahmed aaa</td><td>testquiz</td><td>2/10</td>
+      <td>ahmed aaa</td><td>Howest Quiz</td><td>2/10</td>
     </tr>
     <tr>
-      <td>shabala ddd</td><td>testquiz</td><td>5/10</td>
+      <td>shabala ddd</td><td>Howest Quiz</td><td>5/10</td>
     </tr>
     <tr>
-      <td>rachid ttt</td><td>testquiz</td><td>10/10</td>
+      <td>rachid ttt</td><td>Howest Quiz</td><td>10/10</td>
     </tr>
   </tbody>
 
@@ -87,13 +87,13 @@ require_once "head.html";
   </thead>
   <tbody id="resultstable">
     <tr>
-      <td>rachid ttt</td><td>testquiz</td><td>10/10</td>
+      <td>rachid ttt</td><td>Howest Quiz</td><td>10/10</td>
     </tr>
     <tr>
-      <td>Arthur Saprunov</td><td>testquiz</td><td>9/10</td>
+      <td>Arthur Saprunov</td><td>Howest Quiz</td><td>9/10</td>
     </tr>
     <tr>
-      <td>Maxime Mylle</td><td>testquiz</td><td>8/10</td>
+      <td>Maxime Mylle</td><td>Howest Quiz</td><td>8/10</td>
     </tr>
   </tbody>
 
