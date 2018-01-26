@@ -6,7 +6,7 @@ $(function () {
     $('select').material_select();
     getQuiz();
     viewAllOrganizations()
-    getAll()
+    getAll();
 });
 
 
@@ -28,7 +28,9 @@ var stats = {
 
 function getAll() {
     return doDbAction({action :'getAll'}, function (data) {
-        console.log(data);
+      console.log("All:");
+      console.log(data);
+      //showStats(data);
     })
 }
 
@@ -191,7 +193,7 @@ function filterByStudent(id) { //geef alle antwoorden van de geselecteerde stude
 }
 
 function filterByOrganisations() {
-    
+
 }
 
 
@@ -214,3 +216,67 @@ var studentChartData = {
     }
 };
 //var Chart = new Chart(ctx, studentChartData);
+
+
+
+
+//maxime
+
+var showStats = function(data){
+  showRanking(data);
+}
+
+var showRanking = function(data){
+
+  var answersByUserId= {"-1":{name:"jan pol", quiz:"testquiz" ,correct:3, total:4}};
+
+  var alldata = data;
+  var students = alldata[2];
+  console.log(students);
+  students.forEach(function(student){
+    console.log(student.name);
+  });
+
+  var answers = alldata[3];
+  answers.forEach(function(answer){
+    if(answersByUserId[answer.userid]==undefined){
+      var user = getUserInfoById(students, answer.userid)
+      initscore = 0;
+      if (answer.correct == 1){
+        initscore++;
+      }
+      var newuser = {
+        name:user.name +" "+ user.familyName,
+        //TODO ????????????????
+        //quiz:getQuizByQuestionid(alldata, answer.awnserid)
+        correct = initscore,
+        total = 1
+      }
+
+
+      answersByUserId[answer.userid] = newuser;
+    }else{
+      answersByUserId[answer.userid].total ++;
+      if (answer.correct == 1){
+        answersByUserId[answer.userid].correct ++;
+      }
+    }
+
+  });
+
+  console.log(answersByUserId);
+}
+
+var getUserInfoById = function(allusers, id){
+  var data;
+  allusers.forEach(user){
+    if(id == user.id){
+      data = user;
+    }
+  }
+  return data;
+}
+
+var getQuizByQuestionid(data, id){
+
+}

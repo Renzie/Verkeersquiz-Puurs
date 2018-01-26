@@ -38,7 +38,76 @@ require_once "head.html";
     </div>
 </div>
 
-<canvas id="students" width="400px" height="400px"></canvas>
+<!--<canvas id="students" width="400px" height="400px"></canvas>-->
+
+<h3>Alle resultaten</h3>
+<table class="striped">
+  <thead>
+  <tr>
+    <th>Naam</th>
+    <th>Quiz</th>
+    <th>score</th>
+    <tr>
+  </thead>
+  <tbody id="resultstable">
+    <tr>
+      <td>Maxime Mylle</td><td>testquiz</td><td>8/10</td>
+    </tr>
+    <tr>
+      <td>Arthur Saprunov</td><td>testquiz</td><td>9/10</td>
+    </tr>
+    <tr>
+      <td>Renzie omana</td><td>testquiz</td><td>7/10</td>
+    </tr>
+    <tr>
+      <td>user1 bbbb</td><td>testquiz</td><td>3/10</td>
+    </tr>
+    <tr>
+      <td>ahmed aaa</td><td>testquiz</td><td>2/10</td>
+    </tr>
+    <tr>
+      <td>shabala ddd</td><td>testquiz</td><td>5/10</td>
+    </tr>
+    <tr>
+      <td>rachid ttt</td><td>testquiz</td><td>10/10</td>
+    </tr>
+  </tbody>
+
+</table>
+<br>
+<h3>Top resultaten</h3>
+
+<table class="striped">
+  <thead>
+  <tr>
+    <th>Naam</th>
+    <th>Quiz</th>
+    <th>score</th>
+    <tr>
+  </thead>
+  <tbody id="resultstable">
+    <tr>
+      <td>rachid ttt</td><td>testquiz</td><td>10/10</td>
+    </tr>
+    <tr>
+      <td>Arthur Saprunov</td><td>testquiz</td><td>9/10</td>
+    </tr>
+    <tr>
+      <td>Maxime Mylle</td><td>testquiz</td><td>8/10</td>
+    </tr>
+  </tbody>
+
+</table>
+<br>
+<h3>Andere resultaten</h3>
+<h5>Gemiddelde tijd voor het oplossen van een vraag: 4 seconden</h5>
+<br>
+<h5>Meest juist beantwoorde vraag: "Heb je voorang hier?" (questionid:35)</h5>
+<br>
+<h5>Meest fout beantwoorde vraag: "Wat moet ik doen bij dit verkeersbord" (questionid:15)</h5>
+<br>
+
+
 
 
 
