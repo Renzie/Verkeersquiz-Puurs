@@ -13,30 +13,14 @@ if(!$_SESSION['login']){
 }
 ?>
 <div class="is-main-content">
-    <h1 class="header">Menu</h1>
+    <h1 class="header">Welkom</h1>
+    <p>Welkom op het administratiepaneel. Start met een quiz te maken door op de "quiz" link links in het menu te klikken</p>
+    <br>
 
-
-
-    <article>
-        <h3>Quiz</h3>
-        <a href="createquiz.php" class="btn inline">Maak een nieuwe quiz<i class="material-icons right">add</i></a>
-        <a href="editquiz.php" class="btn orange">Wijzig een gebruikte quiz<i class="material-icons right">edit</i></a>
-        <a href="editquestions.php" class="btn purple">Wijzig de vragen per moeilijkheidsgraad</a>
-        <p class="flow-text">De vragen per moeilijkheidsvraag kunnen toegevoegd / gewijzigd worden.</p>
-
-    </article>
-
-    <article>
         <h3>Handleiding</h3>
-        <p class="flow-text">Indien niet alles duidelijk wordt alles nog eens uitgelegt in de <a href="download.php?val=Handleiding.docx" target="_blank">handleiding dat u hier kan downloaden.</a></p>
 
-    </article>
+        <p class="flow-text">Indien niet alles duidelijk is kunt u de handleiding <a href="assets/files/Handleiding-Quiz.docx">hier</a> downloaden</p>
 
-    <article>
-        <h3>School</h3>
-        <h3><a href="organisatie.php" class="btn">Organisaties</a></h3>
-        <p class="flow-text">Bekijk hier de organisaties en wijzig ze indien nodig.</p>
-    </article>
 </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
