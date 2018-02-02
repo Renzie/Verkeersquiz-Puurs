@@ -217,9 +217,6 @@ var studentChartData = {
 };
 //var Chart = new Chart(ctx, studentChartData);
 
-
-
-
 //maxime
 
 var showStats = function(data){
@@ -247,13 +244,11 @@ var showRanking = function(data){
       }
       var newuser = {
         name:user.name +" "+ user.familyName,
-        //TODO ????????????????
-        //quiz:getQuizByQuestionid(alldata, answer.awnserid)
+        //TODO
+        quiz:getQuizByAnswerid(alldata, answer.awnserid)
         correct = initscore,
         total = 1
       }
-
-
       answersByUserId[answer.userid] = newuser;
     }else{
       answersByUserId[answer.userid].total ++;
@@ -265,6 +260,8 @@ var showRanking = function(data){
   });
 
   console.log(answersByUserId);
+
+  //displayData(answers);
 }
 
 var getUserInfoById = function(allusers, id){
@@ -277,6 +274,7 @@ var getUserInfoById = function(allusers, id){
   return data;
 }
 
-var getQuizByQuestionid(data, id){
+var  getQuizByQuestionid = function(data, id){
 
+  //yte implementeren -> questions ook meegeven met alldata zodat die kan worden uitgevoerd
 }
