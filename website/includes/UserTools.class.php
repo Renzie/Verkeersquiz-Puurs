@@ -1309,21 +1309,12 @@ class UserTools extends Database
         return $data;
     }
 
-    public function getStatisticsByDepartment($demapartmentId)
-    {
-
-    }
-
 
     protected function getRandomQuestionsByQuizId($id)
     {
         return shuffle($this->getAllQuestionsByQuizId($id));
     }
 
-
-    public function getStatisticsByOragnisation($organisationId)
-    {
-    }
 
     public function checkTemplateDepartment($did, $quizid)
     {
