@@ -8,6 +8,10 @@ $usertools = new UserTools();
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
 
+        case 'getUsers' :
+            echo json_encode($usertools->getAllUsers());
+            break;
+
         case 'getAll' :
             echo json_encode($usertools->getAll());
             break;

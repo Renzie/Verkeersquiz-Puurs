@@ -6,7 +6,7 @@ $(function () {
     $('select').material_select();
     getQuiz();
     viewAllOrganizations()
-    getAll()
+    getAll();
 });
 
 
@@ -28,9 +28,12 @@ var stats = {
 
 function getAll() {
     return doDbAction({action :'getAll'}, function (data) {
-        console.log(data);
+      console.log("All:");
+      console.log(data);
+      showStats(data);
     })
 }
+
 
 function doDbAction(action, callback) {
     return $.ajax({
@@ -191,7 +194,7 @@ function filterByStudent(id) { //geef alle antwoorden van de geselecteerde stude
 }
 
 function filterByOrganisations() {
-    
+
 }
 
 
@@ -214,3 +217,70 @@ var studentChartData = {
     }
 };
 //var Chart = new Chart(ctx, studentChartData);
+
+//maxime
+
+var showStats = function(data){
+  showRanking(data);
+}
+
+
+
+var showRanking = function(data){
+
+  var answersByUserId= {"-1":{name:"jan pol", quiz:"testquiz" ,correct:3, total:4}};
+
+  var alldata = data;
+  var students = alldata[2];
+  console.log(students);
+  students.forEach(function(student){
+    console.log(student.name);
+  });
+
+  var answers = alldata[3];
+    console.log(answers)
+  answers.forEach(function(answer){
+    if(answersByUserId[answer.userid]==undefined){
+        console.log(students)
+      var user = getUserInfoById(students, answer.userid)
+      initscore = 0;
+      if (answer.correct == 1){
+        initscore++;
+      }
+      var newuser = {
+        name:user.name +" "+ user.familyName,
+        quiz:getQuizByAnswerid(alldata, answer.awnserid),
+        correct : initscore,
+        total : 1
+      }
+      answersByUserId[answer.userid] = newuser;
+    }else{
+      answersByUserId[answer.userid].total ++;
+      if (answer.correct == 1){
+        answersByUserId[answer.userid].correct ++;
+      }
+    }
+
+  });
+
+  console.log(answersByUserId);
+
+  //displayData(answers);
+}
+
+var getUserInfoById = function(allusers, id){
+  var data;
+  allusers.forEach(function(user){
+    if(id == user.id){
+
+      data = user;
+        console.log(data)
+    }
+  })
+  return data;
+}
+
+var getQuizByQuestionid = function(data, id){
+
+  //yte implementeren -> questions ook meegeven met alldata zodat die kan worden uitgevoerd
+}
