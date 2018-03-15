@@ -105,7 +105,7 @@ if($_SESSION['login']){
         $usertools->writeLog($tmplog);
         //die;
       }
-
+      echo "<script>location.reload();</script>";
 
     }
     ?>
