@@ -18,6 +18,8 @@ var departmentsFromOrganisation;
 var allStudentsFromOrganisation = [];
 var allAnswersFromStudents = [];
 
+var allData;
+
 var stats = {
     schools : [],   // id, name, extraInfo
     departments : [], // id, name, organisationId
@@ -30,7 +32,10 @@ function getAll() {
     return doDbAction({action :'getAll'}, function (data) {
       console.log("All:");
       console.log(data);
-      showStats(data);
+      //showStats(data);
+        allData = data;
+        getPercentageOfEachStudentByClass()
+
     })
 }
 
@@ -48,11 +53,47 @@ function doDbAction(action, callback) {
     })
 }
 
+function getPercentageOfEachStudentByClass() {
+    var klas = {};
+    klas.students = [];
+
+    allData[2].forEach(function (student,index) {
+        klas.students.push({
+            name : student.name,
+            percentage: 0,
+            answers : []
+        })
+
+        allData[3].forEach(function (answer, i) {
+            var percentage = klas.students[index].percentage
+
+            if (answer.userId == student.id) {
+                klas.students[index].answers.push(answer)
+                
+            }
+            
+        })
+
+        klas.students[index].answers.forEach(function (answer, i) {
+            if ( answer.correct == 1 ) klas.students[index].percentage++
+
+        })
+        klas.students[index].percentage = klas.students[index].percentage / klas.students[index].answers.length
+    })
+
+    console.log(klas)
+}
+
+function getPercentage() {
+    
+}
+
+
 
 function getQuestionsByQuizId(quizId) {
     doDbAction({action: 'getCurrentQuiz', quizId: quizId}, function (data) {
         currentQuiz = data;
-        console.log("fetching Quiz: OK");
+     //   console.log("fetching Quiz: OK");
     })
 }
 
@@ -61,7 +102,7 @@ function viewAllOrganizations() {
         addOrganisationsToList(data);
         organisations = data;
         stats.schools = data;
-        console.log("fetching Organisations: OK");
+        //console.log("fetching Organisations: OK");
     });
 }
 
@@ -79,7 +120,7 @@ function getDepartmentById() {
     doDbAction({action: 'getDepartmentsByOrganisationId', organisationId: selectedOrg}, function (data) {
         departmentsFromOrganisation = data;
 
-        console.log(departmentsFromOrganisation)
+       // console.log(departmentsFromOrganisation)
         addToSelect("#department", data);
     }).then(function () {
         stats.departments = departmentsFromOrganisation;
@@ -172,7 +213,7 @@ function getAnswersFromUsers(students) {
         addToSelect("#user",students)
         $("#user").off().on('change', filterByStudent)
 
-        console.log("stats", stats)
+       // console.log("stats", stats)
     })
 }
 
@@ -181,7 +222,7 @@ function filterByStudent(id) { //geef alle antwoorden van de geselecteerde stude
         $(allStudentsFromOrganisation).each(function (dep) {
             console.log(dep);
             $(dep).each(function (student) {
-                console.log(student);
+            //    console.log(student);
                 if (student.id == id) return student;
             })
         });
@@ -190,7 +231,7 @@ function filterByStudent(id) { //geef alle antwoorden van de geselecteerde stude
     }
 
     var student = allStudentsFromOrganisation.find(searchStudent())
-    console.log(student)
+   // console.log(student)
 }
 
 function filterByOrganisations() {
@@ -232,16 +273,16 @@ var showRanking = function(data){
 
   var alldata = data;
   var students = alldata[2];
-  console.log(students);
+ // console.log(students);
   students.forEach(function(student){
-    console.log(student.name);
+   // console.log(student.name);
   });
 
   var answers = alldata[3];
-    console.log(answers)
+  //  console.log(answers)
   answers.forEach(function(answer){
     if(answersByUserId[answer.userid]==undefined){
-        console.log(students)
+    //    console.log(students)
       var user = getUserInfoById(students, answer.userid)
       initscore = 0;
       if (answer.correct == 1){
@@ -263,7 +304,7 @@ var showRanking = function(data){
 
   });
 
-  console.log(answersByUserId);
+//  console.log(answersByUserId);
 
   //displayData(answers);
 }
@@ -274,7 +315,7 @@ var getUserInfoById = function(allusers, id){
     if(id == user.id){
 
       data = user;
-        console.log(data)
+       // console.log(data)
     }
   })
   return data;
