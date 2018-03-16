@@ -4,3 +4,30 @@
 RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+Header set Strict-Transport-Security "max-age=300; includeSubDomains" env=HTTPS
+Header set Content-Security-Policy "default-src 'self' data: https://*.google.com https://*.youtube.com https://*.vimeo.com https://*.googleapis.com https://maps.google.be https://*.gstatic.com https://www.google-analytics.com https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'"
+Header set X-Content-Security-Policy "default-src 'self' data: https://*.google.com https://*.youtube.com https://*.vimeo.com https://*.googleapis.com https://maps.google.be https://*.gstatic.com https://www.google-analytics.com https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'"
+Header set X-WebKit-CSP "default-src 'self' data: https://*.google.com https://*.youtube.com https://*.vimeo.com https://*.googleapis.com https://maps.google.be https://*.gstatic.com https://www.google-analytics.com https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'"
+Header set X-Content-Type-Options "nosniff"
+Header unset "X-Powered-By"
+Header set Referrer-Policy same-origin
+Header set Strict-Transport-Security "max-age=2592000; includeSubDomains"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+Header set Cache-Control "no-cache, must-revalidate"
+Header unset Server
+ServerSignature Off
+
+
+ErrorDocument 400 /error.php?q=400
+ErrorDocument 401 /error.php?q=401
+ErrorDocument 403 /error.php?q=403
+ErrorDocument 404 /error.php?q=404
+ErrorDocument 405 /error.php?q=405
+ErrorDocument 408 /error.php?q=408
+ErrorDocument 414 /error.php?q=414
+ErrorDocument 500 /error.php?q=500
+ErrorDocument 502 /error.php?q=502
+ErrorDocument 504 /error.php?q=504
