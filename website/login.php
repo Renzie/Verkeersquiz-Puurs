@@ -1,13 +1,13 @@
 <?php
 session_start();
+if(isset($_SESSION['login'])){
+   header("location:menu.php");
+}
 require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
+
 $usertools = new UserTools();
 
-if($_SESSION['login']){
-   header("location:menu.php");
-   //die;
-}
 
 ?>
 
@@ -103,7 +103,6 @@ if($_SESSION['login']){
         $tmplog = "Failed login from ".$ip." with username:".$_POST["username"];
 
         $usertools->writeLog($tmplog);
-        //die;
       }
       echo "<script>location.reload();</script>";
 

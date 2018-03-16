@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('session.php');
 require_once "includes/UserTools.class.php";
 require_once "includes/View.class.php";
 require_once "head.html";

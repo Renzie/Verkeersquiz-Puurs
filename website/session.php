@@ -1,7 +1,8 @@
 <?php
    session_start();
 
-   if(session_destroy()) {
+   if(!isset($_SESSION['login'])){
       header("location:login.php");
    }
+
 ?>
