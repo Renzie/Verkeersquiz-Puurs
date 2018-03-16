@@ -7,9 +7,6 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 
 Header set Strict-Transport-Security "max-age=300; includeSubDomains" env=HTTPS
-Header set Content-Security-Policy "default-src 'self' data: https://*.google.com https://*.youtube.com https://*.vimeo.com https://*.googleapis.com https://maps.google.be https://*.gstatic.com https://www.google-analytics.com https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'"
-Header set X-Content-Security-Policy "default-src 'self' data: https://*.google.com https://*.youtube.com https://*.vimeo.com https://*.googleapis.com https://maps.google.be https://*.gstatic.com https://www.google-analytics.com https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'"
-Header set X-WebKit-CSP "default-src 'self' data: https://*.google.com https://*.youtube.com https://*.vimeo.com https://*.googleapis.com https://maps.google.be https://*.gstatic.com https://www.google-analytics.com https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'"
 Header set X-Content-Type-Options "nosniff"
 Header unset "X-Powered-By"
 Header set Referrer-Policy same-origin

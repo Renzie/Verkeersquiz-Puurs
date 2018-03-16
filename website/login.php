@@ -83,13 +83,14 @@ $usertools = new UserTools();
       $check = $usertools->login($_POST["username"],$_POST["password"]);
       if($check){
         //echo "succesfull";
-        $_SESSION['login'] = true;
+        $_SESSION['login'] = $_POST["username"];
 
-        header("location:menu.php");
+        //header("location:menu.php"); //header not always working
+        echo "<script>window.location.replace('menu.php')</script>";
+        
 
       }else{
         //echo "failed";
-        $_SESSION['login'] = false;
         echo '<script>Materialize.toast("Login gefaald!",1155);</script>';
 
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -104,7 +105,6 @@ $usertools = new UserTools();
 
         $usertools->writeLog($tmplog);
       }
-      echo "<script>location.reload();</script>";
 
     }
     ?>

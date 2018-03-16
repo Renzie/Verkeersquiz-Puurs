@@ -44,7 +44,7 @@ if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("departmen
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Selecteer quiz</title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="assets/materialize/css/materialize.css" rel="stylesheet" media="screen,projection"/>
