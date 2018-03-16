@@ -16,7 +16,7 @@ $usertools = new UserTools();
 
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Login</title>
     <link href="assets/css/reset.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="assets/materialize/css/materialize.min.css" rel="stylesheet" media="screen,projection"/>
