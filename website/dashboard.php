@@ -1,11 +1,5 @@
 <?php
-
-session_start();
-
-if (!$_SESSION['login']) {
-    header("location:logout.php");
-    //die;
-}
+include('session.php');
 
 require_once "head.html";
 

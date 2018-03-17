@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('session.php');
 require_once "head.html";
 require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
@@ -7,10 +7,6 @@ require_once "includes/View.class.php";
 $usertools = new UserTools();
 
 
-if(!$_SESSION['login']){
-   header("location:logout.php");
-   //die;
-}
 ?>
 <div class="is-main-content">
     <h1 class="header">Welkom</h1>
