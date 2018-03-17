@@ -9,12 +9,11 @@ if (!$_SESSION['login']) {
 
 require_once "head.html";
 
-
 ?>
 
 
 <h1>Dashboard</h1>
-<!--
+
 <div class="row">
     <div class="col s3">
         <label for="organisation" >Organisaties</label>
@@ -36,7 +35,7 @@ require_once "head.html";
             <option value="" disabled selected>Filter op student</option>
         </select>
     </div>
-</div>-->
+</div>
 
 <!--<canvas id="students" width="400px" height="400px"></canvas>-->
 
@@ -46,31 +45,12 @@ require_once "head.html";
   <tr>
     <th>Naam</th>
     <th>Quiz</th>
-    <th>score</th>
+    <th>Departement</th>
+    <th>Score</th>
     <tr>
   </thead>
-  <tbody id="resultstable">
-    <tr>
-      <td>Maxime Mylle</td><td>Howest Quiz</td><td>8/10</td>
-    </tr>
-    <tr>
-      <td>Arthur Saprunov</td><td>Howest Quiz</td><td>9/10</td>
-    </tr>
-    <tr>
-      <td>Renzie omana</td><td>Howest Quiz</td><td>7/10</td>
-    </tr>
-    <tr>
-      <td>user1 bbbb</td><td>Howest Quiz</td><td>3/10</td>
-    </tr>
-    <tr>
-      <td>ahmed aaa</td><td>Howest Quiz</td><td>2/10</td>
-    </tr>
-    <tr>
-      <td>shabala ddd</td><td>Howest Quiz</td><td>5/10</td>
-    </tr>
-    <tr>
-      <td>rachid ttt</td><td>Howest Quiz</td><td>10/10</td>
-    </tr>
+  <tbody id="all-results">
+
   </tbody>
 
 </table>

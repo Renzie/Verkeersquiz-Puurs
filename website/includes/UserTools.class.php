@@ -1157,6 +1157,7 @@ class UserTools extends Database
         array_push($data, $this->getAllOrganisation());
         array_push($data, $this->getAllUsers());
         array_push($data, $this->getAllAnswers());
+        array_push($data, $this->getAllQuizzes());
         return $data;
     }
 

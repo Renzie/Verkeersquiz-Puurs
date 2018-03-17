@@ -7,6 +7,7 @@ $(function () {
     getQuiz();
     viewAllOrganizations()
     getAll();
+
 });
 
 
@@ -20,12 +21,12 @@ var allAnswersFromStudents = [];
 
 var allData;
 
+
 var stats = {
     schools : [],   // id, name, extraInfo
     departments : [], // id, name, organisationId
     students : [], // id,name,familyname,departmentid  TODO fix tenzij je het zo wilt houden  [in array]
     answers : [], // id,answer ,questionId,correct,userId TODO fix tenzij je het zo wilt houden  [in array]
-
 };
 
 function getAll() {
@@ -34,9 +35,15 @@ function getAll() {
       console.log(data);
       //showStats(data);
         allData = data;
-        getPercentageOfEachStudentByClass()
+        getStudentsByQuiz()
+        getCurrentQuiz()
 
     })
+}
+
+function getCurrentQuiz() {
+    var url = new URL(window.location.href.toString());
+    currentQuiz = allData[4].filter(e => e.id === url.searchParams.get('id'))[0];
 }
 
 
@@ -53,39 +60,76 @@ function doDbAction(action, callback) {
     })
 }
 
-function getPercentageOfEachStudentByClass() {
+function getStudentsByQuiz() {
     var klas = {};
     klas.students = [];
 
+
+    // For every student in the db
     allData[2].forEach(function (student,index) {
+
         klas.students.push({
             name : student.name,
-            percentage: 0,
-            answers : []
-        })
+            score: 0,
+            answers : [],
+        });
 
-        allData[3].forEach(function (answer, i) {
-            var percentage = klas.students[index].percentage
-
+        // For every answer in the db
+        allData[3].forEach(function (answer) {
             if (answer.userId == student.id) {
                 klas.students[index].answers.push(answer)
-                
             }
-            
-        })
+        });
 
-        klas.students[index].answers.forEach(function (answer, i) {
-            if ( answer.correct == 1 ) klas.students[index].percentage++
+        // Get the department of the student
+        klas.students[index].department = allData[0].filter(e => e.id === student.departmentId)[0];
+        //klas.students[index].department.departmentId = allData[0].filter(e => e.id === student.departmentId)[0];
 
-        })
-        klas.students[index].percentage = klas.students[index].percentage / klas.students[index].answers.length
-    })
 
+        // for every correct answer of the student
+        klas.students[index].answers.forEach(function (answer) {
+            if ( answer.correct == 1 ) klas.students[index].score++
+        });
+        klas.students[index].score = klas.students[index].score / klas.students[index].answers.length
+    });
+
+    sortByScore(klas.students)
     console.log(klas)
+    viewScoreFromAllStudents(klas.students)
 }
 
-function getPercentage() {
-    
+function getDepartment(department, id) {
+    return department.id === id;
+}
+
+
+/*
+ *    View the score of all students in the given table
+ *    @param students   {Array}
+ */
+function viewScoreFromAllStudents(students) {
+    var table = $("#all-results");
+    var html = "";
+    students.forEach(function (student) {
+        html += "<tr>" +
+            "<td>" + student.name  +"</td>" +
+            "<td>Howest Quiz</td>"+
+            "<td>"+ student.department.name + "</td>" +
+
+            "<td>" + student.score *100 + " %</td>"
+
+    });
+    table.append(html)
+}
+
+/*
+ *  Sort the students by score (DESC). Turn the b and a around to change direction.
+ *  @param students     {Array}
+ */
+function sortByScore(students) {
+    students.sort(function (a, b) {
+        return b.score - a.score
+    })
 }
 
 
