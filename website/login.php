@@ -1,13 +1,13 @@
 <?php
 session_start();
+if(isset($_SESSION['login'])){
+   header("location:menu.php");
+}
 require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
+
 $usertools = new UserTools();
 
-if($_SESSION['login']){
-   header("location:menu.php");
-   //die;
-}
 
 ?>
 
@@ -16,7 +16,7 @@ if($_SESSION['login']){
 
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Login</title>
     <link href="assets/css/reset.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="assets/materialize/css/materialize.min.css" rel="stylesheet" media="screen,projection"/>
@@ -83,13 +83,14 @@ if($_SESSION['login']){
       $check = $usertools->login($_POST["username"],$_POST["password"]);
       if($check){
         //echo "succesfull";
-        $_SESSION['login'] = true;
+        $_SESSION['login'] = $_POST["username"];
 
-        header("location:menu.php");
+        //header("location:menu.php"); //header not always working
+        echo "<script>window.location.replace('menu.php')</script>";
+        
 
       }else{
         //echo "failed";
-        $_SESSION['login'] = false;
         echo '<script>Materialize.toast("Login gefaald!",1155);</script>';
 
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -103,9 +104,7 @@ if($_SESSION['login']){
         $tmplog = "Failed login from ".$ip." with username:".$_POST["username"];
 
         $usertools->writeLog($tmplog);
-        //die;
       }
-      echo "<script>location.reload();</script>";
 
     }
     ?>
