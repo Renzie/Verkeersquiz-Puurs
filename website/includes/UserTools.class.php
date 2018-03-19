@@ -172,7 +172,7 @@ class UserTools extends Database
 
         $connection = $this->connect();
 
-        if (!$stmt = $connection->prepare("UPDATE Answer SET answer = ? , correct = ? WHERE id = ?")) {
+        if (!$stmt = $connection->prepare("UPDATE answer SET answer = ? , correct = ? WHERE id = ?")) {
             echo "FAIL prepare";
         }
 
