@@ -4,14 +4,6 @@ require_once 'Database.class.php';
 
 class UserTools extends Database
 {
-    private function zuiverData($data)
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlentities($data, ENT_QUOTES);
-        return $data;
-    }
-
     public function getAllUsers()
     {
         $connection = $this->connect();
@@ -100,7 +92,7 @@ class UserTools extends Database
             echo "FAIL prepare";
         }
 
-        if (!$stmt->bind_param("ss", $this->zuiverData($name), $this->zuiverData($extrainfo))) {
+        if (!$stmt->bind_param("ss", $name, $extrainfo)) {
             echo "FAIL bind";
         }
 
@@ -120,7 +112,7 @@ class UserTools extends Database
             echo "FAIL prepare";
         }
 
-        if (!$stmt->bind_param("iss", $this->zuiverData($quizId), $this->zuiverData($name), $template)) {
+        if (!$stmt->bind_param("iss", $quizId, $name, $template)) {
             echo "FAIL bind";
         }
 
@@ -320,7 +312,7 @@ class UserTools extends Database
             echo "FAIL prepare";
         }
 
-        if (!$stmt->bind_param("ss", $this->zuiverData($name), $this->zuiverData($extrainfo))) {
+        if (!$stmt->bind_param("ss", $name, $extrainfo)) {
             echo "FAIL bind";
         }
 
@@ -363,7 +355,7 @@ class UserTools extends Database
             echo "FAIL prepare";
         }
 
-        if (!$stmt->bind_param("sisi", $this->zuiverData($question), $difficulty, $imgLink, $category)) {
+        if (!$stmt->bind_param("sisi", $question, $difficulty, $imgLink, $category)) {
             echo "FAIL bind";
         }
 
@@ -1366,7 +1358,7 @@ class UserTools extends Database
             echo "FAIL prepare";
         }
 
-        if (!$stmt->bind_param("sisi", $this->zuiverData($question), $difficulty, $imgLink, $category)) {
+        if (!$stmt->bind_param("sisi", $question, $difficulty, $imgLink, $category)) {
             echo "FAIL bind";
         }
 
