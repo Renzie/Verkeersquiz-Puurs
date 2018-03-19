@@ -79,6 +79,7 @@ function saveQuiz() {
             //alert("action performed successfully");
             Materialize.toast("Opgeslagen!",1155);
             $('.body').load(document.URL +  ' .body');
+            location.reload();
 
         });
 

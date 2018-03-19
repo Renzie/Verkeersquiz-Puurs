@@ -17,9 +17,9 @@ function bindEvents(){
 }
 
 var updateQuestion = function(){
-  //console.log("updating question");
+  ////console.log("updating question");
   //getting data
-  console.log("updating");
+  //console.log("updating");
 
   var questionId = $(this).closest('.question').attr("questionid");
   var question = $(this).closest('.question').find("[name='question']").val();
@@ -43,23 +43,25 @@ var updateQuestion = function(){
     'imgLink': imgLink
   };
   $.post(ajaxurl, data, function (response) {
-      // Response div goes here.
-      Materialize.toast("Vraag opgeslaan",1000);
-      //alert("action performed successfully");
+      if(response == "success") {
+          Materialize.toast("Vraag opgeslagen!",1000);
+      } else if(response == "error") {
+          Materialize.toast("Fout bij het opslaan van vraag!",1000);
+      }
   });
 
  var answerlist = $(this).find('.answer li');
- console.log("before");
-  //console.log($(this).parent().parent().parent().find(".answers"));
+ //console.log("before");
+  ////console.log($(this).parent().parent().parent().find(".answers"));
   var ul = $(this).closest(".collapsible-body").find(".answers");
   $(ul).find(".answer").each(function(){
 
    var answerId = $(this).attr("answerid");
    var answer = $(this).find("input").val();
    var correct = $(this).attr("correct");
-   console.log("answerid:"+answerId );
-   console.log("answer:"+answer);
-   console.log("correct:"+correct );
+   //console.log("answerid:"+answerId );
+   //console.log("answer:"+answer);
+   //console.log("correct:"+correct );
 
    var ajaxurl = 'dbaction.php',
    data =  {
@@ -70,9 +72,9 @@ var updateQuestion = function(){
    };
    $.post(ajaxurl, data, function (response) {
        if(response == "success") {
-           Materialize.toast("Vraag opgeslaan",1000);
+           Materialize.toast("Antwoord opgeslagen!",1000);
        } else if(response == "error") {
-           Materialize.toast("Fout bij het opslaan van vraag!",1000);
+           Materialize.toast("Fout bij het opslaan van antwoord!",1000);
        }
    });
 
@@ -81,12 +83,12 @@ var updateQuestion = function(){
 }
 
 var makeQuestion = function(){
-  console.log("making question");
+  //console.log("making question");
 
     var url_string = window.location.href;
     var url = new URL(url_string);
     var quizId = url.searchParams.get("id");
-    console.log("quizId:"+ quizId);
+    //console.log("quizId:"+ quizId);
     quizId = parseInt(quizId);
 
 
@@ -99,16 +101,13 @@ var makeQuestion = function(){
     'category': null,
     'quizId':quizId
   };
-  console.log(quizId)
+  ////console.log(quizId)
 
   $.post(ajaxurl, data, function (response) {
-        console.log(response);
-
-
         if(response == "success") {
             Materialize.toast("Nieuwe vraag aangemaakt!",1000);
             location.reload();
-        } else if(response === "error") {
+        } else if(response == "error") {
             Materialize.toast("Fout bij het opslaan van vraag!",1000);
         }
 
@@ -127,9 +126,6 @@ var removeQuestion = function(e){
     var currentQuestion = $(this).closest('.question');
     var questionId = currentQuestion.attr('questionid');
 
-
-
-
     var ajaxurl = 'dbaction.php',
       data =  {
       'action': 'deleteQuestion',
@@ -137,9 +133,12 @@ var removeQuestion = function(e){
     };
     $.post(ajaxurl, data, function (response) {
 
-        Materialize.toast("Vraag is verwijderd!",1155);
-        //Dirty way
-        location.reload();
+        if(response == "success") {
+            Materialize.toast("Vraag verwijderd",1000);
+            location.reload();
+        } else if(response == "error") {
+            Materialize.toast("Fout bij het verwijderen van vraag!",1000);
+        }
 
     });
 
@@ -155,7 +154,7 @@ var addNewAnswer = function (e) {
 
 
     var questionId = $(this).closest('.question').attr("questionid");
-    var answer = "new answer";
+    var answer = "Nieuw antwoord";
     var correct = 0;
     var that = this;
 
@@ -169,24 +168,17 @@ var addNewAnswer = function (e) {
     };
 
     $.post(ajaxurl, data, function (response) {
-        // Response div goes here.
-        Materialize.toast("Nieuw antwoord aangemaakt!",1000);
+        if(response == "success") {
+            Materialize.toast("Nieuw antwoord aangemaakt!",1000);
 
+            var id = $(that).closest('.question').attr("questionid");
+            var div = $(that).parent().parent().parent().find(".answersdiv"+id);
+            var thegodrow = $(that).parent().parent().parent().find(".answers");
+            $(div).load(document.URL +  ' .answersdiv'+id+' .answers');
+        } else if(response == "error") {
+            Materialize.toast("Fout bij het aanmaken van antwoord!",1000);
+        }
 
-
-
-        //TODO
-        //refresh
-        var id = $(that).closest('.question').attr("questionid");
-        var div = $(that).parent().parent().parent().find(".answersdiv"+id);
-        console.log(that);
-        console.log(div);
-        console.log("id: "+id);
-          var thegodrow = $(that).parent().parent().parent().find(".answers");
-          console.log("doing reload");
-          $(div).load(document.URL +  ' .answersdiv'+id+' .answers');
-
-          //$(that).closest(".answers").load(document.URL +  ' .answer');
 
     });
 };
@@ -202,7 +194,7 @@ var removeAnswer = function (e) {
     }
 
     var answerId = $(this).closest(".answer").attr("answerid");
-    console.log("te verwijderen id: "+answerId);
+    //console.log("te verwijderen id: "+answerId);
 
 
     var ajaxurl = 'dbaction.php',
@@ -211,14 +203,17 @@ var removeAnswer = function (e) {
       'answerId': answerId
     };
     $.post(ajaxurl, data, function (response) {
-        // Response div goes here.
-        Materialize.toast("Antwoord is verwijderd",1000);
+        if(response == "success") {
+            Materialize.toast("Antwoord verwijderd!",1000);
+        } else if(response == "error") {
+            Materialize.toast("Fout bij het verwijderen van antwoord!",1000);
+        }
 
     });
 }
 
 var markCorrect = function(){
-  console.log("correct!");
+  //console.log("correct!");
 
   $(this).removeClass("orange").addClass("green");
   $(this).closest(".answer").attr("correct", 1);
