@@ -69,7 +69,11 @@ var updateQuestion = function(){
      'correct': correct
    };
    $.post(ajaxurl, data, function (response) {
-      //response
+       if(response == "success") {
+           Materialize.toast("Vraag opgeslaan",1000);
+       } else if(response == "error") {
+           Materialize.toast("Fout bij het opslaan van vraag!",1000);
+       }
    });
 
  });
@@ -90,19 +94,23 @@ var makeQuestion = function(){
   data =  {
     'action': 'createQuestion',
     'question': 'nieuwe vraag',
-    'difficulty': 1,
+    'difficulty': null,
     'imgLink': '',
-    'category': 1,
+    'category': null,
     'quizId':quizId
   };
   console.log(quizId)
 
   $.post(ajaxurl, data, function (response) {
         console.log(response);
-      Materialize.toast("Nieuwe vraag aangemaakt!",1000);
 
-      //Dirty way, just reload the entire page!
-      //location.reload();
+
+        if(response == "success") {
+            Materialize.toast("Nieuwe vraag aangemaakt!",1000);
+            location.reload();
+        } else if(response === "error") {
+            Materialize.toast("Fout bij het opslaan van vraag!",1000);
+        }
 
 
   });
