@@ -14,6 +14,12 @@ function bindEvents(){
     $(".dropdown-button").dropdown();
     $(".button-collapse").sideNav();
     $('form').on('change',updateQuestion);
+    $('body').on('change','#difficulty',redirect);
+    $('body').on('change','#category',redirect);
+}
+
+var redirect = function(){
+    if($(this).prop('selectedIndex') == 1) window.location = this.value;
 }
 
 var updateQuestion = function(){

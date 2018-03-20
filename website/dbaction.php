@@ -10,67 +10,60 @@ if (isset($_POST['action'])) {
 
         case 'getUsers' :
             echo json_encode($usertools->getAllUsers());
-            echo "success"; break;
-
+            break;
         case 'getAll' :
             echo json_encode($usertools->getAll());
-            echo "success"; break;
-
+            break;
         case 'getAllQuestionsByQuizId' :
             echo json_encode($usertools->getAllQuestionsByQuizId($_POST['quizId']));
-            echo "success"; break;
+            break;
         case 'getTemplateByDepartmentId' :
             echo json_encode($usertools->getTemplateByDepartmentId($_POST['departmentId'], $_POST['quizId']));
-            echo "success"; break;
-
+            break;
         case 'getAllOrganisations' :
             echo json_encode($usertools->getAllOrganisation());
-            echo "success"; break;
-
+            break;
         case 'getDifficultyById' :
             echo json_encode($usertools->getDifficultyById($_POST['difficultyId']));
-            echo "success"; break;
-
+            break;
         case 'getCategoryById' :
             echo json_encode($usertools->getCategoryById($_POST['categoryId']));
-            echo "success"; break;
-
+            break;
         case "getAnswers" :
             echo json_encode($usertools->getAnswersByUserId($_POST['userId']));
-            echo "success"; break;
+            break;
         case "getAnswersByUser" :
             echo json_encode($usertools->getAnswersByUser($_POST['userId']));
-            echo "success"; break;
+            break;
         case 'getUser' :
             echo json_encode($usertools->getUserById($_POST['userId']));
-            echo "success"; break;
-        case 'sendAnswer' :
-            $usertools->makeUserAnswer($_POST['userId'], $_POST['answerId'], $_POST['time']);
-            echo "success"; break;
+            break;
         case 'getUsersByDepartmentId' :
             echo json_encode($usertools->getUsersByDepartmentId($_POST['departmentId']));
-            echo "success"; break;
-
+            break;
         case 'getDepartmentByDepartmentId' :
             echo json_encode($usertools->getDepartmentByDepartmentId($_POST['departmentId']));
-            echo "success"; break;
+            break;
         case 'getDepartments' :
             echo json_encode($usertools->getAllDepartments());
-            echo "success"; break;
+            break;
         case 'getDepartmentsByOrganisationId' :
             echo json_encode($usertools->getAllDepartmentsById($_POST['organisationId']));
-            echo "success"; break;
+            break;
         case 'getRandomQuestionsByQuizId' :
             echo json_encode($usertools->getRandomQuestionsByTemplate($_POST['templateId'], $_POST['quizId']));
-            echo "success"; break;
+            break;
         case 'getCurrentQuiz' :
             echo json_encode($usertools->getQuizInfoById($_POST['quizId']));
-            echo "success"; break;
+            break;
         case 'getQuestionById' :
             echo json_encode($usertools->getQuestionById($_POST['questionId']));
-            echo "success"; break;
+            break;
         case 'getAnswersByQuestionId' :
             echo json_encode($usertools->getAllAnswersByQuestionId($_POST['questionId']));
+            break;
+        case 'sendAnswer' :
+            $usertools->makeUserAnswer($_POST['userId'], $_POST['answerId'], $_POST['time']);
             echo "success"; break;
         case 'updateOrganisation':
             $usertools->updateOrganisation($_POST['schoolId'], $_POST['schoolName'], $_POST['schoolInfo']);
@@ -162,6 +155,6 @@ if (isset($_POST['action'])) {
         default:
             echo "error";
             break;
-}
+        }
 }
 ?>

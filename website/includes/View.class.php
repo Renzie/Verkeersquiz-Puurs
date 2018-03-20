@@ -253,7 +253,7 @@ class View extends UserTools
             ?>
 			<tr class="difficulty" diffId="<?php echo $difficulty["id"]?>">
 				<td><input  class="difficultyName" type="text" value="<?php echo $difficulty["difficulty"]?>"></td>
-				<td><input  class="difficultyTime" type="number" min="0" max ="9999" value="<?php echo $difficulty["time"]?>"></td>
+				<td><input  class="difficultyTime" type="number" min="0" max ="600" value="<?php echo $difficulty["time"]?>"></td>
 				<td><a  class="btn red deleteDifficulty" buttonAction="deleteDifficulty"><i class="material-icons">delete</i></a>
 					<a class="btn purple updateDifficulty" buttonAction="updateDifficulty" ><i class="material-icons">save</i></a>
 					</td>
@@ -292,12 +292,12 @@ class View extends UserTools
 		        <div class="editquestion row">
 		        <div class=" col s5">
 							<div class="input-field">
-		        <select name="difficulty">
-		       	<option value="" disabled >Selecteer de moeilijkheidsgraad</option>
+		        <select id="difficulty" name="difficulty">
+		       	<option value="" disabled selected >Selecteer de moeilijkheidsgraad</option>
+                <option value="moeilijkheidsgraad.php">Maak een nieuwe moeilijkheidsgraad</option>
 
-						<?php
-                        foreach ($this->getAllDifficulties() as $difficulty) {
-                            ?>
+
+						<?php foreach ($this->getAllDifficulties() as $difficulty) { ?>
 							<option value="<?php echo $difficulty["id"] ?>"
 								<?php
                                 if ($difficulty["id"] == $data["difficulty"]) {
@@ -305,8 +305,8 @@ class View extends UserTools
                                 } ?>
 								><?php echo $difficulty["difficulty"] ?></option>
 
-							<?php
-                        } ?>
+
+                        <?php } ?>
 
 		        <!-- <option value="makkelijk">Makkelijk</option>
 		       	<option value="normaal">Normaal</option>
@@ -316,8 +316,9 @@ class View extends UserTools
 					</div>
 					<div class="input-field">
 
-						 <select name="category">
-							 <option disabled>selecteer een categorie</option>
+						 <select id="category" name="category">
+							 <option disabled selected>Selecteer een categorie</option>
+                             <option value="categories.php">Maak een nieuwe categorie</option>
 							 <?php
                             foreach ($this->getAllCategories() as $categorie) {
                                 ?>
@@ -562,7 +563,7 @@ class View extends UserTools
 
         <!-- The Modal -->
         <div id="id01" class="modal">
->>>>>>> frontend
+
 		<span onclick="document.getElementById('id01').style.display='none'"
               class="close" title="Close Modal">&times;</span>
 

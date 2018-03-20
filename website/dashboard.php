@@ -6,7 +6,7 @@ require_once "head.html";
 ?>
 
 
-<h1>Dashboard</h1>
+<h1>Dashboard [Work in progress]</h1>
 
 <div class="row">
     <div class="col s3">
@@ -48,6 +48,8 @@ require_once "head.html";
   </tbody>
 
 </table>
+
+<!--
 <br>
 <h3>Top resultaten</h3>
 
@@ -80,6 +82,7 @@ require_once "head.html";
 <br>
 <h5>Meest fout beantwoorde vraag: "Wat moet ik doen bij dit verkeersbord" (questionid:15)</h5>
 <br>
+-->
 
 
 
