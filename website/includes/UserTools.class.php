@@ -1172,10 +1172,7 @@ class UserTools extends Database
         $stmt->bind_param("i", $templateId);
         if (!$stmt->execute()) {
             echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-        } else {
-            //echo "succesfull";
         }
-        //echo "<h3>DIKKE TEST</h3>";
 
         if (!$stmt->bind_result($template)) {
             echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
@@ -1195,7 +1192,13 @@ class UserTools extends Database
             foreach ($difficultyArray as $difficulty => $aantal) {
                 if ($aantal > 0) {
                     //array_push($all,$this->getAnswersByCategoryAndDifficulty($category, $difficulty, $quizid, $aantal));
-                    $all = array_merge($all, $this->getAnswersByCategoryAndDifficulty($category, $difficulty, $quizid, $aantal));
+                    //TODO check if this works
+                    $tmp = array();
+                    $tmp = $this->getAnswersByCategoryAndDifficulty($category, $difficulty, $quizid, $aantal);
+                    if ($tmp != "empty") {
+                        $all = array_merge($all, $tmp);
+                    }
+
                 }
                 // echo "<br><br>";
                 // echo "<p>all: ";
@@ -1269,7 +1272,7 @@ class UserTools extends Database
             }
             return $random_answers;
         } else {
-            return $answersarray;
+            return "empty";
         }
 
 
@@ -1279,7 +1282,8 @@ class UserTools extends Database
         // echo "<p>random_answers:</p>";
         // print_r($random_answers);
 
-        return $random_keys;
+        //TODO Komt zelfs nooit hier door de if hierboven
+        //return $random_keys;
     }
 
     public function getCategoryById($id)
