@@ -19,7 +19,7 @@ function checkIfSet($name){
 }
 
 if (checkIfSet("firstname") && checkIfSet("familyname") && checkIfSet("department")) {
-    $register = $usertools->registerUser($_POST["firstname"], $_POST["familyname"], $_POST["department"]);
+    $register = $usertools->registerUser($_POST["firstname"], $_POST["familyname"], $_POST["department"], $_POST['quiz']);
 
     if ($register) {
         $_SESSION['userId'] = $register;

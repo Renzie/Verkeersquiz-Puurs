@@ -21,13 +21,14 @@ class UserTools extends Database
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $firstname, $familyname, $departmentId);
+            $stmt->bind_result($id, $firstname, $familyname, $departmentId, $quizId);
             $stmt->fetch();
             $data = [
                 "id" => $id,
                 "name" => $firstname,
                 "familyName" => $familyname,
-                "departmentId" => $departmentId
+                "departmentId" => $departmentId,
+                "quizId" => $quizId
             ];
             $stmt->close();
         }
@@ -55,17 +56,17 @@ class UserTools extends Database
         $connection->close();
     }
 
-    public function registerUser($firstname, $familyname, $departmentid)
+    public function registerUser($firstname, $familyname, $departmentid, $quizId)
     {
 
         $connection = $this->connect();
 
-        if (!$stmt = $connection->prepare("INSERT INTO user (name, familyName, departmentId) VALUES (?, ?,?)")) {
+        if (!$stmt = $connection->prepare("INSERT INTO user (name, familyName, departmentId, quizId) VALUES (?, ?,?, ?)")) {
             echo "FAIL prepare";
             return false;
         }
 
-        if (!$stmt->bind_param("ssi", $firstname, $familyname, $departmentid)) {
+        if (!$stmt->bind_param("ssii", $firstname, $familyname, $departmentid, $quizId)) {
             echo "FAIL bind";
             return false;
         }
@@ -869,7 +870,7 @@ class UserTools extends Database
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $name, $familyName, $departmentId);
+            $stmt->bind_result($id, $name, $familyName, $departmentId, $quizId);
             $data = array();
 
             while ($stmt->fetch()) {
@@ -877,7 +878,8 @@ class UserTools extends Database
                     "id" => $id,
                     "name" => $name,
                     "familyName" => $familyName,
-                    "departmentId" => $departmentId
+                    "departmentId" => $departmentId,
+                    "quizId" => $quizId
                 ];
                 array_push($data, $subarray);
             }

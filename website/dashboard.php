@@ -22,13 +22,6 @@ require_once "head.html";
             <option value="" disabled selected>Filter op klas</option>
         </select>
     </div>
-
-    <div class="col s3">
-        <label for="user">Studenten</label>
-        <select name="filter" id="user">
-            <option value="" disabled selected>Filter op student</option>
-        </select>
-    </div>
 </div>
 
 <!--<canvas id="students" width="400px" height="400px"></canvas>-->
@@ -39,6 +32,7 @@ require_once "head.html";
   <tr>
     <th>Naam</th>
     <th>Quiz</th>
+      <th>Organisatie</th>
     <th>Departement</th>
     <th>Score</th>
     <tr>
