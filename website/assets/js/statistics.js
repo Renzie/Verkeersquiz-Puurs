@@ -8,6 +8,7 @@ $(function () {
     viewAllOrganizations()
     getAll();
 
+
 });
 
 
@@ -20,6 +21,8 @@ var allStudentsFromOrganisation = [];
 var allAnswersFromStudents = [];
 
 var allData;
+
+var klas = {};
 
 
 var stats = {
@@ -61,7 +64,7 @@ function doDbAction(action, callback) {
 }
 
 function getStudentsByQuiz() {
-    var klas = {};
+    klas = {};
     klas.students = [];
 
 
@@ -95,7 +98,7 @@ function getStudentsByQuiz() {
 
     sortByScore(klas.students)
     console.log(klas)
-    viewScoreFromAllStudents(klas.students)
+    viewScoreFromStudents(klas.students)
 }
 
 function getDepartment(department, id) {
@@ -107,7 +110,7 @@ function getDepartment(department, id) {
  *    View the score of all students in the given table
  *    @param students   {Array}
  */
-function viewScoreFromAllStudents(students) {
+function viewScoreFromStudents(students) {
     var table = $("#all-results");
     var html = "";
     students.forEach(function (student) {
@@ -132,12 +135,32 @@ function sortByScore(students) {
     })
 }
 
+function filterByOrganization(organizationId) {
+    $("#all-results").empty();
+    var studentsInOrganization = [];
+
+    klas.students.forEach(function(student, index){
+        if (student.department.organisationId == organizationId) studentsInOrganization.push(student);
+    })
+    viewScoreFromStudents(studentsInOrganization);
+}
+
+function filterByDepartment(departmentId) {
+    $("#all-results").empty();
+    var studentsInDepartment = [];
+
+    klas.students.forEach(function(student, index){
+        if (student.department.id == departmentId) studentsInDepartment.push(student);
+    })
+    viewScoreFromStudents(studentsInDepartment);
+}
+
+
 
 
 function getQuestionsByQuizId(quizId) {
     doDbAction({action: 'getCurrentQuiz', quizId: quizId}, function (data) {
         currentQuiz = data;
-     //   console.log("fetching Quiz: OK");
     })
 }
 
@@ -146,7 +169,6 @@ function viewAllOrganizations() {
         addOrganisationsToList(data);
         organisations = data;
         stats.schools = data;
-        //console.log("fetching Organisations: OK");
     });
 }
 
@@ -155,12 +177,14 @@ function addOrganisationsToList(organisations) {
     $('#organisation').off().on('change', getDepartmentById)
 }
 
-function getDepartmentById() {
+function getDepartmentById(e) {
+    e.preventDefault();
     var department = $("#department");
     var org = document.getElementById("organisation");
-    //department.empty();
+
     $('select').material_select('update');
     var selectedOrg = org.options[org.selectedIndex].value;
+    filterByOrganization(selectedOrg)
     doDbAction({action: 'getDepartmentsByOrganisationId', organisationId: selectedOrg}, function (data) {
         departmentsFromOrganisation = data;
 
@@ -202,6 +226,8 @@ function getAllStudentsFromAllDepartments(departments) {
 function saveSelectedDepartment() {
     var dep = document.getElementById("department");
     var selectedDep = dep.options[dep.selectedIndex].value;
+
+    filterByDepartment(selectedDep);
     doDbAction({action: 'getDepartmentByDepartmentId', departmentId: selectedDep}, function (data) {
         selectedDepartment = data;
         getStudents(selectedDepartment.id);
