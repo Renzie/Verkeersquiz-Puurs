@@ -12,6 +12,18 @@ var currentQuestionPosition = 0;
 var currentUser;
 var currentDepartment;
 
+/**
+ * Shuffles array in place. ES6 version
+ * @param {Array} a items An array containing the items.
+ */
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
 
 function doDbAction(action, callback) {
     $.ajax({
@@ -91,12 +103,12 @@ function getQuestionsByQuizId(templateId) {
         quizId: currentQuiz.id,
         templateId: templateId
     }, function (data) {
-        setUpQuestions(data);
+        setUpQuestions(shuffle(data));
     })
 }
 
 function setUpQuestions(data) {
-    let questions = data.map((question) => {
+    let questions = shuffle(data).map((question) => {
         return new Promise((resolve) => {
             doDbAction({action: 'getQuestionById', questionId: question.id}, function (res) {
                 allQuestions.push(new Question(res));
@@ -186,7 +198,7 @@ function Question(obj) {
     };
 
     this.setup = function () {
-        if (this.total !== 0) {
+        if (this.total <= 0) {
             this.timer = setInterval(this.update, 1000);
         }
         this.setupText();
@@ -199,7 +211,6 @@ function Question(obj) {
     };
 
     this.update = () => {
-
         if (this.currentTime < 0) {
             that.stopTimer();
         } else if (this.currentTime == Math.round((this.total / 2) * 10 / 10)) {
