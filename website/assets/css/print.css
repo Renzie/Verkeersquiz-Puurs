@@ -6,6 +6,10 @@ p[correct~='1']::before{
     content: "✔";
     padding-right: 5px;
 }
+img{
+    height: 150px;
+}
 .question{
     border-bottom: 2px solid black;
+    page-break-inside: avoid;
 }
