@@ -6,3 +6,6 @@ p[correct~='1']::before{
     content: "✔";
     padding-right: 5px;
 }
+.question{
+    border-bottom: 2px solid black;
+}
