@@ -1,0 +1,8 @@
+p[correct~='0']::before{
+    content: "✘";
+    padding-right: 5px;
+}
+p[correct~='1']::before{
+    content: "✔";
+    padding-right: 5px;
+}

@@ -31,4 +31,11 @@ var addHTMLToNav= function(){
         loaded = true;
     }
 
+    if(url.pathname == "/createquiz.php" && !loaded){
+        html = '<li><div class="divider"></div></li><li><a href="print.php" target="_blank"><i class="material-icons">print</i>Print alle vragen</a></li>'
+        $("#slide-out").append(html);
+        loaded = true;
+
+    }
+
 }

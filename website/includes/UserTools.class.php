@@ -765,6 +765,12 @@ class UserTools extends Database
 
     }
 
+    public function getAllQuestions(){
+        $connection = $this->connect();
+        $sql = "SELECT * FROM question";
+        return $this->getData($sql, $connection);
+    }
+
     public function getAllQuizzes()
     {
         $connection = $this->connect();
@@ -1477,5 +1483,6 @@ class UserTools extends Database
         $connection->close();
     }
 
+    
 
 }
