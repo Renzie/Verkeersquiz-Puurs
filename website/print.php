@@ -28,12 +28,12 @@ $questions = $userTools->getAllQuestions();
         foreach ($questions as $questionKey => $questionValue) {
             $question =  $questionValue["question"];
             $qId = $questionValue["id"];
-            $img = $questionValue["imageLink"];
+            $img = "";
 
-            if($img == "") $img = "No-image-found.jpg";
+            if($questionValue["imageLink"] != "") $img = "<img src='./images/".$questionValue["imageLink"]."' />";
             echo "<div class='question'>
                 <p>$question</p>
-                <img src='./images/$img' />
+                $img
                 <div class='answer'>";
             $answerData = $userTools->getAllAnswersByQuestionId($qId);
             foreach ($answerData as $answerKey => $answerValue) {
