@@ -6,6 +6,9 @@ function bindEvents(){
     $('select').material_select();
     $('.question').on('click', '.updateQuestion', updateQuestion);
 
+    addEventListenerToAnswers();
+    addEventListenerToQuestions();
+
     $('.makeQuestion').on('click', makeQuestion);
     $('.questions').on('click', '.newanswer', addNewAnswer);
     $('.questions').on('click', '.removeanswer', removeAnswer);
@@ -16,10 +19,35 @@ function bindEvents(){
     $('form').on('change',updateQuestion);
     $('body').on('change','#difficulty',redirect);
     $('body').on('change','#category',redirect);
+
+
 }
 
 var redirect = function(){
     if($(this).prop('selectedIndex') == 1) window.location = this.value;
+}
+
+function addEventListenerToQuestions(){
+    var questionList = document.getElementsByTagName("form");
+    for(var i = 0; i < questionList.length;i++){
+        questionList[i].childNodes[3].onblur = function(){
+            updateQuestion();
+        };
+
+    }
+
+
+}
+
+function addEventListenerToAnswers(){
+    var answerList = document.getElementsByClassName("answer");
+    for(var i = 0; i < answerList.length;i++){
+        answerList[i].childNodes[0].childNodes[1].onblur = function(){
+            updateQuestion();
+        };
+
+    }
+
 }
 
 var updateQuestion = function(){
