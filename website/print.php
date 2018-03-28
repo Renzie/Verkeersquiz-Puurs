@@ -1,17 +1,9 @@
 <?php
+include("session.php");
 require_once "includes/UserTools.class.php";
 $userTools = new UserTools();
 $questions = array();
 $questions = $userTools->getAllQuestions();
-
-
-
-//$this->getAnswerByQuestionId();
-//$this->getAllQuestions();
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -23,8 +15,6 @@ $questions = $userTools->getAllQuestions();
     </head>
     <body>
         <?php
-
-
         foreach ($questions as $questionKey => $questionValue) {
             $question =  $questionValue["question"];
             $qId = $questionValue["id"];
@@ -44,11 +34,6 @@ $questions = $userTools->getAllQuestions();
             echo "</div></div>";
         }
         ?>
-
-
-
-
-
         <!-- <script>window.print()</script> -->
     </body>
 </html>
