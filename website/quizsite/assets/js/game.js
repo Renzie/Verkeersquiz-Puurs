@@ -211,7 +211,8 @@ function Question(obj) {
     };
 
     this.update = () => {
-        if (this.currentTime < 0) {
+        if (this.currentTime <= 0) {
+
             that.stopTimer();
         } else if (this.currentTime == Math.round((this.total / 2) * 10 / 10)) {
             Materialize.toast('Je hebt nog ' + this.currentTime-- + ' Seconden!', 4000);
@@ -231,7 +232,8 @@ function Question(obj) {
         $('.timeleft').css('width', this.width + '%');
         Materialize.toast('Vraag ' + (currentQuestionPosition + 2), 4000);
         $('.answers p input').attr('disabled', true)
-        that.sendAnswer();
+        this.timer = this.total;
+        setTimeout(that.sendAnswer(), 2000);
     }
 
     this.nextQuestion = () => {
@@ -264,15 +266,16 @@ function Question(obj) {
             answer = null;
         }
 
-        clearInterval(this.timer);
+        this.time = this.total;
 
-        console.log(currentQuestion.currentTime)
         $.ajax({
             type: "POST",
             url: "../dbaction.php",
             data: {action: 'sendAnswer', userId: currentUser.id, answerId: answer, time: currentQuestion.currentTime},
         }).then(function () {
-            that.nextQuestion();
+            that.time = that.total;
+            that.nextQuestion()
+            console.log(that.time)
         });
     }
 }

@@ -125,13 +125,13 @@ function viewScoreFromStudents(students) {
             "<td>Howest Quiz</td>" +
             "<td>" + student.organisation.name + "</td>" +
             "<td>" + student.department.name + "</td>" +
-            "<td>" + student.score * 100 + " %</td>"
+            "<td>" + Math.floor(student.score * 100) + " %</td>"
 
     });
     table.append(html)
 }
 
-/*
+/**
  *  Sort the students by score (DESC). Turn the b and a around to change direction.
  *  @param students     {Array}
  */

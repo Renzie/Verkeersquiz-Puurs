@@ -64,10 +64,8 @@ function setupQuestions(data) {
         return new Promise((resolve) => {
             doDbAction({action: 'getQuestionById', questionId: question.id}, function (res) {
                 questions.push(res);
-                console.log("res", res)
                 setupText();
 
-                console.log(questions)
                 resolve();
 
             })
@@ -85,16 +83,26 @@ function getScoreByCategories() {
     categories.forEach(function (category, index) {
         category.amount = 0;
         category.amountCorrect = 0;
+        answers.sort((a, b) => parseFloat(a.questionId) - parseFloat(b.questionId)); //sorts the answerarray by questionId
+
         questions.forEach(function (question, i) {
             if (question.category == category.id) {
                 category.amount++;
+                console.log(question, answers[i])
+                console.log(question.id == answers[i].questionId)
+
                 if (questionIsCorrect(question, answers[i])) {
                     category.amountCorrect++;
+                    console.log(category)
                 }
             }
         })
 
     })
+}
+
+function questionHasSameId(question, answer) {
+    return question.id == answer.questionId;
 }
 
 function questionIsCorrect(question, answer) {
@@ -115,7 +123,6 @@ function addToCategoriesUsed() {
         })
     })
     Promise.all(listQuestions).then(function () {
-            console.log("categories",categories)
             getScoreByCategories();
             setCategories();
         })
@@ -152,7 +159,6 @@ function getDepartmentByDepartmentId() {
 
 function getAnswers() {
     return doDbAction({action: "getAnswers", userId: localStorage.getItem('userId')}, function (data) {
-        console.log(data)
         answers = data;
     }).then(function () {
         answers.forEach(function (data, index) {
@@ -163,7 +169,6 @@ function getAnswers() {
         })
     })
 }
-
 
 function setupText() {
     var score = Math.round((correctAnswers.length / questions.length) * 100) + "%";
