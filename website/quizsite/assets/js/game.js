@@ -133,8 +133,6 @@ function setUpQuestions(data) {
 function Question(obj) {
     this.id = obj.id;
     this.difficultyId = obj.difficulty;
-
-
     this.time = 0;
 
     this.answers = [];
@@ -144,7 +142,6 @@ function Question(obj) {
     this.text = obj.question;
     this.width = 0;
     this.total = 0;
-
     this.imageLink = obj.imageLink;
 
     this.setImage = function () {
@@ -163,7 +160,9 @@ function Question(obj) {
             action: "getDifficultyById",
             difficultyId: this.difficultyId
         }, function (data) {
-            that.currentTime = that.time = that.total = data.time;
+            that.currentTime = data.time;
+            that.time = data.time;
+            that.total = data.time;
             console.log("current",that.currentTime)
             console.log("total", that.total)
 
@@ -207,7 +206,7 @@ function Question(obj) {
             this.timer = setInterval(this.update, 1000);
         }
         this.setupText();
-        this.getTime()
+        this.getTime();
 
         this.getAnswers();
         this.setImage();
@@ -216,8 +215,8 @@ function Question(obj) {
     };
 
     this.update = () => {
-        if (this.currentTime <= 0) {
-
+        if (this.currentTime == 0) {
+            console.log(this.currentTime)
             that.stopTimer();
         } else if (this.currentTime == Math.round((this.total / 2) * 10 / 10)) {
             Materialize.toast('Je hebt nog ' + this.currentTime-- + ' Seconden!', 4000);
@@ -237,8 +236,8 @@ function Question(obj) {
         $('.timeleft').css('width', this.width + '%');
         Materialize.toast('Vraag ' + (currentQuestionPosition + 2), 4000);
         $('.answers p input').attr('disabled', true)
+        window.clearInterval(this.timer)
         this.timer = this.total;
-        setTimeout(that.sendAnswer(), 2000);
     }
 
     this.nextQuestion = () => {
@@ -279,7 +278,7 @@ function Question(obj) {
             data: {action: 'sendAnswer', userId: currentUser.id, answerId: answer, time: currentQuestion.currentTime},
         }).then(function () {
             that.time = that.total;
-            that.nextQuestion()
+            that.nextQuestion();
             console.log(that.time)
         });
     }
