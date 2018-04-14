@@ -192,8 +192,6 @@ function Question(obj) {
 
     };
 
-
-
     this.setupText = function () {
         var text = currentQuestionPosition;
         text++;
@@ -203,7 +201,7 @@ function Question(obj) {
 
     this.setup = function () {
         if (this.total <= 0) {
-            this.timer = setInterval(this.update, 1000);
+            this.timer = window.setInterval(this.update, 1000);
         }
         this.setupText();
         this.getTime();
@@ -213,6 +211,8 @@ function Question(obj) {
         $('form').off().on('submit', currentQuestion.sendAnswer)
 
     };
+
+
 
     this.update = () => {
         if (this.currentTime == 0) {
@@ -236,8 +236,8 @@ function Question(obj) {
         $('.timeleft').css('width', this.width + '%');
         Materialize.toast('Vraag ' + (currentQuestionPosition + 2), 4000);
         $('.answers p input').attr('disabled', true)
+        console.log(this.timer)
         window.clearInterval(this.timer)
-        this.timer = this.total;
     }
 
     this.nextQuestion = () => {
@@ -257,21 +257,13 @@ function Question(obj) {
 
     this.sendAnswer = (e) => {
         if (e) e.preventDefault();
-        var time;
-        if (time == undefined) {
-            time = 0
-        } else {
-            time = currentQuestion.currentTime
-        }
+        this.stopTimer()
         var answer = $('input[name="answer"]:checked').attr('id')
         if (answer !== undefined) {
             answer = answer.split('answer-')[1];
         } else {
-            answer = null;
+            answer = 0;
         }
-
-        this.time = this.total;
-
         $.ajax({
             type: "POST",
             url: "../dbaction.php",
