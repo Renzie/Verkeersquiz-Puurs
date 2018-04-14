@@ -34,6 +34,8 @@ function doDbAction(action, callback) {
             console.log("error")
         }
     }).then(function (data) {
+        //console.log(callback);
+        console.log("DATA", JSON.parse(data));
         callback(JSON.parse(data));
     })
 }
@@ -99,16 +101,18 @@ function getTemplateByDepartmentId() {
 
 function getQuestionsByQuizId(templateId) {
     return doDbAction({
-        action: 'getRandomQuestionsByQuizId',
+        action: 'getAllQuestionsByQuizId',
         quizId: currentQuiz.id,
         templateId: templateId
     }, function (data) {
-        setUpQuestions(shuffle(data));
+        //console.log(data);
+        setUpQuestions(data);
     })
 }
 
 function setUpQuestions(data) {
-    let questions = shuffle(data).map((question) => {
+    let questions;
+    questions = shuffle(data).map((question) => {
         return new Promise((resolve) => {
             doDbAction({action: 'getQuestionById', questionId: question.id}, function (res) {
                 allQuestions.push(new Question(res));
@@ -117,6 +121,7 @@ function setUpQuestions(data) {
         })
     });
     Promise.all(questions).then(function () {
+        //console.log(allQuestions);
         currentQuestion = allQuestions[0];
         currentQuestion.setup();
         setupQuiz();
@@ -279,5 +284,3 @@ function Question(obj) {
         });
     }
 }
-
-

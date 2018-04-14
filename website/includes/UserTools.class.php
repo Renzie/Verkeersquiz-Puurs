@@ -1324,7 +1324,7 @@ class UserTools extends Database
 
     public function checkTemplateDepartment($did, $quizid)
     {
-
+        $data = array();
         $return = false;
         $connection = $this->connect();
 
