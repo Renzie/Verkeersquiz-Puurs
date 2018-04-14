@@ -112,7 +112,7 @@ function removeNaN(students) {
 }
 
 
-/*
+/**
  *    View the score of all students in the given table
  *    @param students   {Array}
  */

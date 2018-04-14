@@ -35,7 +35,7 @@ function doDbAction(action, callback) {
         }
     }).then(function (data) {
         //console.log(callback);
-        console.log("DATA", JSON.parse(data));
+        //console.log(data);
         callback(JSON.parse(data));
     })
 }
@@ -80,8 +80,8 @@ function getDepartmentByDepartmentId() {
 }
 
 function getAllQuestionsFromQuiz() {
-    return doDbAction({action : 'getAllQuestionsByQuizId', quizId : currentQuiz.id}, function (data) {
-        setUpQuestions(data)
+    doDbAction({action : 'getAllQuestionsByQuizId', quizId : currentQuiz.id}, function (data) {
+        setUpQuestions(data);
     })
 }
 
@@ -92,22 +92,19 @@ function getTemplateByDepartmentId() {
         quizId: localStorage.quizId
     }, function (data) {
         if (data.id == null){
+            console.log("getAllQuestionsFromQuiz");
             getAllQuestionsFromQuiz();
         } else {
-            getQuestionsByQuizId(data.templateId);
+            console.log("getQuestionsByQuizId");
+            getQuestionsByQuizId(data.schemaId);
         }
     });
 }
 
 function getQuestionsByQuizId(templateId) {
-    return doDbAction({
-        action: 'getAllQuestionsByQuizId',
-        quizId: currentQuiz.id,
-        templateId: templateId
-    }, function (data) {
-        //console.log(data);
+    doDbAction({action: 'getAllQuestionsByQuizId', quizId: currentQuiz.id,templateId: templateId}, function (data) {
         setUpQuestions(data);
-    })
+    });
 }
 
 function setUpQuestions(data) {
@@ -133,8 +130,6 @@ function setUpQuestions(data) {
 function Question(obj) {
     this.id = obj.id;
     this.difficultyId = obj.difficulty;
-
-
     this.time = 0;
 
     this.answers = [];
@@ -144,7 +139,6 @@ function Question(obj) {
     this.text = obj.question;
     this.width = 0;
     this.total = 0;
-
     this.imageLink = obj.imageLink;
 
     this.setImage = function () {
@@ -163,7 +157,9 @@ function Question(obj) {
             action: "getDifficultyById",
             difficultyId: this.difficultyId
         }, function (data) {
-            that.currentTime = that.time = that.total = data.time;
+            that.currentTime = data.time;
+            that.time = data.time;
+            that.total = data.time;
             console.log("current",that.currentTime)
             console.log("total", that.total)
 
@@ -193,8 +189,6 @@ function Question(obj) {
 
     };
 
-
-
     this.setupText = function () {
         var text = currentQuestionPosition;
         text++;
@@ -204,10 +198,10 @@ function Question(obj) {
 
     this.setup = function () {
         if (this.total <= 0) {
-            this.timer = setInterval(this.update, 1000);
+            this.timer = window.setInterval(this.update, 1000);
         }
         this.setupText();
-        this.getTime()
+        this.getTime();
 
         this.getAnswers();
         this.setImage();
@@ -215,9 +209,11 @@ function Question(obj) {
 
     };
 
-    this.update = () => {
-        if (this.currentTime <= 0) {
 
+
+    this.update = () => {
+        if (this.currentTime == 0) {
+            console.log(this.currentTime)
             that.stopTimer();
         } else if (this.currentTime == Math.round((this.total / 2) * 10 / 10)) {
             Materialize.toast('Je hebt nog ' + this.currentTime-- + ' Seconden!', 4000);
@@ -237,8 +233,8 @@ function Question(obj) {
         $('.timeleft').css('width', this.width + '%');
         Materialize.toast('Vraag ' + (currentQuestionPosition + 2), 4000);
         $('.answers p input').attr('disabled', true)
-        this.timer = this.total;
-        setTimeout(that.sendAnswer(), 2000);
+        console.log(this.timer)
+        window.clearInterval(this.timer)
     }
 
     this.nextQuestion = () => {
@@ -258,28 +254,20 @@ function Question(obj) {
 
     this.sendAnswer = (e) => {
         if (e) e.preventDefault();
-        var time;
-        if (time == undefined) {
-            time = 0
-        } else {
-            time = currentQuestion.currentTime
-        }
+        this.stopTimer()
         var answer = $('input[name="answer"]:checked').attr('id')
         if (answer !== undefined) {
             answer = answer.split('answer-')[1];
         } else {
-            answer = null;
+            answer = 0;
         }
-
-        this.time = this.total;
-
         $.ajax({
             type: "POST",
             url: "../dbaction.php",
             data: {action: 'sendAnswer', userId: currentUser.id, answerId: answer, time: currentQuestion.currentTime},
         }).then(function () {
             that.time = that.total;
-            that.nextQuestion()
+            that.nextQuestion();
             console.log(that.time)
         });
     }

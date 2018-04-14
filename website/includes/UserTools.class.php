@@ -964,17 +964,19 @@ class UserTools extends Database
     public function getAllQuestionsByQuizId($quizId)
     {
         $connection = $this->connect();
-
+        $data = array();
         if ($stmt = $connection->prepare("SELECT question.* FROM question JOIN quiz_questions ON question.id = quiz_questions.questionId WHERE quizId = ?")) {
             $stmt->bind_param("i", $quizId);
 
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $question, $difficulty, $imageLink, $category);
-            $data = array();
 
+            $stmt->bind_result($id, $question, $difficulty, $imageLink, $category);
+
+            $i = 0;
             while ($stmt->fetch()) {
+                $subarray = array();
                 $subarray = [
                     "id" => $id,
                     "question" => $question,
@@ -982,11 +984,14 @@ class UserTools extends Database
                     "imageLink" => $imageLink,
                     "category" => $category
                 ];
-                array_push($data, $subarray);
+
+                $data[$i++] = $subarray;
             }
             $stmt->close();
-            return $data;
+
         }
+
+        return $data;
     }
 
     public function getAllExtraQuestions($template_department_id)
@@ -1028,7 +1033,11 @@ class UserTools extends Database
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $answer, $quistionId, $correct);
+
+            if (!$stmt->bind_result($id, $answer, $quistionId, $correct)) {
+                echo "FAIL bind";
+            }
+
             $data = array();
 
             while ($stmt->fetch()) {
@@ -1316,10 +1325,7 @@ class UserTools extends Database
     }
 
 
-    protected function getRandomQuestionsByQuizId($id)
-    {
-        return shuffle($this->getAllQuestionsByQuizId($id));
-    }
+
 
 
     public function checkTemplateDepartment($did, $quizid)
