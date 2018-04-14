@@ -1230,7 +1230,7 @@ class UserTools extends Database
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $schemaId, $departmentId, $quizid);
+            $stmt->bind_result($id, $schemaId, $departmentId, $quizId);
             $stmt->fetch();
 
 
@@ -1244,7 +1244,7 @@ class UserTools extends Database
             $stmt->close();
         }
         return $data;
-    
+
     }
 
     public function getAnswersByCategoryAndDifficulty($category, $difficulty, $quizId, $aantal)
