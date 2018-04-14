@@ -1224,12 +1224,14 @@ class UserTools extends Database
         $connection = $this->connect();
         $data = array();
         if ($stmt = $connection->prepare("select * from template_department where departmentId = ? and quizId = ?")) {
-            $stmt->bind_param("ii", $did, $qid);
-
+            if (!$stmt->bind_param("ii", $did, $qid)) {
+                echo "FAIL bind";
+            }
             if (!$stmt->execute()) {
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
-            $stmt->bind_result($id, $schemaId, $departmentId, $quizId);
+            $stmt->bind_result($id, $schemaId, $departmentId, $quizid);
+            $stmt->fetch();
 
 
             $data = [
@@ -1239,11 +1241,10 @@ class UserTools extends Database
                 "quizId" => $quizId
 
             ];
-
-
             $stmt->close();
-            return $data;
         }
+        return $data;
+    
     }
 
     public function getAnswersByCategoryAndDifficulty($category, $difficulty, $quizId, $aantal)
@@ -1483,6 +1484,6 @@ class UserTools extends Database
         $connection->close();
     }
 
-    
+
 
 }
