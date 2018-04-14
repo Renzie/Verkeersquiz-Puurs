@@ -34,6 +34,6 @@ $questions = $userTools->getAllQuestions();
             echo "</div></div>";
         }
         ?>
-        <!-- <script>window.print()</script> -->
+        <script>window.print()</script>
     </body>
 </html>
