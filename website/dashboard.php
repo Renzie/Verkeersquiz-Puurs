@@ -31,7 +31,6 @@ require_once "head.html";
   <thead>
   <tr>
     <th>Naam</th>
-    <th>Quiz</th>
       <th>Organisatie</th>
     <th>Departement</th>
     <th>Score</th>

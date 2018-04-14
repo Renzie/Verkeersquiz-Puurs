@@ -122,7 +122,6 @@ function viewScoreFromStudents(students) {
     students.forEach(function (student) {
         html += "<tr>" +
             "<td>" + student.name + "</td>" +
-            "<td>Howest Quiz</td>" +
             "<td>" + student.organisation.name + "</td>" +
             "<td>" + student.department.name + "</td>" +
             "<td>" + Math.floor(student.score * 100) + " %</td>"
