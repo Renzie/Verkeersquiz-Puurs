@@ -97,8 +97,8 @@ function getTemplateByDepartmentId() {
             getAllQuestionsFromQuiz();
         } else {
             console.log("getQuestionsByTemplateId",data);
-            //getQuestionAndAnswerByQuizId(currentQuiz.id);
-            getQuestionsByTemplateId(data.schemaId);
+            getQuestionAndAnswerByQuizId(currentQuiz.id);
+            //getQuestionsByTemplateId(data.schemaId);
         }
     });
 }
@@ -120,15 +120,15 @@ function getQuestionAndAnswerByQuizId(quizId){
         response = response.replace(/é/g, "e");
         response = response.replace(/\\t/g, "");
         //console.log(processRawData(response));
-        var processedData = processRawData(response);
+        processRawData(response,setUpQuestionsV2);
 
-        console.log(processedData);
 
-        setUpQuestionsV2(processedData);
+
+
     });
 }
 
-function processRawData(data){
+function processRawData(data,callback){
     /*
     [{ "id": 5,
         "question":"Is dit een quiz?",
@@ -160,31 +160,33 @@ function processRawData(data){
     for(var i = 0; i<data.length;i++){
 
         if(data[i].questionId != key){
-            temp[counter++] = {id: data[i].questionId, question:data[i].question, difficulty:data[i].difficulty, category:data[i].category, imageLink:data[i].imageLink, answer:[]};
+            temp[counter++] = {id: data[i].questionId, question:data[i].question, difficulty:data[i].difficulty, category:data[i].category, imageLink:data[i].imageLink, answers:[]};
             answerCounter = 0;
         }
 
         if(temp[counter - 1].id == data[i].questionId){
-            temp[counter - 1].answer[answerCounter++] = {id:data[i].answerId, answer: data[i].answer, correct: data[i].correct};
+            temp[counter - 1].answers[answerCounter++] = {id:data[i].answerId, answer: data[i].answer, correct: data[i].correct};
         }
         key = data[i].questionId;
     }
 
-    return temp;
+    callback(temp);
 
 }
 
 function setUpQuestionsV2(data){
-    console.log("DATA LEN",data.length);
-    for(var i = 0; i > data.length; i++){
+    //console.log("DATA LEN",Object.keys(data).length);
+    for(var i = 0; i < Object.keys(data).length; i++){
          allQuestions[i] = new QuestionV2(data[i]);
          //console.log(data[i]);
     }
 
 
     currentQuestion = allQuestions[0];
-    //currentQuestion.setup();
-    //setupQuiz();
+    //console.log("allquestions",allQuestions);
+    //allQuestions[0].setup();
+    currentQuestion.setup();
+    setupQuiz();
 }
 
 
@@ -397,7 +399,9 @@ function QuestionV2(obj) {
 
     this.setupAnswers = function (answers) {
         $('[data-role="answers"]').empty();
+        console.log("answer",answers);
         $(answers).each(function (data) {
+            console.log("answer",data);
             var html = '<p>' +
                 '<input name="answer" type="radio" id="answer-' + answers[data].id + '">' +
                 '<label for="answer-' + answers[data].id + '">' + answers[data].answer + '</label>' +
@@ -407,6 +411,7 @@ function QuestionV2(obj) {
         })
 
     };
+
 
     this.setupText = function () {
         var text = currentQuestionPosition;
@@ -422,6 +427,7 @@ function QuestionV2(obj) {
         this.setupText();
         this.getTime();
 
+        this.setupAnswers(this.answers);
         this.setImage();
         $('form').off().on('submit', currentQuestion.sendAnswer)
 
