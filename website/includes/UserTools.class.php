@@ -1054,6 +1054,40 @@ class UserTools extends Database
         }
     }
 
+    public function getQuestionAndAnswerByQuizId($quizId){
+        $connection = $this->connect();
+
+        if ($stmt = $connection->prepare("select question.*, answer.id, answer.answer, answer.correct from question join answer on answer.questionId = question.id join quiz_questions on quiz_questions.questionId = question.id where quiz_questions.quizId = ? ")) {
+            $stmt->bind_param("i", $quizId);
+
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            if (!$stmt->bind_result($questionId, $question, $difficulty, $imageLink, $category, $answerId, $answer, $correct)) {
+                echo "FAIL bind";
+            }
+
+            $data = array();
+
+            while ($stmt->fetch()) {
+                $subarray = [
+                    "questionId" => $questionId,
+                    "question" => $question,
+                    "difficulty" => $difficulty,
+                    "imageLink" => $imageLink,
+                    "category" => $category,
+                    "answerId" => $answerId,
+                    "answer" => $answer,
+                    "correct" => $correct
+                ];
+                array_push($data, $subarray);
+            }
+            $stmt->close();
+            return json_encode($data);
+        }
+    }
+
 
     public function getLogs()
     {

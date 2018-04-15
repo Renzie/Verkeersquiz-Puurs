@@ -24,7 +24,7 @@ echo "<script>localStorage.setItem('userId',\"$user\"); localStorage.setItem('qu
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="utf-8">
     <title>Title</title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
