@@ -31,6 +31,7 @@ class UserTools extends Database
                 "quizId" => $quizId
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }
@@ -396,6 +397,7 @@ class UserTools extends Database
                 $this->deleteQuestionWithId($questionId);
             }
             $stmt->close();
+            $connection->close();
 
             foreach ($data as $value) {
                 $this->deleteQuestionWithId($value);
@@ -740,6 +742,7 @@ class UserTools extends Database
             $stmt->bind_result($resultPassword);
             $stmt->fetch();
             $stmt->close();
+            $connection->close();
         }
         return password_verify($password, $resultPassword);
     }
@@ -829,6 +832,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -862,6 +866,7 @@ class UserTools extends Database
                 "extraInfo" => $extraInfo
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }
@@ -890,6 +895,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -911,6 +917,7 @@ class UserTools extends Database
                 "extraInfo" => $extraInfo
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }
@@ -933,6 +940,7 @@ class UserTools extends Database
 
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }
@@ -956,6 +964,7 @@ class UserTools extends Database
                 "category" => $category
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }
@@ -988,6 +997,7 @@ class UserTools extends Database
                 $data[$i++] = $subarray;
             }
             $stmt->close();
+            $connection->close();
 
         }
 
@@ -1018,6 +1028,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -1050,6 +1061,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -1084,6 +1096,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return json_encode($data);
         }
     }
@@ -1141,6 +1154,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -1162,6 +1176,7 @@ class UserTools extends Database
                 "organisationId" => $organisationId
             ];
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -1190,6 +1205,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -1285,6 +1301,7 @@ class UserTools extends Database
 
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
 
@@ -1307,6 +1324,7 @@ class UserTools extends Database
             array_push($answersarray, $quiestionid);
         };
         $stmt->close();
+        $connection->close();
 
         // echo "<p>aantal:";
         // echo $aantal;
@@ -1354,6 +1372,7 @@ class UserTools extends Database
                 "category" => $category,
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }
