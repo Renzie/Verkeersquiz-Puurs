@@ -7,7 +7,9 @@ $usertools = new UserTools();
 
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
-
+        case 'getQuestionAndAnswerByQuizId':
+            echo ($usertools->getQuestionAndAnswerByQuizId($_POST['quizId']));
+            break;
         case 'getUsers' :
             echo json_encode($usertools->getAllUsers());
             break;
@@ -62,6 +64,7 @@ if (isset($_POST['action'])) {
         case 'getAnswersByQuestionId' :
             echo json_encode($usertools->getAllAnswersByQuestionId($_POST['questionId']));
             break;
+
         case 'sendAnswer' :
             $usertools->makeUserAnswer($_POST['userId'], $_POST['answerId'], $_POST['time']);
             echo "success"; break;

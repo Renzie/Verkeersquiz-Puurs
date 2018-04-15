@@ -31,6 +31,7 @@ class UserTools extends Database
                 "quizId" => $quizId
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }
@@ -396,6 +397,7 @@ class UserTools extends Database
                 $this->deleteQuestionWithId($questionId);
             }
             $stmt->close();
+            $connection->close();
 
             foreach ($data as $value) {
                 $this->deleteQuestionWithId($value);
@@ -740,6 +742,7 @@ class UserTools extends Database
             $stmt->bind_result($resultPassword);
             $stmt->fetch();
             $stmt->close();
+            $connection->close();
         }
         return password_verify($password, $resultPassword);
     }
@@ -829,6 +832,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -862,6 +866,7 @@ class UserTools extends Database
                 "extraInfo" => $extraInfo
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }
@@ -890,6 +895,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -911,6 +917,7 @@ class UserTools extends Database
                 "extraInfo" => $extraInfo
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }
@@ -933,6 +940,7 @@ class UserTools extends Database
 
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }
@@ -956,6 +964,7 @@ class UserTools extends Database
                 "category" => $category
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }
@@ -988,6 +997,7 @@ class UserTools extends Database
                 $data[$i++] = $subarray;
             }
             $stmt->close();
+            $connection->close();
 
         }
 
@@ -1018,6 +1028,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -1050,7 +1061,43 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
+        }
+    }
+
+    public function getQuestionAndAnswerByQuizId($quizId){
+        $connection = $this->connect();
+
+        if ($stmt = $connection->prepare("select question.*, answer.id, answer.answer, answer.correct from question join answer on answer.questionId = question.id join quiz_questions on quiz_questions.questionId = question.id where quiz_questions.quizId = ? ORDER BY answer.questionId")) {
+            $stmt->bind_param("i", $quizId);
+
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            if (!$stmt->bind_result($questionId, $question, $difficulty, $imageLink, $category, $answerId, $answer, $correct)) {
+                echo "FAIL bind";
+            }
+
+            $data = array();
+
+            while ($stmt->fetch()) {
+                $subarray = [
+                    "questionId" => $questionId,
+                    "question" => $question,
+                    "difficulty" => $difficulty,
+                    "imageLink" => $imageLink,
+                    "category" => $category,
+                    "answerId" => $answerId,
+                    "answer" => $answer,
+                    "correct" => $correct
+                ];
+                array_push($data, $subarray);
+            }
+            $stmt->close();
+            $connection->close();
+            return json_encode($data);
         }
     }
 
@@ -1107,6 +1154,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -1128,6 +1176,7 @@ class UserTools extends Database
                 "organisationId" => $organisationId
             ];
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -1156,6 +1205,7 @@ class UserTools extends Database
                 array_push($data, $subarray);
             }
             $stmt->close();
+            $connection->close();
             return $data;
         }
     }
@@ -1251,6 +1301,7 @@ class UserTools extends Database
 
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
 
@@ -1273,6 +1324,7 @@ class UserTools extends Database
             array_push($answersarray, $quiestionid);
         };
         $stmt->close();
+        $connection->close();
 
         // echo "<p>aantal:";
         // echo $aantal;
@@ -1320,6 +1372,7 @@ class UserTools extends Database
                 "category" => $category,
             ];
             $stmt->close();
+            $connection->close();
         }
         return $data;
     }

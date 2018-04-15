@@ -79,6 +79,7 @@ function getStudentsByQuiz() {
 
         klas.students.push({
             name: student.name,
+            familyName : student.familyName,
             score: 0,
             answers: []
         });
@@ -121,7 +122,7 @@ function viewScoreFromStudents(students) {
     var html = "";
     students.forEach(function (student) {
         html += "<tr>" +
-            "<td>" + student.name + "</td>" +
+            "<td>" + student.name + " " + student.familyName + "</td>" +
             "<td>" + student.organisation.name + "</td>" +
             "<td>" + student.department.name + "</td>" +
             "<td>" + Math.floor(student.score * 100) + " %</td>"
@@ -255,7 +256,7 @@ function getStudents(departmentId) {
 function getNamesOfStudents() {
     var studentNames;
     $(students).each(function (index) {
-        studentNames[index] = students[index].name + " " + students[index].familyName;
+        studentNames[index] = "" + students[index].name + " " + students[index].familyName;
     });
     return studentNames;
 }
