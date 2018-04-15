@@ -1069,7 +1069,7 @@ class UserTools extends Database
     public function getQuestionAndAnswerByQuizId($quizId){
         $connection = $this->connect();
 
-        if ($stmt = $connection->prepare("select question.*, answer.id, answer.answer, answer.correct from question join answer on answer.questionId = question.id join quiz_questions on quiz_questions.questionId = question.id where quiz_questions.quizId = ? ")) {
+        if ($stmt = $connection->prepare("select question.*, answer.id, answer.answer, answer.correct from question join answer on answer.questionId = question.id join quiz_questions on quiz_questions.questionId = question.id where quiz_questions.quizId = ? ORDER BY answer.questionId")) {
             $stmt->bind_param("i", $quizId);
 
             if (!$stmt->execute()) {
