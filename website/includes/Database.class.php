@@ -5,6 +5,8 @@ class Database {
 	private $db_pass = 'puurs';
 	private $db_name = 'puurs';
 
+
+
 	protected function connect(){
 		return new mysqli($this->db_host,$this->db_user,$this->db_pass,$this->db_name);
 	}

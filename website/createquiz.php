@@ -10,7 +10,7 @@ require_once "includes/View.class.php";
 $view = new View();
 
 
-
+//TODO make it so it is able to disable the quiz, ex. example quiz that you can toggle the visibility
 
 ?>
 

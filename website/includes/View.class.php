@@ -294,7 +294,7 @@ class View extends UserTools
 							<div class="input-field">
 		        <select id="difficulty" name="difficulty">
 		       	<option value="" disabled selected >Selecteer de moeilijkheidsgraad</option>
-                <option value="moeilijkheidsgraad.php">Maak een nieuwe moeilijkheidsgraad</option>
+                <option value="difficulty.php">Maak een nieuwe moeilijkheidsgraad</option>
 
 
 						<?php foreach ($this->getAllDifficulties() as $difficulty) { ?>
@@ -318,7 +318,7 @@ class View extends UserTools
 
 						 <select id="category" name="category">
 							 <option disabled selected>Selecteer een categorie</option>
-                             <option value="categories.php">Maak een nieuwe categorie</option>
+                             <option value="category.php">Maak een nieuwe categorie</option>
 							 <?php
                             foreach ($this->getAllCategories() as $categorie) {
                                 ?>

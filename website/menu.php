@@ -15,7 +15,7 @@ $usertools = new UserTools();
 
         <h3>Handleiding</h3>
 
-        <p class="flow-text">Indien niet alles duidelijk is kunt u de handleiding <a href="assets/files/Handleiding-Quiz.docx">hier</a> downloaden</p>
+        <p class="flow-text">Indien niet alles duidelijk is kunt u de handleiding <a href="assets/files/Handleiding.docx">hier</a> downloaden</p>
 
 </div>
 

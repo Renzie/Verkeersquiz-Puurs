@@ -12,8 +12,6 @@ $(document).ready(function () {
     $('.questions').on('change', '.imageupload', uploadImg);
     $('.questionbuttons').on('click', 'a.delquestion', checkQuestion);
 
-    //Printjob
-    addPrintEventHandlers();
 
 
 
@@ -24,24 +22,6 @@ $(document).ready(function () {
     //$('.tabel_quiz').on('click', '.edit_questions', edit_questions);
     $(".questionbuttons").on('click', '.removeimage', removeImage);
 });
-
-var addPrintEventHandlers = function(){
-    //check if you are on the right page
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    if(url.pathname == "/editquestions.php"){
-        //adds print css file
-        var head  = document.getElementsByTagName('head')[0];
-        var link  = document.createElement('link');
-        link.rel  = 'stylesheet';
-        link.type = 'text/css';
-        link.href = '../assets/css/style-quiz.css';
-        link.media = 'all';
-        head.appendChild(link);
-
-        window.matchMedia("print").addListener(openAll);
-    }
-}
 
 var openAll = function(){
     $(".collapsible-header").addClass("active");

@@ -1,4 +1,7 @@
- <!DOCTYPE html>
+<?php
+//Make this page better so it can be also on the live version!
+?>
+<!DOCTYPE html>
  <html>
      <head>
          <meta charset="utf-8">
