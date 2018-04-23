@@ -809,6 +809,43 @@ class UserTools extends Database
         return $this->getData($sql, $connection);
     }
 
+    //TODO WIP: Change this so it just gives back organisations and its department in an array.
+    public function getAllOrganisationAndDepartments()
+    {
+        $connection = $this->connect();
+
+        if ($stmt = $connection->prepare("SELECT organisation.*, department.id, department.name FROM organisation JOIN department ON organisation.id = department.organisationId")) {
+            $stmt->bind_param("i", $quizId);
+
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            if (!$stmt->bind_result($questionId, $question, $difficulty, $imageLink, $category, $answerId, $answer, $correct)) {
+                echo "FAIL bind";
+            }
+
+            $data = array();
+
+            while ($stmt->fetch()) {
+                $subarray = [
+                    "questionId" => $questionId,
+                    "question" => $question,
+                    "difficulty" => $difficulty,
+                    "imageLink" => $imageLink,
+                    "category" => $category,
+                    "answerId" => $answerId,
+                    "answer" => $answer,
+                    "correct" => $correct
+                ];
+                array_push($data, $subarray);
+            }
+            $stmt->close();
+            $connection->close();
+            return json_encode($data);
+        }
+    }
+
     public function getAllDepartmentsById($organisationId)
     {
 
