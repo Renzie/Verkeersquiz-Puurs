@@ -42,7 +42,6 @@ $organisationData = $userTools->getOrganisationInfoById($_GET["id"]);
 
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="assets/js/school.js"></script>
-<script type="text/javascript" src="assets/js/script.js"></script>
 <script type="text/javascript" src="assets/js/editorganisation.js"></script>
 
 

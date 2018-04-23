@@ -31,7 +31,7 @@ require_once "head.html";
   <thead>
   <tr>
     <th>Naam</th>
-      <th>Organisatie</th>
+    <th>Organisatie</th>
     <th>Departement</th>
     <th>Score</th>
     <tr>
@@ -47,7 +47,6 @@ require_once "head.html";
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
-<script type="text/javascript" src="assets/js/script.js"></script>
 <script type="text/javascript" src="assets/js/statistics.js"></script>
 
 <?php

@@ -1,6 +1,8 @@
 <?php
 /*
 
+Even (just maybe) remake the whole site. 
+
 - Make the site mobile friendly
 - Remove all the console.logs
 - Refactor dbaction and UserTools

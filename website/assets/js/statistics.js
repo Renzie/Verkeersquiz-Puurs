@@ -34,8 +34,7 @@ var stats = {
 
 function getAll() {
     return doDbAction({action: 'getAll'}, function (data) {
-        console.log("All:");
-        console.log(data);
+        console.log("All",data);
         //showStats(data);
         allData = data;
         getStudentsByQuiz()
@@ -56,10 +55,10 @@ function doDbAction(action, callback) {
         url: "dbaction.php",
         data: action,
         error: function (err) {
-            return console.log(err)
+            console.log("Error",err);
         }
     }).then(function (data) {
-        return callback(JSON.parse(data));
+        callback(JSON.parse(data));
     })
 }
 
@@ -86,7 +85,7 @@ function getStudentsByQuiz() {
 
 
         klas.students[index].department = allData[0].filter(e => e.id === student.departmentId)[0];
-        klas.students[index].organisation = allData[0].filter(e => e.id === student.departmentId)[0];
+        klas.students[index].organisation = allData[0].filter(e => e.id === organisations.id)[0];
         // For every answer in the db
         allData[3].forEach(function (answer) {
             if (answer.userId == student.id) {

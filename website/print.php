@@ -4,6 +4,7 @@ require_once "includes/UserTools.class.php";
 $userTools = new UserTools();
 $questions = array();
 $questions = $userTools->getAllQuestions();
+//TODO add checkboxes of all the quizzes that need to be printed.
 ?>
 
 <!DOCTYPE html>

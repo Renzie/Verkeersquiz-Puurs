@@ -30,12 +30,10 @@ function doDbAction(action, callback) {
         type: "POST",
         url: "../dbaction.php",
         data: action,
-        error: function (e) {
-            console.log("error",e);
+        error: function (err) {
+            console.log("error",err);
         }
     }).then(function (data) {
-        //console.log(callback);
-        //console.log(data);
         callback(JSON.parse(data));
         //callback(data);
     })
@@ -81,9 +79,7 @@ function getDepartmentByDepartmentId() {
 }
 
 function getAllQuestionsFromQuiz() {
-    doDbAction({action : 'getAllQuestionsByQuizId', quizId : currentQuiz.id}, function (data) {
-        setUpQuestions(data);
-    })
+    doDbAction({action : 'getAllQuestionsByQuizId', quizId : currentQuiz.id}, setUpQuestions);
 }
 
 function getTemplateByDepartmentId() {
@@ -104,9 +100,7 @@ function getTemplateByDepartmentId() {
 }
 
 function getQuestionsByTemplateId(templateId) {
-    doDbAction({action: 'getAllQuestionsByQuizId', quizId: currentQuiz.id,templateId: templateId}, function (data) {
-        setUpQuestions(data);
-    });
+    doDbAction({action: 'getAllQuestionsByQuizId', quizId: currentQuiz.id,templateId: templateId},setUpQuestions);
 }
 
 function getQuestionAndAnswerByQuizId(quizId){
@@ -116,15 +110,7 @@ function getQuestionAndAnswerByQuizId(quizId){
       'quizId': quizId
     };
     $.post(ajaxurl, data, function (response) {
-        response = response.replace(/'/g, "");
-        response = response.replace(/é/g, "e");
-        response = response.replace(/\\t/g, "");
-        //console.log(processRawData(response));
         processRawData(response,setUpQuestionsV2);
-
-
-
-
     });
 }
 
@@ -151,9 +137,12 @@ function processRawData(data,callback){
     "correct" => $correct
     */
 
-    var temp = {};
-
+    data = data.replace(/'/g, "");
+    data = data.replace(/é/g, "e");
+    data = data.replace(/\\t/g, "");
     data = JSON.parse(data);
+
+    var temp = {};
     var key = 0;
     var counter = 0;
     var answerCounter = 0;
@@ -175,16 +164,12 @@ function processRawData(data,callback){
 }
 
 function setUpQuestionsV2(data){
-    //console.log("DATA LEN",Object.keys(data).length);
     for(var i = 0; i < Object.keys(data).length; i++){
          allQuestions[i] = new QuestionV2(data[i]);
-         //console.log(data[i]);
     }
 
     allQuestions = shuffle(allQuestions);
     currentQuestion = allQuestions[0];
-    //console.log("allquestions",allQuestions);
-    //allQuestions[0].setup();
     currentQuestion.setup();
     setupQuiz();
 }

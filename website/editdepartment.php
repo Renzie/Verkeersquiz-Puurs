@@ -35,7 +35,6 @@ $departmentData = $userTools->getDepartmentByDepartmentId($_GET["did"]);
 
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="assets/js/school.js"></script>
-<script type="text/javascript" src="assets/js/script.js"></script>
 <script type="text/javascript" src="assets/js/editdepartment.js"></script>
 <script>
 var url_string = window.location.href;
