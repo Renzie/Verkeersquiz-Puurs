@@ -1,14 +1,8 @@
-/**
- * Created by Renzie on 24/01/2018.
- */
-
 $(function () {
     $('select').material_select();
     getQuiz();
     viewAllOrganizations()
     getAll();
-
-
 });
 
 
@@ -93,7 +87,8 @@ function getStudentsByQuiz() {
                 if (answer.correct == 1) klas.students[index].score++
             }
         });
-        klas.students[index].score = klas.students[index].score / klas.students[index].answers.length
+        klas.students[index].score = Math.round((klas.students[index].score / klas.students[index].answers.length) * 100) ;
+
 
     });
 
@@ -124,7 +119,7 @@ function viewScoreFromStudents(students) {
             "<td>" + student.name + " " + student.familyName + "</td>" +
             "<td>" + student.organisation.name + "</td>" +
             "<td>" + student.department.name + "</td>" +
-            "<td>" + Math.floor(student.score * 100) + " %</td>"
+            "<td>" + student.score + " %</td></tr>"
 
     });
     table.append(html)
@@ -321,69 +316,3 @@ var studentChartData = {
     }
 };
 //var Chart = new Chart(ctx, studentChartData);
-
-//maxime
-
-var showStats = function (data) {
-    showRanking(data);
-}
-
-
-var showRanking = function (data) {
-
-    var answersByUserId = {"-1": {name: "jan pol", quiz: "testquiz", correct: 3, total: 4}};
-
-    var alldata = data;
-    var students = alldata[2];
-    // console.log(students);
-    students.forEach(function (student) {
-        // console.log(student.name);
-    });
-
-    var answers = alldata[3];
-    //  console.log(answers)
-    answers.forEach(function (answer) {
-        if (answersByUserId[answer.userid] == undefined) {
-            //    console.log(students)
-            var user = getUserInfoById(students, answer.userid)
-            initscore = 0;
-            if (answer.correct == 1) {
-                initscore++;
-            }
-            var newuser = {
-                name: user.name + " " + user.familyName,
-                quiz: getQuizByAnswerid(alldata, answer.awnserid),
-                correct: initscore,
-                total: 1
-            }
-            answersByUserId[answer.userid] = newuser;
-        } else {
-            answersByUserId[answer.userid].total++;
-            if (answer.correct == 1) {
-                answersByUserId[answer.userid].correct++;
-            }
-        }
-
-    });
-
-//  console.log(answersByUserId);
-
-    //displayData(answers);
-}
-
-var getUserInfoById = function (allusers, id) {
-    var data;
-    allusers.forEach(function (user) {
-        if (id == user.id) {
-
-            data = user;
-            // console.log(data)
-        }
-    })
-    return data;
-}
-
-var getQuizByQuestionid = function (data, id) {
-
-    //yte implementeren -> questions ook meegeven met alldata zodat die kan worden uitgevoerd
-}

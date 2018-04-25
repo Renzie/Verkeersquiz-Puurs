@@ -7,32 +7,40 @@ $(document).ready(function () {
                                     onOpen: function(e) {  $(e).find(".collapsible-header > i").text("keyboard_arrow_down");}
                                 });
 
-    addHTMLToNav();
+
 });
 
+addHTMLToNav();
 
 
 
 var loaded = false;
 
-var addHTMLToNav= function(){
+function addHTMLToNav(){
     var url_string = window.location.href;
     var url = new URL(url_string);
     var quizId = url.searchParams.get("id");
-    var html = `<li><div class="divider"></div></li>
-            <li><a href="editquestions.php?id=${quizId}"><i class="material-icons">label</i>Vragen</a></li>
-            <li><a href="template.php?id=${quizId}"><i class="material-icons">format_list_numbered</i>Quiz Template</a></li>
-            <li><a href="difficulty.php?id=${quizId}"><i class="material-icons">format_align_left</i>Moeilijkheidsgraad</a></li>
-            <li><a href="category.php?id=${quizId}"><i class="material-icons">sort</i>Categorieën</a></li>
-            <li><a href="results.php?id=${quizId}"><i class="material-icons">equalizer</i>Statistics</a></li>`;
 
-    if(quizId != null && url.pathname != '/editorganisation.php' && !loaded) {
+
+
+
+
+    if(quizId != null && url.pathname != '/editorganisation.php' && !loaded && loaded != undefined) {
+        var html = `<li><div class="divider"></div></li>
+                <li><a href="editquestions.php?id=${quizId}"><i class="material-icons">label</i>Vragen</a></li>
+                <li><a href="template.php?id=${quizId}"><i class="material-icons">format_list_numbered</i>Quiz Template</a></li>
+                <li><a href="difficulty.php?id=${quizId}"><i class="material-icons">format_align_left</i>Moeilijkheidsgraad</a></li>
+                <li><a href="category.php?id=${quizId}"><i class="material-icons">sort</i>Categorieën</a></li>
+                <li><a href="results.php?id=${quizId}"><i class="material-icons">equalizer</i>Statistics</a></li>`;
+
         $("#slide-out").append(html);
+        console.log("BEFORE",loaded);
         loaded = true;
+        console.log("AFTER",loaded);
     }
 
     if(url.pathname == "/createquiz.php" && !loaded){
-        html = '<li><div class="divider"></div></li><li><a href="print.php" target="_blank"><i class="material-icons">print</i>Print alle vragen</a></li>'
+        var html = '<li><div class="divider"></div></li><li><a href="print.php" target="_blank"><i class="material-icons">print</i>Print alle vragen</a></li>'
         $("#slide-out").append(html);
         loaded = true;
 
