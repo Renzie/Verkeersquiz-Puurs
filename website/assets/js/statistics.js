@@ -85,7 +85,7 @@ function getStudentsByQuiz() {
 
 
         klas.students[index].department = allData[0].filter(e => e.id === student.departmentId)[0];
-        klas.students[index].organisation = allData[0].filter(e => e.id === organisations.id)[0];
+        klas.students[index].organisation = allData[1].filter(e => e.id === klas.students[index].department.organisationId)[0];
         // For every answer in the db
         allData[3].forEach(function (answer) {
             if (answer.userId == student.id) {
