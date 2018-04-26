@@ -49,8 +49,4 @@ require_once "head.html";
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="assets/js/statistics.js"></script>
 
-<?php
-
-require_once "tail.html";
-
-?>
+<?php require_once "tail.html"; ?>

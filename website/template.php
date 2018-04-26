@@ -57,9 +57,7 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
 
 		</div>
     <form>
-    <?php
-    $view->getAnswersOverview($_GET["id"]);
-    ?>
+    <?php $view->getAnswersOverview($_GET["id"]); ?>
 
     </form>
 		<a type="submit" class="waves-effect waves-light btn" id="submitTemplate">Aanmaken</a>
@@ -73,8 +71,4 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
 <script type="text/javascript" src="assets/js/template.js"></script>
 
 
-<?php
-
-require_once "tail.html";
-
-?>
+<?php require_once "tail.html"; ?>

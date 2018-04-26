@@ -25,10 +25,7 @@ $view = new View();
         </thead>
 
         <tbody class="tabel_school">
-          <?php
-
-         $view->showEditDifficulties();
-           ?>
+          <?php $view->showEditDifficulties(); ?>
         </tbody>
 
 
@@ -43,8 +40,4 @@ $view = new View();
 <script type="text/javascript" src="assets/js/difficulty.js"></script>
 
 
-<?php
-
-require_once "tail.html";
-
-?>
+<?php require_once "tail.html"; ?>

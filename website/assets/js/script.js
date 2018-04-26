@@ -21,10 +21,6 @@ function addHTMLToNav(){
     var url = new URL(url_string);
     var quizId = url.searchParams.get("id");
 
-
-
-
-
     if(quizId != null && url.pathname != '/editorganisation.php' && !loaded && loaded != undefined) {
         var html = `<li><div class="divider"></div></li>
                 <li><a href="editquestions.php?id=${quizId}"><i class="material-icons">label</i>Vragen</a></li>
@@ -34,16 +30,12 @@ function addHTMLToNav(){
                 <li><a href="results.php?id=${quizId}"><i class="material-icons">equalizer</i>Statistics</a></li>`;
 
         $("#slide-out").append(html);
-        console.log("BEFORE",loaded);
         loaded = true;
-        console.log("AFTER",loaded);
     }
 
     if(url.pathname == "/createquiz.php" && !loaded){
         var html = '<li><div class="divider"></div></li><li><a href="print.php" target="_blank"><i class="material-icons">print</i>Print alle vragen</a></li>'
         $("#slide-out").append(html);
         loaded = true;
-
     }
-
 }

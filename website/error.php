@@ -20,19 +20,15 @@
             <div class="loader-section section-left"></div>
             <div class="loader-section section-right"></div>
         </div>
-            <div class="section"></div>
-            <main class="center">
+        <div class="section"></div>
+        <main class="center">
 
-                <h5 class="indigo-text">Quizplatform</h5>
-                <div class="section"></div>
-
-
-                    <div class="loginpanel z-depth-1 grey lighten-4 row"
-                         style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+        <h5 class="indigo-text">Quizplatform</h5>
+        <div class="section"></div>
 
 
-
-<p id="errorMsg">
+        <div class="loginpanel z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+        <p id="errorMsg">
 
 
 <?php
@@ -53,21 +49,21 @@
     );
     $error_msg = $status[$_GET['q']];
   }
-  if (!empty($error_msg)) {
+
+  if(!empty($error_msg)) {
     foreach ($error_msg as $err) {
       echo $err . '<br><br>';
     }
-  }
-  else {
+  }else {
     echo 'Something went wrong.';
   }
 
 ?>
-</p>
-</div>
 
-<div class="section"></div>
-<div class="section"></div>
-</main>
-</body>
+            </p>
+            </div>
+            <div class="section"></div>
+            <div class="section"></div>
+        </main>
+    </body>
 </html>

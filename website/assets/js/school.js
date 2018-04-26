@@ -66,18 +66,18 @@ function saveSchool() {
 
 
   var schoolId = $(this).closest('.school').attr("schoolId");
-  console.log("schoolid: "+schoolId);
+  // console.log("schoolid: "+schoolId);
   var schoolName = $(this).parent().parent().find(".schoolName").val();
   var schoolName2 = $(this).closest('.school').find(".schoolName").val();
 
-  console.log("schoolName: "+schoolName);
-  console.log("schoolName2: "+schoolName2);
+  // console.log("schoolName: "+schoolName);
+  // console.log("schoolName2: "+schoolName2);
 
   var schoolInfo = $(this).parent().parent().find(".schoolInfo").val();
-  console.log("schoolInfo: "+schoolInfo);
+  // console.log("schoolInfo: "+schoolInfo);
 
   var buttonAction = $(this).attr("buttonAction");
-  console.log("buttonAction: ",buttonAction);
+  //console.log("buttonAction: ",buttonAction);
 
   if(buttonAction == "createOrganisation"){
     $(this).attr("buttonAction", "updateOrganisation");
@@ -92,7 +92,7 @@ function saveSchool() {
         };
         $.post(ajaxurl, data, function (response) {
             // Response div goes here.
-            Materialize.toast("opgeslagen!",1155);
+            Materialize.toast("Opgeslagen!",1155);
 
             //alert("action performed successfully");
         });

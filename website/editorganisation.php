@@ -14,9 +14,6 @@ $userTools = new UserTools();
 
 $organisationData = $userTools->getOrganisationInfoById($_GET["id"]);
 
-
-
-
 ?>
     <h1>School: <?php echo $organisationData["name"]; ?></h1>
 
@@ -27,9 +24,7 @@ $organisationData = $userTools->getOrganisationInfoById($_GET["id"]);
         </tr>
         </thead>
         <tbody class="tabel_school">
-          <?php
-         $view->getAllDepartmentsByOrganisationId($_GET["id"]);
-           ?>
+          <?php $view->getAllDepartmentsByOrganisationId($_GET["id"]); ?>
         </tbody>
 
 
@@ -45,8 +40,4 @@ $organisationData = $userTools->getOrganisationInfoById($_GET["id"]);
 <script type="text/javascript" src="assets/js/editorganisation.js"></script>
 
 
-<?php
-
-require_once "tail.html";
-
-?>
+<?php require_once "tail.html"; ?>

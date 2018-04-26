@@ -6,10 +6,6 @@ require_once "includes/Database.class.php";
 require_once "includes/UserTools.class.php";
 require_once "includes/View.class.php";
 $view = new View();
-
-
-
-
 ?>
 
     <h1>Categorieën</h1>
@@ -20,10 +16,7 @@ $view = new View();
         </tr>
         </thead>
         <tbody class="tabel_school">
-          <?php
-
-         $view->showCategories();
-           ?>
+          <?php $view->showCategories(); ?>
         </tbody>
 
 
@@ -38,8 +31,4 @@ $view = new View();
 <script type="text/javascript" src="assets/js/categories.js"></script>
 
 
-<?php
-
-require_once "tail.html";
-
-?>
+<?php require_once "tail.html"; ?>

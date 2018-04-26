@@ -21,9 +21,7 @@ $view = new View();
         </tr>
         </thead>
         <tbody class="tabel_school">
-          <?php
-         $view->getAllSchools();
-           ?>
+          <?php $view->getAllSchools(); ?>
         </tbody>
 
 
@@ -38,8 +36,4 @@ $view = new View();
 <script type="text/javascript" src="assets/js/school.js"></script>
 
 
-<?php
-
-require_once "tail.html";
-
-?>
+<?php require_once "tail.html"; ?>

@@ -45,7 +45,7 @@ var getData = function(){
   };
   $.post(ajaxurl, data, function (response) {
       // Response div goes here.
-      Materialize.toast("nieuwe template aangemaakt!",1155);
+      Materialize.toast("Nieuwe template aangemaakt!",1155);
       //location.reload();
   });
 }

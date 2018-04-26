@@ -23,9 +23,7 @@ $departmentData = $userTools->getDepartmentByDepartmentId($_GET["did"]);
     <h2>Klas: <?php echo $departmentData["name"]; ?></h2>
 
     <ul class="quizzes collapsible" data-collapsible="accordion">
-          <?php
-         $view->getQuizzesForTemplate($departmentData["id"]);
-           ?>
+          <?php $view->getQuizzesForTemplate($departmentData["id"]); ?>
     </ul>
     </table>
 
@@ -49,8 +47,4 @@ if(!loaded) {
 </script>
 
 
-<?php
-
-require_once "tail.html";
-
-?>
+<?php require_once "tail.html";?>

@@ -1,3 +1,4 @@
+"use strict";
 $(function () {
     $('select').material_select();
     getQuiz();
@@ -31,8 +32,8 @@ function getAll() {
         console.log("All",data);
         //showStats(data);
         allData = data;
-        getStudentsByQuiz()
-        getCurrentQuiz()
+        getStudentsByQuiz();
+        getCurrentQuiz();
 
     })
 }
@@ -53,7 +54,7 @@ function doDbAction(action, callback) {
         }
     }).then(function (data) {
         callback(JSON.parse(data));
-    })
+    });
 }
 
 function getStudentsByQuiz() {
@@ -74,6 +75,7 @@ function getStudentsByQuiz() {
             name: student.name,
             familyName : student.familyName,
             score: 0,
+            scoreInPercent:0,
             answers: []
         });
 
@@ -83,18 +85,18 @@ function getStudentsByQuiz() {
         // For every answer in the db
         allData[3].forEach(function (answer) {
             if (answer.userId == student.id) {
-                klas.students[index].answers.push(answer)
+                klas.students[index].answers.push(answer);
                 if (answer.correct == 1) klas.students[index].score++
             }
         });
-        klas.students[index].score = Math.round((klas.students[index].score / klas.students[index].answers.length) * 100) ;
+        klas.students[index].score = Math.round((klas.students[index].score / klas.students[index].answers.length) * 100);
 
 
     });
 
-    removeNaN(klas.students)
-    sortByScore(klas.students)
-    viewScoreFromStudents(klas.students)
+    removeNaN(klas.students);
+    sortByScore(klas.students);
+    viewScoreFromStudents(klas.students);
 }
 
 function removeNaN(students) {
@@ -102,7 +104,7 @@ function removeNaN(students) {
         if (isNaN(student.score)){
             students[index].score = 0
         }
-    })
+    });
 
 }
 
@@ -119,20 +121,20 @@ function viewScoreFromStudents(students) {
             "<td>" + student.name + " " + student.familyName + "</td>" +
             "<td>" + student.organisation.name + "</td>" +
             "<td>" + student.department.name + "</td>" +
-            "<td>" + student.score + " %</td></tr>"
+            "<td>" + student.score + " %</td></tr>";
 
     });
-    table.append(html)
+    table.append(html);
 }
 
 /**
  *  Sort the students by score (DESC). Turn the b and a around to change direction.
- *  @param students     {Array}
+ *  @param students {Array}
  */
 function sortByScore(students) {
     students.sort(function (a, b) {
-        return b.score - a.score
-    })
+        return b.score - a.score;
+    });
 }
 
 function filterByOrganization(organizationId) {
@@ -171,8 +173,8 @@ function viewAllOrganizations() {
 }
 
 function addOrganisationsToList(organisations) {
-    addToSelect("#organisation", organisations)
-    $('#organisation').off().on('change', getDepartmentById)
+    addToSelect("#organisation", organisations);
+    $('#organisation').off().on('change', getDepartmentById);
 }
 
 function getDepartmentById(e) {
@@ -182,7 +184,7 @@ function getDepartmentById(e) {
 
     $('select').material_select('update');
     var selectedOrg = org.options[org.selectedIndex].value;
-    filterByOrganization(selectedOrg)
+    filterByOrganization(selectedOrg);
     doDbAction({action: 'getDepartmentsByOrganisationId', organisationId: selectedOrg}, function (data) {
         departmentsFromOrganisation = data;
 
@@ -192,7 +194,7 @@ function getDepartmentById(e) {
         stats.departments = departmentsFromOrganisation;
         getAllStudentsFromAllDepartments(departmentsFromOrganisation);
         $('#department').off().on('change', saveSelectedDepartment);
-    })
+    });
 }
 
 function getAllStudentsFromAllDepartments(departments) {
@@ -201,13 +203,13 @@ function getAllStudentsFromAllDepartments(departments) {
         return new Promise((resolve) => {
             doDbAction({action: 'getUsersByDepartmentId', departmentId: department.id}, function (res) {
                 allStudentsFromOrganisation.push(res);
-                array.push(res)
+                array.push(res);
                 getAnswersFromUsers(res);
                 stats.students.push(res);
                 resolve();
-            })
-        })
-    })
+            });
+        });
+    });
 
 
 }
@@ -269,7 +271,7 @@ function getAnswersFromUsers(students) {
 
     Promise.all(answers).then(function () {
         //console.log("Fetchd all answerss from students", allAnswersFromStudents)
-        addToSelect("#user", students)
+        addToSelect("#user", students);
         $("#user").off().on('change', filterByStudent)
 
         // console.log("stats", stats)
@@ -281,10 +283,10 @@ function filterByStudent(id) { //geef alle antwoorden van de geselecteerde stude
         $(allStudentsFromOrganisation).each(function (dep) {
             $(dep).each(function (student) {
                 //    console.log(student);
-                if (student.id == id) return student;
+                if(student.id == id) return student;
             })
         });
-        console.log("not found")
+        console.log("not found");
         return false;
     }
 
