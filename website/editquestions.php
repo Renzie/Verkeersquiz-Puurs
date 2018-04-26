@@ -29,9 +29,7 @@ $data = $userTools->getQuizInfoById($_GET["id"]);
     <ul class="questions collapsible" data-collapsible="expandable">
 			<?php $view->getAllQuestionsById($_GET["id"]) ?>
     </ul>
-    <a data-tooltip="Voeg een nieuwe vraag"
-       class="newquestion tooltipped btn btn-small waves-effect waves-light blue makeQuestion"><i
-            class="material-icons ">add</i></a>
+    <a data-tooltip="Voeg een nieuwe vraag" class="newquestion tooltipped btn btn-small waves-effect waves-light blue makeQuestion"><i class="material-icons ">add</i></a>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>

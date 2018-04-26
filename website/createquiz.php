@@ -11,6 +11,11 @@ $view = new View();
 
 
 //TODO make it so it is able to disable the quiz, ex. example quiz that you can toggle the visibility
+    //Add column to database (active) -> change the functions so it doesn't break the other functions
+    //Add a check to the quizsite
+    //Add checkbox on the admin page to enable and disable the quiz -> extra <th> 
+
+
 
 ?>
 
