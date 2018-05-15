@@ -30,8 +30,8 @@ function doDbAction(action, callback) {
         type: "POST",
         url: "../dbaction.php",
         data: action,
-        error: function () {
-            console.log("error");
+        error: function (e) {
+            console.log("error",e);
         }
     }).then(function (data) {
         //console.log(callback);
