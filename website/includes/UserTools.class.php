@@ -310,7 +310,7 @@ class UserTools extends Database
     {
         $connection = $this->connect();
 
-        if (!$stmt = $connection->prepare("INSERT INTO quiz (name, `extraInfo`) VALUES (?, ?)")) {
+        if (!$stmt = $connection->prepare("INSERT INTO quiz (name, extraInfo, active) VALUES (?, ?, 0)")) {
             echo "FAIL prepare";
         }
 
@@ -858,12 +858,13 @@ class UserTools extends Database
                 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
 
-            $stmt->bind_result($id, $name, $extraInfo);
+            $stmt->bind_result($id, $name, $extraInfo, $active);
             $stmt->fetch();
             $data = [
                 "id" => $id,
                 "name" => $name,
-                "extraInfo" => $extraInfo
+                "extraInfo" => $extraInfo,
+                "active" => $active
             ];
             $stmt->close();
             $connection->close();
@@ -1541,6 +1542,27 @@ class UserTools extends Database
         $stmtOrg->close();
         $stmtDep->close();
         $connection->close();
+    }
+
+    public function toggleActiveQuiz($quizId){
+        $connection = $this->connect();
+        //UPDATE quiz SET active = !active where id = ?
+
+        if (!$stmt = $connection->prepare('UPDATE quiz SET active = !active where id = ?')) {
+            echo "FAIL prepare";
+        }
+
+
+        if (!$stmt->bind_param("i", $quizId)) {
+            echo "FAIL bind";
+        }
+
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $stmt->close();
+        $connection->close();
+
     }
 
 

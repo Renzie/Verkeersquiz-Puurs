@@ -15,7 +15,8 @@ $(document).ready(function () {
     //Printjob
     addPrintEventHandlers();
 
-
+    //toggle if the quiz is active
+    $(".toggleActiveQuiz").on("click",toggleActiveQuiz);
 
     //create quiz
     $(".add_new_quiz").on('click', addNewQuiz);
@@ -24,6 +25,31 @@ $(document).ready(function () {
     //$('.tabel_quiz').on('click', '.edit_questions', edit_questions);
     $(".questionbuttons").on('click', '.removeimage', removeImage);
 });
+
+var toggleActiveQuiz = function(){
+    var quizId = $(this).closest('.quiz').attr("quizId");
+    var buttonAction = $(this).attr("buttonAction");
+    var that = this;
+    var ajaxurl = 'dbaction.php',
+    data =  {
+      'action': buttonAction,
+      'quizId': quizId
+    };
+    $.post(ajaxurl, data, function (response) {
+        var status = "";
+        if($(that).hasClass("green")){
+            $(that).removeClass("green").addClass("red");
+            status = "uit gezet";
+            $(".toggleActiveQuiz > i").text("close");
+        }else{
+            $(that).removeClass("red").addClass("green");
+            status = "aan gezet";
+            $(".toggleActiveQuiz > i").text("check");
+        }
+
+        Materialize.toast("Quiz " + status,1155);
+    });
+}
 
 var addPrintEventHandlers = function(){
     //check if you are on the right page

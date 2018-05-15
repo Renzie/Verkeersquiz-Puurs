@@ -65,6 +65,9 @@ if (isset($_POST['action'])) {
             echo json_encode($usertools->getAllAnswersByQuestionId($_POST['questionId']));
             break;
 
+        case 'toggleActiveQuiz':
+            echo $usertools->toggleActiveQuiz($_POST['quizId']);
+
         case 'sendAnswer' :
             $usertools->makeUserAnswer($_POST['userId'], $_POST['answerId'], $_POST['time']);
             echo "success"; break;

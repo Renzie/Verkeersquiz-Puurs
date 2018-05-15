@@ -50,6 +50,15 @@ class View extends UserTools
 				<td><input class="quizName" type="text" value="<?php echo $quiz["name"]?>" schoolIdName="<?php echo $quiz["id"]?>" ></td>
 				<td><input class="quizInfo" type="text" value="<?php echo $quiz["extraInfo"]?>" schoolIdInfo="<?php echo $quiz["id"]?>"  ></td>
 				<td>
+                    <a  class="btn <?php
+                        if($quiz["active"]) {
+                            echo "green";
+                        }else echo "red";
+                    ?> toggleActiveQuiz" buttonAction="toggleActiveQuiz"><i class="material-icons"><?php
+                        if($quiz["active"]) {
+                            echo "check";
+                        }else echo "close";
+                    ?></i></a>
 					<a href="editquestions.php?id=<?php echo $quiz["id"]?>" class="btn edit_questions"><i class="material-icons">edit</i> </a>
 					<a class="btn purple save_quiz" buttonAction="updateQuiz" ><i class="material-icons">save</i></a>
 					<a  class="btn red remove_quiz" buttonAction="deleteQuiz"><i class="material-icons">delete</i></a>
@@ -599,8 +608,9 @@ class View extends UserTools
     public function listQuizzes()
     {
         foreach ($this->getAllQuizzes() as $quiz) {
-            ?><option value="<?php echo $quiz["id"] ?>"><?php echo $quiz["name"] ?></option>
-            <?php
+            if($quiz["active"]){
+                ?><option value="<?php echo $quiz["id"] ?>"><?php echo $quiz["name"] ?></option><?php
+            }
         }
     }
 
