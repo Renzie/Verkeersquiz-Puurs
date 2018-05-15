@@ -33,14 +33,15 @@ var stats = {
 };
 
 function getAll() {
-    return doDbAction({action: 'getAll'}, function (data) {
+    var url = new URL(window.location.href.toString());
+    return doDbAction({action: 'getAll', quizId : url.searchParams.get('id')}, function (data) {
         console.log("All:");
         console.log(data);
         //showStats(data);
         allData = data;
         getStudentsByQuiz()
         getCurrentQuiz()
-
+        console.log("In GetAll()");
     })
 }
 
@@ -86,7 +87,7 @@ function getStudentsByQuiz() {
 
 
         klas.students[index].department = allData[0].filter(e => e.id === student.departmentId)[0];
-        klas.students[index].organisation = allData[0].filter(e => e.id === student.departmentId)[0];
+        klas.students[index].organisation = allData[1].filter(e => e.id === student.organizationId)[0];
         // For every answer in the db
         allData[3].forEach(function (answer) {
             if (answer.userId == student.id) {
@@ -94,7 +95,12 @@ function getStudentsByQuiz() {
                 if (answer.correct == 1) klas.students[index].score++
             }
         });
-        klas.students[index].score = klas.students[index].score / klas.students[index].answers.length
+
+        klas.students[index].score = klas.students[index].score / allData[5].length;
+        klas.students.forEach(function (student,index2) {
+
+                })
+        //klas.students[index].score = klas.students[index].score / klas.students[index].answers.length
 
     });
 

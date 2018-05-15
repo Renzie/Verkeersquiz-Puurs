@@ -14,7 +14,7 @@ if (isset($_POST['action'])) {
             echo json_encode($usertools->getAllUsers());
             break;
         case 'getAll' :
-            echo json_encode($usertools->getAll());
+            echo json_encode($usertools->getAll($_POST['quizId']));
             break;
         case 'getAllQuestionsByQuizId' :
             echo json_encode($usertools->getAllQuestionsByQuizId($_POST['quizId']));

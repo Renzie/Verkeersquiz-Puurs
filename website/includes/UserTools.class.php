@@ -1211,13 +1211,14 @@ class UserTools extends Database
         }
     }
 
-    public function getAll(){
+    public function getAll($quizId){
         $data = array();
         array_push($data, $this->getAllDepartments());
         array_push($data, $this->getAllOrganisation());
         array_push($data, $this->getAllUsers());
         array_push($data, $this->getAllAnswers());
         array_push($data, $this->getAllQuizzes());
+        array_push($data, $this->getAllQuestionsByQuizId($quizId));
         return $data;
     }
 
